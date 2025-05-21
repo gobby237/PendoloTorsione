@@ -1,0 +1,1 @@
+Questa è una repository in cui verra svolta l'attività di laboratorio sul pendolo a torsione.
