@@ -8,12 +8,18 @@ string InputFile();
 int main ()
 {
     vector<double> t, a, max, t_max, tf; 
-    double val1, val2, val3, mediaTf, mediaA, somma; 
+    double val1, val2, val3, mediaTf, mediaA, sommaTf, sommaA; 
     string nome; 
 
     nome = InputFile(); 
 
-    fstream fin (nome); 
+    fstream fin (nome);
+
+    if (!fin)
+    {
+        cout << "File errato o assente!" << endl; 
+    }
+
 
     while (fin>>val1>>val2>>val3)
     {
@@ -29,7 +35,6 @@ int main ()
         {
             max.push_back(a.at(i)); 
             t_max.push_back(t.at(i)); 
-            cout << t.at(i) << " "; 
         }
     }
     // abbiamo trovato tutti i massimi ed i tempi  
@@ -42,16 +47,27 @@ int main ()
         i++; 
     }
 
-    somma = 0; 
-    media = 0; 
-    for (int i = 0; i < tf.size(); i ++ )
+    mediaA = 0;  
+    sommaA = 0; 
+    for (int i = 0; i < max.size(); i ++ )
     {
-        somma += tf.at(i); 
+        sommaA += max.at(i); 
     }
 
-    media = somma / tf.size(); 
+    mediaA = sommaA/max.size(); 
 
-    cout << "Tf medio vale: " << media << endl; 
+
+    mediaTf = 0; 
+    sommaTf = 0; 
+    for (int i = 0; i < tf.size(); i ++ )
+    {
+        sommaTf += tf.at(i); 
+    }
+
+    mediaTf = sommaTf/tf.size();
+
+    cout << "L'ampiezza media vale: " << mediaA << endl; 
+    cout << "Tf medio vale: " << mediaTf << endl; 
 
 
     return 0;
