@@ -13,6 +13,7 @@ int main ()
 
     nome = InputFile(); 
 
+
     fstream fin (nome);
 
     if (!fin)
