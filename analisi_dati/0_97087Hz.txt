@@ -1,5 +1,3 @@
---- Pendolo di torsione ---
-Tempo.Forzante.Pendolo
 0.000	23.775	0.140
 0.020	25.972	0.148
 0.040	27.798	0.141

@@ -37,7 +37,7 @@ int main ()
         t_max.clear();
         tf.clear();
 
-        fstream fin (nome.at(i));
+        ifstream fin (nome.at(i));
 
         if (!fin)
         {

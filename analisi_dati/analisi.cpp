@@ -10,10 +10,11 @@ int main ()
     vector<double> t, a, max, t_max, tf, A_ris, Tf_ris, wf_ris; 
 
     // INSERISCI FILE IN INPUT 
-    vector<string> nome = {"0_96Hz.txt", "0_95688Hz.txt"}; 
+    vector<string> nome = {"0_96Hz.txt", "0_95688Hz.txt", "0_9502Hz.txt", "0_9577Hz.txt" , "0_9756Hz.txt" , "0_93897Hz.txt" , "0_94384Hz.txt" , "0_94503Hz.txt" , "0_94847Hz.txt" , "0_95178Hz.txt", "0_95329Hz.txt" , "0_95405Hz.txt" , "0_95496Hz.txt" , "0_95557Hz.txt" , "0_95572Hz.txt" , "0_95618Hz.txt", "0_95648Hz.txt" , "0_95688Hz.txt" , "0_95724Hz.txt" , "0_95816Hz.txt" , "0_96108Hz.txt" , "0_96277Hz.txt", "0_96448Hz.txt", "0_96603Hz.txt" , "0_96759Hz.txt" , "0_96993Hz.txt" , "0_97087Hz.txt" , "0_97403Hz.txt"}; 
     
-    double val1, val2, val3, mediaTf, mediaA, sommaTf, sommaA, T_presa, T_presa_dec, wf; 
-    int T_presa_int = 0; 
+    double val1, val2, val3, mediaTf, mediaA, sommaTf, sommaA, T_presa, T_presa_dec, wf, resto, T_presa_int_dec; 
+    int T_presa_int = 0;
+    int resto_int = 0;  
     
 
 
@@ -37,7 +38,7 @@ int main ()
         t_max.clear();
         tf.clear();
 
-        fstream fin (nome.at(i));
+        ifstream fin (nome.at(i));
 
         if (!fin)
         {
@@ -58,13 +59,13 @@ int main ()
         T_presa = t.back(); 
         T_presa_int = t.back(); // prenda la parte intera
         T_presa_dec = T_presa - T_presa_int;  
-        cout << "TEMPO PRESA: " << T_presa_int/60 << "min   " << (T_presa_int % 60)*60 << "secondi   "  << T_presa_dec << "millesimi   " << endl; 
+        cout << "TEMPO PRESA: " << T_presa_int/60 << "min   " << T_presa_int % 60 << "secondi   "  << T_presa_dec << "millesimi   " << endl; 
 
 
 
         // abbiamo i vettori con i tempi e le ampiezze 
 
-        for (int i = 2; i < a.size() - 1; i ++ )
+        for (int i = 2; i < a.size() - 2; i ++ )
         {
             if ((a.at(i) > a.at(i+1) ) && (a.at(i) > a.at(i-1)) && (a.at(i) > a.at(i-2)) && (a.at(i) > a.at(i+2) ))
             {
@@ -76,7 +77,7 @@ int main ()
 
 
         // utilizziamo sempre il numero maggiore di massimi per stimare il Tf 
-        for (int i = 0; i < t_max.size() - 1; i++)
+        for (int i = 0; i < t_max.size() - 2; i++)
         {
             tf.push_back(t_max.at(i+1) - t_max.at(i)); 
             i++; 
