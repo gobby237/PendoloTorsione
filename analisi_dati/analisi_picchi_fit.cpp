@@ -4,18 +4,20 @@
 #include <cmath>
 #include <string>
 using namespace std; 
-string InputFile(); 
+double thr_cal(vector<double>); 
 int main ()
 {
-    vector<double> t, a, max, t_max, tf, A_ris, Tf_ris, wf_ris; 
+    vector<double> t, a, max, t_max, tf, A_ris, Tf_ris, wf_ris, y_fit, x_fit; 
 
     // INSERISCI FILE IN INPUT 
     // vector<string> nome = {"0_96Hz.txt", "0_95688Hz.txt", "0_9502Hz.txt", "0_9577Hz.txt" , "0_9756Hz.txt" , "0_93897Hz.txt" , "0_94384Hz.txt" , "0_94503Hz.txt" , "0_94847Hz.txt" , "0_95178Hz.txt", "0_95329Hz.txt" , "0_95405Hz.txt" , "0_95496Hz.txt" , "0_95557Hz.txt" , "0_95572Hz.txt" , "0_95618Hz.txt", "0_95648Hz.txt" , "0_95688Hz.txt" , "0_95724Hz.txt" , "0_95816Hz.txt" , "0_96108Hz.txt" , "0_96277Hz.txt", "0_96448Hz.txt", "0_96603Hz.txt" , "0_96759Hz.txt" , "0_96993Hz.txt" , "0_97087Hz.txt" , "0_97403Hz.txt"}; 
     vector<string> nome = {"0_96Hz.txt"}; 
 
-    double val1, val2, val3, mediaTf, mediaA, sommaTf, sommaA, T_presa, T_presa_dec, wf, resto, T_presa_int_dec; 
+    double val1, val2, val3, mediaTf, mediaA, sommaTf, sommaA, T_presa, T_presa_dec, wf, resto, T_presa_int_dec, thr; 
     int T_presa_int = 0;
-    int resto_int = 0;  
+    int resto_int = 0;   
+    bool Regione_fit = false;
+    int startIdx = 0;
     
     // NEL FILE CORRETTO QUESTO COMMENTO VA TOLTO 
     // ofstream out ("wf_plot.txt", std::ios::app); 
@@ -65,42 +67,72 @@ int main ()
         T_presa_int = t.back(); // prenda la parte intera
         T_presa_dec = T_presa - T_presa_int;  
         cout << "TEMPO PRESA: " << T_presa_int/60 << "min   " << T_presa_int % 60 << "secondi   "  << T_presa_dec << "millesimi   " << endl; 
-
+        cout << "IL THR (0.75*max): " << thr_cal(a)*0.75 << endl; 
+        
+        thr = (double) thr_cal(a)*0.75; 
 
 
         // abbiamo i vettori con i tempi e le ampiezze 
 
-        for (int i = 2; i < a.size() - 2; i ++ )
-        {
-
-            if ((a.at(i) > a.at(i+1)) && (a.at(i) > a.at(i-1)) && (a.at(i) > a.at(i-2)) && (a.at(i) > a.at(i+2)))
-            {
-                max.push_back(a.at(i)); 
-                t_max.push_back(t.at(i)); 
+        // Rilevo regioni sopra soglia e faccio fit quadratico
+        bool inRegion = false;
+        int start = 0;
+        for (int i = 0; i <= (int)a.size(); ++i) {
+            if (!inRegion && i < (int)a.size() && a[i] > thr) {
+                inRegion = true;
+                start = i;
             }
-            
-            
-            if ((a.at(i) > a.at(i-2)) && (a.at(i) > a.at(i-1)) && (a.at(i) == a.at(i+1)) && (a.at(i) == a.at(i+2)))
-            {
-                max.push_back(a.at(i)); 
-                t_max.push_back(t.at(i));
+            else if (inRegion && (i == (int)a.size() || a[i] <= thr)) {
+                int end = i - 1;
+                int m = end - start + 1;
+                if (m >= 3) {
+                    // somma per minimi quadrati
+                    double S0 = m, S1=0,S2=0,S3=0,S4=0;
+                    double Sy=0,Sxy=0,Sx2y=0;
+                    for (int j = start; j <= end; ++j) {
+                        double x = t[j];
+                        double y = a[j];
+                        double x2 = x*x;
+                        S1   += x;
+                        S2   += x2;
+                        S3   += x2 * x;
+                        S4   += x2 * x2;
+                        Sy   += y;
+                        Sxy  += x * y;
+                        Sx2y += x2 * y;
+                    }
+                    // sistema normale 3x3 aumentato
+                    double M[3][4] = {
+                        {S4,  S3,  S2,   Sx2y},
+                        {S3,  S2,  S1,   Sxy },
+                        {S2,  S1,  S0,   Sy  }
+                    };
+                    // gauss
+                    for (int r = 0; r < 3; ++r) {
+                        double piv = M[r][r];
+                        if (fabs(piv) < 1e-12) break;
+                        for (int c = r; c < 4; ++c) M[r][c] /= piv;
+                        for (int rr = r+1; rr < 3; ++rr) {
+                            double f = M[rr][r];
+                            for (int c = r; c < 4; ++c)
+                                M[rr][c] -= f * M[r][c];
+                        }
+                    }
+                    // risolvo a ritroso
+                    double c = M[2][3];
+                    double b = M[1][3] - M[1][2]*c;
+                    double a_coef = M[0][3] - M[0][1]*b - M[0][2]*c;
+                    // vertice parabola
+                    double x_peak = -b/(2*a_coef);
+                    double y_peak = a_coef*x_peak*x_peak + b*x_peak + c;
+                    t_max.push_back(x_peak);
+                    max.push_back(y_peak);
+                    out << x_peak << " " << y_peak << "\n";
+                }
+                inRegion = false;
             }
-                
-                
-            if ((a.at(i) > a.at(i-2)) && (a.at(i) > a.at(i-1)) && (a.at(i) > a.at(i+1)) && (a.at(i) == a.at(i+2)))
-            {
-                max.push_back(a.at(i)); 
-                t_max.push_back(t.at(i));
-            }
-            
-            if ((a.at(i) > a.at(i-2)) && (a.at(i) > a.at(i-1)) && (a.at(i) == a.at(i+1)) && (a.at(i) > a.at(i+2)))
-            {
-                max.push_back(a.at(i)); 
-                t_max.push_back(t.at(i));
-            }
-            
-                
         }
+
         
         // abbiamo trovato tutti i massimi ed i tempi  
 
@@ -180,4 +212,15 @@ int main ()
 
 
     return 0;
+}
+double thr_cal(vector<double> g)
+{
+    double max = g.at(0); 
+    for (int i =0; i < g.size(); i ++ )
+    {
+        if (g.at(i) > max)
+            max = g.at(i); 
+    }
+    // abbiamo il massimo di tutto il file 
+    return max; 
 }
