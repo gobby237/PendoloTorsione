@@ -83,7 +83,7 @@ int main ()
         T_presa_int = t.back(); // prenda la parte intera
         T_presa_dec = T_presa - T_presa_int;  
         cout << "TEMPO PRESA: " << T_presa_int/60 << "min   " << T_presa_int % 60 << "secondi   "  << T_presa_dec << "millesimi   " << endl; 
-        cout << "IL THR (0.75*max): " << thr << endl; 
+        cout << "IL THR (0.60*max): " << thr << endl; 
         
 
         // abbiamo i vettori con i tempi e le ampiezze 
@@ -230,7 +230,7 @@ int main ()
     // mettiamo nel file per il grafico 
     for (int i = 0; i < A_ris.size(); i ++ )
     {
-        out << wf_ris.at(i) << "    " << A_ris.at(i) << "\n"; 
+        // out << wf_ris.at(i) << "    " << A_ris.at(i) << "\n"; 
     }
     
     
