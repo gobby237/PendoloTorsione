@@ -3,6 +3,7 @@
 #include <vector>
 #include <cmath>
 #include <string>
+#include <algorithm>
 using namespace std; 
 double thr_cal(vector<double>); 
 int main ()
@@ -11,7 +12,8 @@ int main ()
 
     // INSERISCI FILE IN INPUT 
     // vector<string> nome = {"0_96Hz.txt", "0_95688Hz.txt", "0_9502Hz.txt", "0_9577Hz.txt" , "0_9756Hz.txt" , "0_93897Hz.txt" , "0_94384Hz.txt" , "0_94503Hz.txt" , "0_94847Hz.txt" , "0_95178Hz.txt", "0_95329Hz.txt" , "0_95405Hz.txt" , "0_95496Hz.txt" , "0_95557Hz.txt" , "0_95572Hz.txt" , "0_95618Hz.txt", "0_95648Hz.txt" , "0_95688Hz.txt" , "0_95724Hz.txt" , "0_95816Hz.txt" , "0_96108Hz.txt" , "0_96277Hz.txt", "0_96448Hz.txt", "0_96603Hz.txt" , "0_96759Hz.txt" , "0_96993Hz.txt" , "0_97087Hz.txt" , "0_97403Hz.txt"}; 
-    vector<string> nome = {"0_96Hz.txt"}; 
+
+    vector<string> nome = {"0_96993Hz.txt"}; 
 
     double val1, val2, val3, mediaTf, mediaA, sommaTf, sommaA, T_presa, T_presa_dec, wf, resto, T_presa_int_dec, thr; 
     int T_presa_int = 0;
@@ -44,6 +46,9 @@ int main ()
         max.clear(); 
         t_max.clear();
         tf.clear();
+        x_fit.clear();
+        y_fit.clear();
+        thr = 0; 
 
         ifstream fin (nome.at(i));
 
@@ -60,38 +65,47 @@ int main ()
         {
             t.push_back(val1); 
             a.push_back(val3); 
+
         }
+        
+       if (a.empty() || t.empty()) {
+        cout << "Errore: nessun dato letto dal file " << nome.at(i) << ". Salto questo file." << endl;
+        continue;
+        }
+
+        
+        double thr_max = *max_element(a.begin(), a.end());
+        thr = thr_max * 0.60;
+    
 
         // prendo l'ultimo tempo come tempo di presa, e poi converto in minuti e secondi 
         T_presa = t.back(); 
         T_presa_int = t.back(); // prenda la parte intera
         T_presa_dec = T_presa - T_presa_int;  
         cout << "TEMPO PRESA: " << T_presa_int/60 << "min   " << T_presa_int % 60 << "secondi   "  << T_presa_dec << "millesimi   " << endl; 
-        cout << "IL THR (0.75*max): " << thr_cal(a)*0.75 << endl; 
+        cout << "IL THR (0.75*max): " << thr << endl; 
         
-        thr = (double) thr_cal(a)*0.75; 
-
 
         // abbiamo i vettori con i tempi e le ampiezze 
 
         // Rilevo regioni sopra soglia e faccio fit quadratico
         bool inRegion = false;
         int start = 0;
-        for (int i = 0; i <= (int)a.size(); ++i) {
-            if (!inRegion && i < (int)a.size() && a[i] > thr) {
+        for (int i = 0; i < (int)a.size(); i++) {
+            if (!inRegion && i < (int)a.size() && a.at(i) > thr) {
                 inRegion = true;
                 start = i;
             }
-            else if (inRegion && (i == (int)a.size() || a[i] <= thr)) {
+            else if (inRegion && (a.at(i) <= thr)) {
                 int end = i - 1;
                 int m = end - start + 1;
                 if (m >= 3) {
                     // somma per minimi quadrati
                     double S0 = m, S1=0,S2=0,S3=0,S4=0;
                     double Sy=0,Sxy=0,Sx2y=0;
-                    for (int j = start; j <= end; ++j) {
-                        double x = t[j];
-                        double y = a[j];
+                    for (int j = start; j <= end; j++) {
+                        double x = t.at(j);
+                        double y = a.at(j);
                         double x2 = x*x;
                         S1   += x;
                         S2   += x2;
@@ -108,7 +122,7 @@ int main ()
                         {S2,  S1,  S0,   Sy  }
                     };
                     // gauss
-                    for (int r = 0; r < 3; ++r) {
+                    for (int r = 0; r < 3; r++) {
                         double piv = M[r][r];
                         if (fabs(piv) < 1e-12) break;
                         for (int c = r; c < 4; ++c) M[r][c] /= piv;
@@ -127,7 +141,6 @@ int main ()
                     double y_peak = a_coef*x_peak*x_peak + b*x_peak + c;
                     t_max.push_back(x_peak);
                     max.push_back(y_peak);
-                    out << x_peak << " " << y_peak << "\n";
                 }
                 inRegion = false;
             }
@@ -136,12 +149,15 @@ int main ()
         
         // abbiamo trovato tutti i massimi ed i tempi  
 
-
         // utilizziamo sempre il numero maggiore di massimi per stimare il Tf 
-        for (int i = 0; i < t_max.size() - 2; i++)
-        {
-            tf.push_back(t_max.at(i+1) - t_max.at(i)); 
-            i++; 
+        // Calcola i periodi solo se ci sono almeno 2 massimi
+        if (t_max.size() >= 2) {
+            for (size_t i = 0; i < t_max.size() - 1; i += 2) {
+                tf.push_back(t_max[i+1] - t_max[i]);
+            }
+        } else {
+            cout << "Massimi insufficienti per calcolare il periodo. Salto il file." << endl;
+            continue;
         }
 
         cout << "NUMERO PICCHI (utilizzati per calcolare wf medio): " << tf.size(); 
@@ -193,34 +209,31 @@ int main ()
         // 
         //
 
-        for (int i = 0; i < t_max.size(); i++ )
+
+        
+        
+        for (int i = 0; i < t_max.size(); i ++)
         {
-            out << t_max.at(i) << "     " << max.at(i) << "\n"; 
+            out << t_max.at(i) << " " << max.at(i) << "\n"; 
+
         }
-
-
-    
+        
+        
+        
+        
     }
 
+    
+    /*
     // mettiamo nel file per il grafico 
     for (int i = 0; i < A_ris.size(); i ++ )
     {
         out << wf_ris.at(i) << "    " << A_ris.at(i) << "\n"; 
     }
-
-
+    */
+    
 
 
     return 0;
 }
-double thr_cal(vector<double> g)
-{
-    double max = g.at(0); 
-    for (int i =0; i < g.size(); i ++ )
-    {
-        if (g.at(i) > max)
-            max = g.at(i); 
-    }
-    // abbiamo il massimo di tutto il file 
-    return max; 
-}
+
