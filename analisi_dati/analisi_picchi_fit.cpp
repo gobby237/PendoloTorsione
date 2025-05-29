@@ -13,7 +13,7 @@ int main ()
     // INSERISCI FILE IN INPUT 
     vector<string> nome = {"0_96Hz.txt", "0_95688Hz.txt", "0_9502Hz.txt", "0_9577Hz.txt" , "0_9756Hz.txt" , "0_93897Hz.txt" , "0_94384Hz.txt" , "0_94503Hz.txt" , "0_94847Hz.txt" , "0_95178Hz.txt", "0_95329Hz.txt" , "0_95405Hz.txt" , "0_95496Hz.txt" , "0_95557Hz.txt" , "0_95572Hz.txt" , "0_95618Hz.txt", "0_95648Hz.txt" , "0_95688Hz.txt" , "0_95724Hz.txt" , "0_95816Hz.txt" , "0_96108Hz.txt" , "0_96277Hz.txt", "0_96448Hz.txt", "0_96603Hz.txt" , "0_96759Hz.txt" , "0_96993Hz.txt" , "0_97087Hz.txt" , "0_97403Hz.txt"}; 
 
-    // vector<string> nome = {"0_96993Hz.txt"}; 
+    // vector<string> nome = {"0_96277Hz.txt"}; 
 
     double val1, val2, val3, mediaTf, mediaA, sommaTf, sommaA, T_presa, T_presa_dec, wf, resto, T_presa_int_dec, thr; 
     int T_presa_int = 0;
@@ -222,6 +222,7 @@ int main ()
         
         
         
+        
     }
 
     
@@ -231,6 +232,7 @@ int main ()
     {
         out << wf_ris.at(i) << "    " << A_ris.at(i) << "\n"; 
     }
+    
     
     
     cout << endl << "Programma dei Meccanici di precisione, B10 ©" << endl;
