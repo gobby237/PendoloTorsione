@@ -1,0 +1,332 @@
+
+
+*******************************************************************************
+Fri May 30 09:26:45 2025
+
+
+FIT:    data read from "wf_plot.txt"
+        format = z
+        x range restricted to [5.97000 : 6.04000]
+        #datapoints = 22
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+BREAK: Need via and either parameter list or file
+
+*******************************************************************************
+Fri May 30 09:27:04 2025
+
+
+FIT:    data read from "wf_plot.txt"
+        format = z
+        x range restricted to [5.97000 : 6.04000]
+        #datapoints = 22
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+fitted parameters initialized with current variable values
+
+
+
+*******************************************************************************
+Fri May 30 09:27:17 2025
+
+
+FIT:    data read from "wf_plot.txt"
+        format = z
+        x range restricted to [5.97000 : 6.04000]
+        #datapoints = 22
+        residuals are weighted equally (unit weight)
+
+function used for fitting: y(x)
+	y(x) = a*x^2 + b*x + c
+fitted parameters initialized with current variable values
+
+
+
+*******************************************************************************
+Fri May 30 09:27:26 2025
+
+
+FIT:    data read from "wf_plot.txt"
+        format = z
+        x range restricted to [5.97000 : 6.04000]
+        #datapoints = 22
+        residuals are weighted equally (unit weight)
+
+function used for fitting: y(x)
+	y(x) = a*x^2 + b*x + c
+fitted parameters initialized with current variable values
+
+
+
+*******************************************************************************
+Fri May 30 09:27:55 2025
+
+
+FIT:    data read from "wf_plot.txt"
+        format = z
+        x range restricted to [5.00000 : 6.00000]
+        #datapoints = 18
+        residuals are weighted equally (unit weight)
+
+function used for fitting: y(x)
+	y(x) = a*x^2 + b*x + c
+fitted parameters initialized with current variable values
+
+
+
+*******************************************************************************
+Fri May 30 09:28:02 2025
+
+
+FIT:    data read from "wf_plot.txt"
+        format = z
+        x range restricted to [5.97000 : 6.04000]
+        #datapoints = 22
+        residuals are weighted equally (unit weight)
+
+function used for fitting: y(x)
+	y(x) = a*x^2 + b*x + c
+fitted parameters initialized with current variable values
+
+
+
+*******************************************************************************
+Fri May 30 09:29:30 2025
+
+
+FIT:    data read from "wf_plot.txt" using 1:2
+        format = x:z
+        x range restricted to [5.97000 : 6.04000]
+        #datapoints = 22
+        residuals are weighted equally (unit weight)
+
+function used for fitting: y(x)
+	y(x) = a*x^2 + b*x + c
+fitted parameters initialized with current variable values
+
+
+
+*******************************************************************************
+Fri May 30 09:30:03 2025
+
+
+FIT:    data read from "wf_plot.txt" using 1:2
+        format = x:z
+        x range restricted to [5.97000 : 6.04000]
+        #datapoints = 22
+        residuals are weighted equally (unit weight)
+
+function used for fitting: y(x)
+	y(x) = a*x^2 + b*x + c
+fitted parameters initialized with current variable values
+
+
+
+*******************************************************************************
+Fri May 30 09:30:13 2025
+
+
+FIT:    data read from "wf_plot.txt" using 1:2
+        format = x:z
+        #datapoints = 41
+        residuals are weighted equally (unit weight)
+
+function used for fitting: y(x)
+	y(x) = a*x^2 + b*x + c
+fitted parameters initialized with current variable values
+
+
+
+*******************************************************************************
+Fri May 30 09:30:20 2025
+
+
+FIT:    data read from "wf_plot.txt"
+        format = z
+        #datapoints = 41
+        residuals are weighted equally (unit weight)
+
+function used for fitting: y(x)
+	y(x) = a*x^2 + b*x + c
+fitted parameters initialized with current variable values
+
+
+
+*******************************************************************************
+Fri May 30 09:31:19 2025
+
+
+FIT:    data read from "wf_plot.txt" using 1:2
+        format = x:z
+        x range restricted to [5.97000 : 6.04000]
+        #datapoints = 22
+        residuals are weighted equally (unit weight)
+
+function used for fitting: y(x)
+	y(x) = a*x^2 + b*x + c
+fitted parameters initialized with current variable values
+
+
+
+*******************************************************************************
+Fri May 30 09:36:40 2025
+
+
+FIT:    data read from "wf_plot.txt" using 1:2
+        format = x:z
+        x range restricted to [5.97000 : 6.04000]
+        #datapoints = 22
+        residuals are weighted equally (unit weight)
+
+function used for fitting: y(x)
+	y(x) = a*x^2 + b*x + c
+fitted parameters initialized with current variable values
+
+
+
+*******************************************************************************
+Fri May 30 10:36:34 2025
+
+
+FIT:    data read from "wf_plot.txt" using 1:2
+        format = x:z
+        x range restricted to [5.97000 : 6.04000]
+        #datapoints = 22
+        residuals are weighted equally (unit weight)
+
+function used for fitting: y(x)
+	y(x) = a*x^2 + b*x + c
+fitted parameters initialized with current variable values
+
+
+
+*******************************************************************************
+Fri May 30 10:36:49 2025
+
+
+FIT:    data read from "wf_plot.txt"
+        format = z
+        x range restricted to [5.97000 : 6.04000]
+        #datapoints = 22
+        residuals are weighted equally (unit weight)
+
+function used for fitting: y(x)
+	y(x) = a*x^2 + b*x + c
+fitted parameters initialized with current variable values
+
+
+
+*******************************************************************************
+Fri May 30 10:37:25 2025
+
+
+FIT:    data read from "wf_plot.txt"
+        format = z
+        x range restricted to [5.96600 : 6.05350]
+        #datapoints = 24
+        residuals are weighted equally (unit weight)
+
+function used for fitting: y(x)
+	y(x) = a*x^2 + b*x + c
+fitted parameters initialized with current variable values
+
+
+
+*******************************************************************************
+Fri May 30 10:38:49 2025
+
+
+FIT:    data read from "wf_plot.txt"
+        format = z
+        #datapoints = 41
+        residuals are weighted equally (unit weight)
+
+function used for fitting: y(x)
+fitted parameters initialized with current variable values
+
+
+
+*******************************************************************************
+Fri May 30 10:39:05 2025
+
+
+FIT:    data read from "wf_plot.txt"
+        format = z
+        #datapoints = 41
+        residuals are weighted equally (unit weight)
+
+function used for fitting: y(x)
+	y(x) = a*x^2 + b*x + c
+fitted parameters initialized with current variable values
+
+
+
+*******************************************************************************
+Fri May 30 10:40:27 2025
+
+
+FIT:    data read from "wf_plot.txt" using 1:2
+        format = x:z
+        #datapoints = 41
+        residuals are weighted equally (unit weight)
+
+function used for fitting: y(x)
+	y(x) = a*x^2 + b*x + c
+fitted parameters initialized with current variable values
+
+
+
+*******************************************************************************
+Fri May 30 10:40:50 2025
+
+
+FIT:    data read from "wf_plot.txt"
+        format = z
+        #datapoints = 41
+        residuals are weighted equally (unit weight)
+
+function used for fitting: y(x)
+	y(x) = a*x^2 + b*x + c
+fitted parameters initialized with current variable values
+
+
+
+*******************************************************************************
+Fri May 30 10:48:18 2025
+
+
+FIT:    data read from "wf_plot.txt"
+        format = z
+        x range restricted to [5.97000 : 6.04000]
+        #datapoints = 22
+        residuals are weighted equally (unit weight)
+
+function used for fitting: y(x)
+	y(x) = a * x**2 + b * x + c
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   a             b             c            
+   0 3.7590957490e+04   0.00e+00  2.11e+01    1.000000e+00   1.000000e+00   1.000000e+00
+   9 4.0294501125e-02  -4.68e-01  2.11e-08   -3.212972e+02   3.860710e+03  -1.159576e+04
+
+After 9 iterations the fit converged.
+final sum of squares of residuals : 0.0402945
+rel. change during last iteration : -4.6761e-06
+
+degrees of freedom    (FIT_NDF)                        : 19
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.0460517
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.00212076
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+a               = -321.297         +/- 35.65        (11.1%)
+b               = 3860.71          +/- 428.2        (11.09%)
+c               = -11595.8         +/- 1286         (11.09%)
+
+correlation matrix of the fit parameters:
+                a      b      c      
+a               1.000 
+b              -1.000  1.000 
+c               1.000 -1.000  1.000 

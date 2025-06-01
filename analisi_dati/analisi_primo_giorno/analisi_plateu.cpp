@@ -5,6 +5,7 @@
 #include <string>
 #include <numeric>    
 using namespace std;
+
 // Funzione per raffinamento parabolico del tempo di picco
 double refinePeakTime(const vector<double>& t, const vector<double>& a, int idx) {
     double A = a[idx];
