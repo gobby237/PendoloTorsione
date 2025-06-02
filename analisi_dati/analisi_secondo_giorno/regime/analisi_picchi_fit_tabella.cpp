@@ -12,11 +12,11 @@ using namespace std;
 double calcolaStdev (vector<double> &); 
 int main ()
 {
-    vector<double> t, a, max, t_max, tf, A_ris, Tf_ris, wf_ris, y_fit, x_fit, sigma_tf, A_min_ris, min, t_min, pp; 
+    vector<double> t, a, max, t_max, tf, A_ris, Tf_ris, wf_ris, y_fit, x_fit, sigma_tf, A_min_ris, min, t_min, pp, max_a; 
 
     // INSERISCI FILE IN INPUT 
 
-    // vector<string> nome = {"0_93269.txt"}; 
+    // vector<string> nome = {"0_96Hz.txt"}; 
     
     
     vector<string> nome = {
@@ -33,7 +33,7 @@ int main ()
         "0_95526.txt",
         "0_95618.txt",
         "0_95694.txt",
-        "0_95816.txt",
+       // "0_95816.txt",
         "0_95893.txt",
         "0_96046.txt",
         "0_96216.txt",
@@ -62,23 +62,25 @@ int main ()
         "0_97245.txt",
         "0_97720.txt",
         "0_99469.txt",
+        // con anche i dati della prima giornata 
+        "0_96Hz.txt", "0_95688Hz.txt", "0_9502Hz.txt", "0_9577Hz.txt" , "0_9756Hz.txt" , "0_93897Hz.txt" , "0_94384Hz.txt" , "0_94503Hz.txt" , "0_94847Hz.txt" , "0_95178Hz.txt", "0_95329Hz.txt" , "0_95405Hz.txt" , "0_95496Hz.txt" , "0_95557Hz.txt" , "0_95572Hz.txt" , "0_95618Hz.txt", "0_95648Hz.txt" , "0_95688Hz.txt" , "0_95724Hz.txt" , "0_95816Hz.txt" , "0_96108Hz.txt" , "0_96277Hz.txt", "0_96448Hz.txt", "0_96603Hz.txt" , "0_96759Hz.txt" , "0_96993Hz.txt" , "0_97087Hz.txt" , "0_97403Hz.txt"
     };
     
     
     
     // vector<string> nome = {"0_96293.txt"}; 
 
-    double val1, val2, val3, mediaTf, value ,mediaA, sommaTf, sommaA, T_presa, T_presa_dec, wf, resto, T_presa_int_dec, thr, Sigma_tf, Sigma_wf, Sigma_a_max; 
+    double val1, val2, val3, mediaTf, value ,mediaA, sommaTf, sommaA, T_presa, T_presa_dec, wf, resto, T_presa_int_dec, thr, Sigma_tf, Sigma_wf, Sigma_a_max, amp_max; 
     int T_presa_int = 0;
     int resto_int = 0;   
     bool Regione_fit = false;
     int startIdx = 0;
     
     // NEL FILE CORRETTO QUESTO COMMENTO VA TOLTO 
-    ofstream out ("wf_plot.txt", std::ios::app); 
+    // ofstream out ("wf_plot.txt", std::ios::app); 
 
     // PROVA PER VEDERE I MAX 
-    // ofstream out ("massimi.txt", std::ios::app);
+    ofstream out ("massimi.txt", std::ios::app);
 
     cout << "*******************************************" << endl; 
     cout << "*     ANALISI DATI PENDOLO A TORSIONE     *" << endl; 
@@ -100,7 +102,7 @@ int main ()
     for (int i = 0; i < nome.size(); i ++ )
     {
 
-
+        amp_max = 0; 
         t.clear(); 
         a.clear(); 
         max.clear(); 
@@ -346,7 +348,7 @@ int main ()
 
 
         
-        /*
+        
         for (int i = 0; i < t_max.size(); i ++)
         {
             out << t_max.at(i) << " " << max.at(i) << "\n"; 
@@ -355,7 +357,7 @@ int main ()
         {
             out << t_min.at(i) << " " << min.at(i) << "\n"; 
         }
-        */
+        
         
         
         
@@ -373,22 +375,26 @@ int main ()
          << " * " << fixed << setprecision(4) << setw(9) << wf      // 4 decimali
          << "± " << fixed << setprecision(4) << setw(10) << Sigma_wf  // 4 decimali
          << " * " << fixed << setprecision(4) << setw(10) << abs(*max_element(a.begin(), a.end()) + *min_element(a.begin(), a.end()))
-         << " * " << fixed << setprecision(4) << setw(15) << accumulate(pp.begin(), pp.end(), 0.0)*2*M_PI/pp.size()
-         << "± " << fixed << setprecision(4) << setw(10) << calcolaStdev(pp)*2*M_PI
+         << " * " << fixed << setprecision(4) << setw(13) << accumulate(pp.begin(), pp.end(), 0.0)*2*M_PI/pp.size()
+         << "± " << fixed << setprecision(4) << setw(9) << calcolaStdev(pp)*2*M_PI
          << " *" << endl;
+
+         // riempio il vettore con l'ampiezza media massima di ogni file 
+         max_a.push_back(accumulate(pp.begin(), pp.end(), 0.0)*2*M_PI/pp.size()); 
         
-        
+
         
     }
 
+
     
-    
+    /*
     // mettiamo nel file per il grafico 
     for (int i = 0; i < A_ris.size(); i ++ )
     {
-        out << wf_ris.at(i) << "    " << A_ris.at(i)*2*M_PI << "\n"; 
+        out << wf_ris.at(i) << "    " << max_a.at(i) << "\n"; 
     }
-        
+      */  
     
     
     
