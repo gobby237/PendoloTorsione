@@ -1,21 +1,26 @@
 #include <iostream>
 #include <fstream>
-#include <cmath>
 #include <vector>
+#include <cmath>
+#include <string>
+#include <algorithm>
+#include <iomanip>  // Per setw
+#include <iomanip>  // Necessario per setprecision
+#include <limits>   // Necessario per numeric_limits
+#include <numeric>
 using namespace std;
+double calcolaStdev(vector<double> &); 
 int main ()
 {
-    vector<double> a, t, t_max, t_min, max, min; 
-    double val1, val2, val3, thr, max_rel; 
+    vector<double> a, t, t_max, t_min, max, min, Ts; 
+    double val1, val2, val3, thr, max_rel, ts_medio, sigma_ts, ws, sigma_ws; 
     string nome = ""; 
 
-    cout << "Inserire nome file: "; 
-    cin >> nome; 
+    ifstream fin ("smorzamento_0_95618.txt");
 
-    ifstream fin (nome);
-
-    ofstream out ("check_max.txt", std::ios::app); 
+    // ofstream out ("check_max.txt", std::ios::app); 
     
+
     while (fin>>val1>>val2>>val3)
     {
         // prendo i dati dell'ampiezza e del tempo solo quando il motore è spento 
@@ -26,7 +31,7 @@ int main ()
         }
     }
 
-
+    /*
     
     int j = 0; 
     int start = 0, end = 0; 
@@ -116,6 +121,54 @@ int main ()
         out << t_max.at(i) << " " << max.at(i) << "\n"; 
     }
 
+    t_max.clear(); 
+    max.clear();
+
+    */
+
+    ifstream fin1 ("check_max.txt"); 
+
+    while (fin1>>val1>>val2)
+    {
+        t_max.push_back(val1); 
+        max.push_back(val2);
+    }
+
+    // stimiamo ts 
+
+    for (int i = 0; i < t_max.size() - 2; i ++ )
+    {
+        Ts.push_back(t_max.at(i+1) - t_max.at(i));
+        i++; 
+    }
+
+    // media e stdev di Ts 
+    ts_medio = accumulate(Ts.begin(), Ts.end(), 0.0)/Ts.size();
+    sigma_ts = calcolaStdev(Ts); 
+
+    // media e stdev di ws 
+    ws = (2*M_PI)/ts_medio;
+    sigma_ws = (sigma_ts*(2*M_PI))/(pow(ws,2));
+
+    cout << "ANALISI DATI IN FASE DI SMORZAMENTO " << endl << endl; 
+    cout << "NOME FILE: " << nome << endl; 
+    cout << "stima Ts: " << ts_medio << " pm " << sigma_ts << endl; 
+    cout << "stima ws: " << ws << " pm " << sigma_ws << endl; 
+    
+
 
     return 0; 
+}
+double calcolaStdev(vector<double>& dati) {
+    if (dati.empty()) return 0.0;
+
+    double mean = accumulate(dati.begin(), dati.end(), 0.0) / dati.size();
+    // media
+
+    double sum_sq = 0.0;
+    for (double x : dati) {
+        sum_sq += (x - mean) * (x - mean);
+    }
+    
+    return sqrt(sum_sq / (dati.size() - 1)); 
 }
