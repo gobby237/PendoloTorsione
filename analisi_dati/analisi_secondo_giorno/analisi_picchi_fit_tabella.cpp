@@ -7,13 +7,17 @@
 #include <iomanip>  // Per setw
 #include <iomanip>  // Necessario per setprecision
 #include <limits>   // Necessario per numeric_limits
+#include <numeric>
 using namespace std; 
-double thr_cal(vector<double>); 
+double calcolaStdev (vector<double> &); 
 int main ()
 {
-    vector<double> t, a, max, t_max, tf, A_ris, Tf_ris, wf_ris, y_fit, x_fit, sigma_tf; 
+    vector<double> t, a, max, t_max, tf, A_ris, Tf_ris, wf_ris, y_fit, x_fit, sigma_tf, A_min_ris, min; 
 
     // INSERISCI FILE IN INPUT 
+
+    // vector<string> nome = {"0_93269.txt"}; 
+    
     
     vector<string> nome = {
         "0_9574.txt",
@@ -60,9 +64,10 @@ int main ()
         "0_99469.txt",
     };
     
-    // vector<string> nome = {"0_92308.txt"}; 
+    
+    // vector<string> nome = {"0_96293.txt"}; 
 
-    double val1, val2, val3, mediaTf, mediaA, sommaTf, sommaA, T_presa, T_presa_dec, wf, resto, T_presa_int_dec, thr, Sigma_tf; 
+    double val1, val2, val3, mediaTf, mediaA, sommaTf, sommaA, T_presa, T_presa_dec, wf, resto, T_presa_int_dec, thr, Sigma_tf, Sigma_wf, Sigma_a_max; 
     int T_presa_int = 0;
     int resto_int = 0;   
     bool Regione_fit = false;
@@ -82,12 +87,12 @@ int main ()
     cout << "-Tf medio: periodo medio di oscillazione; " << endl; 
     cout << "-wf medio: velocità angolare di oscillazione media = 2pi/Tf; " << endl; 
     cout << "-A_max media: ampiezza media dei picchi nella presa; " << endl; 
-    cout << "*********************************************************************************************************" << endl;     
+    cout << "********************************************************************************************************************************************" << endl;     
     cout << endl; 
 
 
-    cout << "* NOME FILE          * TEMPO PRESA *   THR    * N. PICCHI * A_max MEDIO * tf MEDIO ± sigma_tf  * wf MEDIO ± sigma_tf         *" << endl;
-    cout << "*********************************************************************************************************" << endl;     
+    cout << "* NOME FILE          * TEMPO PRESA *   THR    * N. PICCHI * A_max MEDIO ± sigma_a_max * tf MEDIO ± sigma_tf  * wf MEDIO ± sigma_tf         *" << endl;
+    cout << "********************************************************************************************************************************************" << endl;     
  
     for (int i = 0; i < nome.size(); i ++ )
     {
@@ -99,6 +104,9 @@ int main ()
         x_fit.clear();
         y_fit.clear();
         thr = 0; 
+        Sigma_tf = 0; 
+        Sigma_wf = 0; 
+        Sigma_a_max = 0; 
 
         ifstream fin (nome.at(i));
 
@@ -107,14 +115,11 @@ int main ()
             cout << "File errato o assente!" << endl; 
         }
 
-        // cout << "*******************************************" << endl << endl; 
-        // cout << "NOME FILE: " << nome.at(i) << endl; 
-
 
         while (fin>>val1>>val2>>val3)
         {
             t.push_back(val1); 
-            a.push_back(val3*2*M_PI); 
+            a.push_back(val3); 
 
         }
         
@@ -133,8 +138,6 @@ int main ()
         T_presa_int = t.back(); // prenda la parte intera
         T_presa_dec = T_presa - T_presa_int;  
         
-        // cout << "TEMPO PRESA: " << T_presa_int/60 << "min   " << T_presa_int % 60 << "secondi   "  << T_presa_dec << "millesimi   " << endl; 
-        // cout << "IL THR (0.60*max): " << thr << endl; 
         
 
         // abbiamo i vettori con i tempi e le ampiezze 
@@ -198,6 +201,62 @@ int main ()
             }
         }
 
+        inRegion = false; 
+        for (int i = 0; i < (int)a.size(); i++) {
+            if (!inRegion && i < (int)a.size() && a.at(i) > thr) {
+                inRegion = true;
+                start = i;
+            }
+            else if (inRegion && (a.at(i) <= thr)) {
+                int end = i - 1;
+                int m = end - start + 1;
+                if (m >= 3) {
+                    // somma per minimi quadrati
+                    double S0 = m, S1=0,S2=0,S3=0,S4=0;
+                    double Sy=0,Sxy=0,Sx2y=0;
+                    for (int j = start; j <= end; j++) {
+                        double x = t.at(j);
+                        double y = a.at(j);
+                        double x2 = x*x;
+                        S1   += x;
+                        S2   += x2;
+                        S3   += x2 * x;
+                        S4   += x2 * x2;
+                        Sy   += y;
+                        Sxy  += x * y;
+                        Sx2y += x2 * y;
+                    }
+                    // sistema normale 3x3 aumentato
+                    double M[3][4] = {
+                        {S4,  S3,  S2,   Sx2y},
+                        {S3,  S2,  S1,   Sxy },
+                        {S2,  S1,  S0,   Sy  }
+                    };
+                    // gauss
+                    for (int r = 0; r < 3; r++) {
+                        double piv = M[r][r];
+                        if (fabs(piv) < 1e-12) break;
+                        for (int c = r; c < 4; ++c) M[r][c] /= piv;
+                        for (int rr = r+1; rr < 3; ++rr) {
+                            double f = M[rr][r];
+                            for (int c = r; c < 4; ++c)
+                                M[rr][c] -= f * M[r][c];
+                        }
+                    }
+                    // risolvo a ritroso
+                    double c = M[2][3];
+                    double b = M[1][3] - M[1][2]*c;
+                    double a_coef = M[0][3] - M[0][1]*b - M[0][2]*c;
+                    // vertice parabola
+                    double x_peak = -b/(2*a_coef);
+                    double y_peak = a_coef*x_peak*x_peak + b*x_peak + c;
+                    t_max.push_back(x_peak);
+                    max.push_back(y_peak);
+                }
+                inRegion = false;
+            }
+        }
+
         
         // abbiamo trovato tutti i massimi ed i tempi  
 
@@ -205,24 +264,12 @@ int main ()
         // Calcola i periodi solo se ci sono almeno 2 massimi
         if (t_max.size() >= 2) {
             for (size_t i = 0; i < t_max.size() - 1; i += 2) {
-                tf.push_back(t_max[i+1] - t_max[i]);
+                tf.push_back(t_max.at(i+1) - t_max.at(i));
             }
         } else {
             cout << "Massimi insufficienti per calcolare il periodo. Salto il file." << endl;
             continue;
         }
-
-        /*
-        cout << "NUMERO PICCHI (utilizzati per calcolare wf medio): " << tf.size(); 
-        if (tf.size()>=20)
-        {
-            cout << " --> sono sufficenti!" << endl; 
-        }
-        else
-        {
-            cout << " --> non sono sufficenti! " << endl; 
-        }
-        */
 
 
         mediaA = 0;  
@@ -231,10 +278,9 @@ int main ()
         {
             sommaA += max.at(i); 
         }
-
+        // calcolo l'ampiezza del picco media 
         mediaA = sommaA/max.size();
         
-        // metto all'interno di un vettore tutte le ampiezze massime
 
         mediaTf = 0; 
         sommaTf = 0; 
@@ -243,16 +289,16 @@ int main ()
             sommaTf += tf.at(i); 
         }
 
-
+        // calcolo Tf medio e wf medio 
         mediaTf = sommaTf/tf.size();
-        sommaTf = 0; 
-        for (int i = 0; i < tf.size(); i ++ )
-        {
-            sommaTf = sommaTf + pow((tf.at(i) - mediaTf),2); 
-        }
-        Sigma_tf = sqrt(sommaTf/(tf.size()-1))/sqrt(tf.size()); 
-
         wf = (2*M_PI)/mediaTf; 
+
+
+        // calcolo la sigma di tf, a_max e wf  
+        Sigma_tf = calcolaStdev(tf);
+        Sigma_wf = (Sigma_tf*(2*M_PI))/(pow(wf,2));
+        Sigma_a_max = calcolaStdev(max); 
+
 
         // aggiungo ai vettori risultati i diversi valori
         A_ris.push_back(mediaA); // ampiezza media 
@@ -260,15 +306,7 @@ int main ()
         wf_ris.push_back(wf); // wf medio 
         sigma_tf.push_back(Sigma_tf); // sigma di tf 
 
-        /*
-        cout << "A_max MEDIO: " << mediaA << endl; 
-        cout << "Tf MEDIO: " << mediaTf << endl; 
-        cout << "wf MEDIO: " << wf << endl; 
-        cout << endl; 
-        cout << "*******************************************" << endl; 
-        */
 
-        //
         //
         //  PROVA PER VEDERE DOVE SONO I PUNTI DI MASSIMO INDIVIDUATI 
         // 
@@ -284,16 +322,19 @@ int main ()
         }
         */
         
+        
        
      // Sostituisci la riga di output con:
          cout << "* " << left << setw(18) << nome.at(i) 
          << " * " << fixed << setprecision(2) << setw(11) << t.back()  // Tempo presa (senza formattazione fissa)
          << " * " << setw(8) << thr        // Thr (senza formattazione fissa)
          << " * " << setw(9) << tf.size()  // Numero picchi (intero, niente decimali)
-         << " * " << fixed << setprecision(4) << setw(11) << mediaA  // 4 decimali
+         << " * " << fixed << setprecision(4) << setw(12) << mediaA*2*M_PI   // 4 decimali
+         << "± " << fixed << setprecision(4) << setw(11) << Sigma_a_max*2*M_PI  // 4 decimali
          << " * " << fixed << setprecision(4) << setw(9) << mediaTf  // 4 decimali
          << "± " << fixed << setprecision(4) << setw(9) << Sigma_tf  // 4 decimali
-         << " * " << fixed << setprecision(4) << setw(15) << wf      // 4 decimali
+         << " * " << fixed << setprecision(4) << setw(9) << wf      // 4 decimali
+         << "± " << fixed << setprecision(4) << setw(16) << Sigma_wf  // 4 decimali
          << " *" << endl;
         
         
@@ -305,13 +346,27 @@ int main ()
     // mettiamo nel file per il grafico 
     for (int i = 0; i < A_ris.size(); i ++ )
     {
-        out << wf_ris.at(i) << "    " << A_ris.at(i) << "\n"; 
+        out << wf_ris.at(i) << "    " << A_ris.at(i)*2*M_PI << "\n"; 
     }
     
-    cout << "*********************************************************************************************************" << endl;    
+    
+    
+    cout << "********************************************************************************************************************************************" << endl;    
     
     cout << endl << "Programma dei Meccanici di precisione, B10 ©" << endl;
 
     return 0;
 }
+double calcolaStdev(vector<double>& dati) {
+    if (dati.empty()) return 0.0;
 
+    double mean = accumulate(dati.begin(), dati.end(), 0.0) / dati.size();
+    // media
+
+    double sum_sq = 0.0;
+    for (double x : dati) {
+        sum_sq += (x - mean) * (x - mean);
+    }
+    
+    return sqrt(sum_sq / (dati.size() - 1)); 
+}
