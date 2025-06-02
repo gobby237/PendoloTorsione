@@ -99,6 +99,8 @@ int main ()
  
     for (int i = 0; i < nome.size(); i ++ )
     {
+
+
         t.clear(); 
         a.clear(); 
         max.clear(); 
@@ -137,6 +139,9 @@ int main ()
         
         double thr_max = *max_element(a.begin(), a.end());
         thr = thr_max * value;
+
+        if (nome.at(i) == "0_93269.txt")
+            thr = 0.5 * thr_max; 
     
 
         // prendo l'ultimo tempo come tempo di presa, e poi converto in minuti e secondi 
