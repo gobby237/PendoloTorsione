@@ -12,7 +12,7 @@ using namespace std;
 double calcolaStdev (vector<double> &); 
 int main ()
 {
-    vector<double> t, a, max, t_max, tf, A_ris, Tf_ris, wf_ris, y_fit, x_fit, sigma_tf, A_min_ris, min; 
+    vector<double> t, a, max, t_max, tf, A_ris, Tf_ris, wf_ris, y_fit, x_fit, sigma_tf, A_min_ris, min, t_min, pp; 
 
     // INSERISCI FILE IN INPUT 
 
@@ -65,9 +65,10 @@ int main ()
     };
     
     
+    
     // vector<string> nome = {"0_96293.txt"}; 
 
-    double val1, val2, val3, mediaTf, mediaA, sommaTf, sommaA, T_presa, T_presa_dec, wf, resto, T_presa_int_dec, thr, Sigma_tf, Sigma_wf, Sigma_a_max; 
+    double val1, val2, val3, mediaTf, value ,mediaA, sommaTf, sommaA, T_presa, T_presa_dec, wf, resto, T_presa_int_dec, thr, Sigma_tf, Sigma_wf, Sigma_a_max; 
     int T_presa_int = 0;
     int resto_int = 0;   
     bool Regione_fit = false;
@@ -87,12 +88,14 @@ int main ()
     cout << "-Tf medio: periodo medio di oscillazione; " << endl; 
     cout << "-wf medio: velocità angolare di oscillazione media = 2pi/Tf; " << endl; 
     cout << "-A_max media: ampiezza media dei picchi nella presa; " << endl; 
-    cout << "********************************************************************************************************************************************" << endl;     
+    cout << "**************************************************************************************************************************************************************************" << endl;     
     cout << endl; 
+    cout << "Inserire il valore di cui scalare thr: "; 
+    cin >> value; 
 
 
-    cout << "* NOME FILE          * TEMPO PRESA *   THR    * N. PICCHI * A_max MEDIO ± sigma_a_max * tf MEDIO ± sigma_tf  * wf MEDIO ± sigma_tf         *" << endl;
-    cout << "********************************************************************************************************************************************" << endl;     
+    cout << "* NOME FILE          * TEMPO PRESA *   THR    * N. PICCHI * A_max MEDIO ± sigma_a_max * tf MEDIO ± sigma_tf  * wf MEDIO ± sigma_tf   * Offset     *  p-p/2 MEDIO ± sigma_pp  *" << endl;
+    cout << "**************************************************************************************************************************************************************************" << endl;     
  
     for (int i = 0; i < nome.size(); i ++ )
     {
@@ -100,9 +103,12 @@ int main ()
         a.clear(); 
         max.clear(); 
         t_max.clear();
+        min.clear(); 
         tf.clear();
+        pp.clear(); 
         x_fit.clear();
         y_fit.clear();
+        t_min.clear(); 
         thr = 0; 
         Sigma_tf = 0; 
         Sigma_wf = 0; 
@@ -130,7 +136,7 @@ int main ()
 
         
         double thr_max = *max_element(a.begin(), a.end());
-        thr = thr_max * 0.60;
+        thr = thr_max * value;
     
 
         // prendo l'ultimo tempo come tempo di presa, e poi converto in minuti e secondi 
@@ -140,10 +146,8 @@ int main ()
         
         
 
-        // abbiamo i vettori con i tempi e le ampiezze 
-
+        // troviamo i massimi 
         // Rilevo regioni sopra soglia e faccio fit quadratico
-        
         bool inRegion = false;
         int start = 0;
         for (int i = 0; i < (int)a.size(); i++) {
@@ -201,7 +205,84 @@ int main ()
             }
         }
 
-        
+        // troviamo i minimi 
+        inRegion = false; 
+        for (int i = 0; i < (int)a.size(); i++) {
+            if (!inRegion && i < (int)a.size() && a.at(i) < -thr) {
+                inRegion = true;
+                start = i;
+            }
+            else if (inRegion && (a.at(i) >= -thr)) {
+                int end = i - 1;
+                int m = end - start + 1;
+                if (m >= 3) {
+                    // somma per minimi quadrati
+                    double S0 = m, S1=0,S2=0,S3=0,S4=0;
+                    double Sy=0,Sxy=0,Sx2y=0;
+                    for (int j = start; j <= end; j++) {
+                        double x = t.at(j);
+                        double y = a.at(j);
+                        double x2 = x*x;
+                        S1   += x;
+                        S2   += x2;
+                        S3   += x2 * x;
+                        S4   += x2 * x2;
+                        Sy   += y;
+                        Sxy  += x * y;
+                        Sx2y += x2 * y;
+                    }
+                    // sistema normale 3x3 aumentato
+                    double M[3][4] = {
+                        {S4,  S3,  S2,   Sx2y},
+                        {S3,  S2,  S1,   Sxy },
+                        {S2,  S1,  S0,   Sy  }
+                    };
+                    // gauss
+                    for (int r = 0; r < 3; r++) {
+                        double piv = M[r][r];
+                        if (fabs(piv) < 1e-12) break;
+                        for (int c = r; c < 4; ++c) M[r][c] /= piv;
+                        for (int rr = r+1; rr < 3; ++rr) {
+                            double f = M[rr][r];
+                            for (int c = r; c < 4; ++c)
+                                M[rr][c] -= f * M[r][c];
+                        }
+                    }
+                    // risolvo a ritroso
+                    double c = M[2][3];
+                    double b = M[1][3] - M[1][2]*c;
+                    double a_coef = M[0][3] - M[0][1]*b - M[0][2]*c;
+                    // vertice parabola
+                    double x_peak = -b/(2*a_coef);
+                    double y_peak = a_coef*x_peak*x_peak + b*x_peak + c;
+                    // salvo all'interno di un vettore i minimi 
+                    min.push_back(y_peak);
+                    t_min.push_back(x_peak); 
+                }
+                inRegion = false;
+            }
+        }
+
+        // stimo p-p/2
+ 
+        // trovo prima se ci sono più massimi o minimi 
+        if (max.size() >= min.size())
+        {
+            for (int i = 0; i < min.size(); i ++ )
+            {
+                pp.push_back((max.at(i) - min.at(i))/2); // metto all'interno del vettore l'iesima differenza tra max e min in valore assoluto 
+            }
+        }
+        else
+        {
+            for (int i = 0; i < max.size(); i ++ )
+            {
+                pp.push_back((max.at(i) - min.at(i))/2); // metto all'interno del vettore l'iesima differenza tra max e min in valore assoluto 
+            }
+        }
+
+        // trovo così la media e la stdev con l'altro metodo 
+
 
         
         // abbiamo trovato tutti i massimi ed i tempi  
@@ -254,7 +335,7 @@ int main ()
 
 
         //
-        //  PROVA PER VEDERE DOVE SONO I PUNTI DI MASSIMO INDIVIDUATI 
+        //  PROVA PER VEDERE DOVE SONO I PUNTI DI MASSIMO INDIVIDUATI (E MINIMI)
         // 
         //
 
@@ -264,9 +345,14 @@ int main ()
         for (int i = 0; i < t_max.size(); i ++)
         {
             out << t_max.at(i) << " " << max.at(i) << "\n"; 
-
+        }
+        for (int i = 0; i < t_min.size(); i ++ )
+        {
+            out << t_min.at(i) << " " << min.at(i) << "\n"; 
         }
         */
+        
+        
         
         
        
@@ -280,7 +366,10 @@ int main ()
          << " * " << fixed << setprecision(4) << setw(9) << mediaTf  // 4 decimali
          << "± " << fixed << setprecision(4) << setw(9) << Sigma_tf  // 4 decimali
          << " * " << fixed << setprecision(4) << setw(9) << wf      // 4 decimali
-         << "± " << fixed << setprecision(4) << setw(16) << Sigma_wf  // 4 decimali
+         << "± " << fixed << setprecision(4) << setw(10) << Sigma_wf  // 4 decimali
+         << " * " << fixed << setprecision(4) << setw(10) << abs(*max_element(a.begin(), a.end()) + *min_element(a.begin(), a.end()))
+         << " * " << fixed << setprecision(4) << setw(15) << accumulate(pp.begin(), pp.end(), 0.0)*2*M_PI/pp.size()
+         << "± " << fixed << setprecision(4) << setw(10) << calcolaStdev(pp)*2*M_PI
          << " *" << endl;
         
         
@@ -294,10 +383,13 @@ int main ()
     {
         out << wf_ris.at(i) << "    " << A_ris.at(i)*2*M_PI << "\n"; 
     }
+        
     
     
     
-    cout << "********************************************************************************************************************************************" << endl;    
+    
+    
+    cout << "**************************************************************************************************************************************************************************" << endl;    
     
     cout << endl << "Programma dei Meccanici di precisione, B10 ©" << endl;
 
