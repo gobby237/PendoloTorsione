@@ -17,6 +17,13 @@ int main ()
     // INSERISCI FILE IN INPUT 
 
     // vector<string> nome = {"0_96Hz.txt"}; 
+
+
+    /*
+        PARAMETRI FIT CURVA RISONANZA 
+
+
+    */
     
     
     vector<string> nome = {
@@ -57,13 +64,17 @@ int main ()
         "0_95847.txt",
         "0_95969.txt",
         "0_96123.txt",
-        "0_96293.txt",
+        // "0_96293.txt",
         "0_96759.txt",
         "0_97245.txt",
         "0_97720.txt",
         "0_99469.txt",
         // con anche i dati della prima giornata 
-        "0_96Hz.txt", "0_95688Hz.txt", "0_9502Hz.txt", "0_9577Hz.txt" , "0_9756Hz.txt" , "0_93897Hz.txt" , "0_94384Hz.txt" , "0_94503Hz.txt" , "0_94847Hz.txt" , "0_95178Hz.txt", "0_95329Hz.txt" , "0_95405Hz.txt" , "0_95496Hz.txt" , "0_95557Hz.txt" , "0_95572Hz.txt" , "0_95618Hz.txt", "0_95648Hz.txt" , "0_95688Hz.txt" , "0_95724Hz.txt" , "0_95816Hz.txt" , "0_96108Hz.txt" , "0_96277Hz.txt", "0_96448Hz.txt", "0_96603Hz.txt" , "0_96759Hz.txt" , "0_96993Hz.txt" , "0_97087Hz.txt" , "0_97403Hz.txt"
+        // "0_96Hz.txt", 
+         "0_95688Hz.txt", "0_9502Hz.txt", "0_9577Hz.txt" , "0_9756Hz.txt" , "0_93897Hz.txt" , "0_94384Hz.txt" , "0_94503Hz.txt" , "0_94847Hz.txt" , "0_95178Hz.txt", "0_95329Hz.txt" , "0_95405Hz.txt" , "0_95496Hz.txt" , "0_95557Hz.txt" , "0_95572Hz.txt" , "0_95618Hz.txt", "0_95648Hz.txt" , "0_95688Hz.txt" , "0_95724Hz.txt" , 
+         //"0_95816Hz.txt" 
+         "0_96108Hz.txt" , "0_96277Hz.txt", "0_96448Hz.txt", "0_96603Hz.txt" , "0_96759Hz.txt" , "0_96993Hz.txt" , "0_97087Hz.txt" 
+         // "0_97403Hz.txt"
     };
     
     
@@ -77,10 +88,10 @@ int main ()
     int startIdx = 0;
     
     // NEL FILE CORRETTO QUESTO COMMENTO VA TOLTO 
-    // ofstream out ("wf_plot.txt", std::ios::app); 
+    ofstream out ("wf_plot.txt", std::ios::app); 
 
     // PROVA PER VEDERE I MAX 
-    ofstream out ("massimi.txt", std::ios::app);
+    //ofstream out ("massimi.txt", std::ios::app);
 
     cout << "*******************************************" << endl; 
     cout << "*     ANALISI DATI PENDOLO A TORSIONE     *" << endl; 
@@ -348,7 +359,7 @@ int main ()
 
 
         
-        
+        /*
         for (int i = 0; i < t_max.size(); i ++)
         {
             out << t_max.at(i) << " " << max.at(i) << "\n"; 
@@ -357,6 +368,7 @@ int main ()
         {
             out << t_min.at(i) << " " << min.at(i) << "\n"; 
         }
+            */
         
         
         
@@ -388,13 +400,13 @@ int main ()
 
 
     
-    /*
+    
     // mettiamo nel file per il grafico 
     for (int i = 0; i < A_ris.size(); i ++ )
     {
         out << wf_ris.at(i) << "    " << max_a.at(i) << "\n"; 
     }
-      */  
+        
     
     
     
