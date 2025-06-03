@@ -240,7 +240,7 @@ int main ()
     t_min.pop_back(); 
     min.pop_back(); 
 
-    for (int i = 0; i < t_max.size(); i ++)
+    for (int i = 0; i < t_min.size(); i ++)
     {
         out << t_min.at(i) << " " << min.at(i) << "\n"; 
     }
