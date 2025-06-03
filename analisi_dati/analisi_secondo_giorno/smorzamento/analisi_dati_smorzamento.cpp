@@ -136,10 +136,9 @@ int main ()
 
     // stimiamo ts 
 
-    for (int i = 0; i < t_max.size() - 2; i ++ )
+    for (int i = 0; i < t_max.size() - 1; i += 2 )
     {
         Ts.push_back(t_max.at(i+1) - t_max.at(i));
-        i++; 
     }
 
     // media e stdev di Ts 
