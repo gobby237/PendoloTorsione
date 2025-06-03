@@ -1,0 +1,66 @@
+
+
+*******************************************************************************
+Tue Jun  3 07:43:28 2025
+
+
+FIT:    data read from "check_max.txt" using 1:2
+        format = x:z
+        #datapoints = 63
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+	f(x) = ln(a*2*pi) + bx
+fitted parameters initialized with current variable values
+
+
+
+*******************************************************************************
+Tue Jun  3 07:43:37 2025
+
+
+FIT:    data read from "check_max.txt" using 1:2
+        format = x:z
+        #datapoints = 63
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+	f(x) = log(a*2*pi) + bx
+fitted parameters initialized with current variable values
+
+
+
+*******************************************************************************
+Tue Jun  3 07:43:43 2025
+
+
+FIT:    data read from "check_max.txt" using 1:2
+        format = x:z
+        #datapoints = 63
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+	f(x) = log(a*2*pi) + b*x
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   a             b            
+   0 1.5639932383e+05   0.00e+00  3.41e+01    1.000000e+00   1.000000e+00
+   6 4.3646168894e-02  -4.13e-04  3.41e-05    2.057324e-01  -3.737404e-03
+
+After 6 iterations the fit converged.
+final sum of squares of residuals : 0.0436462
+rel. change during last iteration : -4.13311e-09
+
+degrees of freedom    (FIT_NDF)                        : 61
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.026749
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.000715511
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+a               = 0.205732         +/- 0.001829     (0.8889%)
+b               = -0.0037374       +/- 0.0001844    (4.934%)
+
+correlation matrix of the fit parameters:
+                a      b      
+a               1.000 
+b              -0.925  1.000 
