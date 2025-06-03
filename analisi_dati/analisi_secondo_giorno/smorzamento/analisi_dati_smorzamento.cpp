@@ -16,11 +16,11 @@ int main ()
     double val1, val2, val3, thr, max_rel, ts_medio, sigma_ts, ws, sigma_ws; 
     string nome = ""; 
 
-    ifstream fin ("smorzamento_0_95618.txt");
+    // ifstream fin ("smorzamento_0_95618.txt");
 
-    ofstream out ("check_min.txt", std::ios::app); 
+    //ofstream out ("check_min.txt", std::ios::app); 
     
-
+    /*
     while (fin>>val1>>val2>>val3)
     {
         // prendo i dati dell'ampiezza e del tempo solo quando il motore è spento 
@@ -30,6 +30,7 @@ int main ()
             t.push_back(val1); 
         }
     }
+    */
 
     /*
     
@@ -126,7 +127,7 @@ int main ()
 
     */
 
-    /*
+    
     ifstream fin1 ("check_max.txt"); 
 
     while (fin1>>val1>>val2)
@@ -144,18 +145,22 @@ int main ()
 
     // media e stdev di Ts 
     ts_medio = accumulate(Ts.begin(), Ts.end(), 0.0)/Ts.size();
-    sigma_ts = calcolaStdev(Ts); 
+    sigma_ts = calcolaStdev(Ts)/sqrt(Ts.size()); 
 
     // media e stdev di ws 
     ws = (2*M_PI)/ts_medio;
-    sigma_ws = (sigma_ts*(2*M_PI))/(pow(ws,2));
+    sigma_ws = (sigma_ts*(2*M_PI))/(pow(ts_medio,2));
 
     cout << "ANALISI DATI IN FASE DI SMORZAMENTO " << endl << endl; 
     cout << "NOME FILE: " << nome << endl; 
     cout << "stima Ts: " << ts_medio << " pm " << sigma_ts << endl; 
     cout << "stima ws: " << ws << " pm " << sigma_ws << endl; 
     
-    */
+    
+
+
+    /*
+    CALCOLA MINIMI 
 
     int j = 0; 
     int start = 0, end = 0; 
@@ -247,6 +252,8 @@ int main ()
 
     t_min.clear(); 
     min.clear();
+
+    */
 
     return 0; 
 }

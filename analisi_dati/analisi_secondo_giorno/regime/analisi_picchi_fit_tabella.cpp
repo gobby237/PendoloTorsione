@@ -340,8 +340,8 @@ int main ()
 
 
         // calcolo la sigma di tf, a_max e wf  
-        Sigma_tf = calcolaStdev(tf);
-        Sigma_wf = (Sigma_tf*(2*M_PI))/(pow(wf,2));
+        Sigma_tf = calcolaStdev(tf)/sqrt(tf.size());
+        Sigma_wf = (Sigma_tf*(2*M_PI))/(pow(mediaTf,2));
         Sigma_a_max = calcolaStdev(max); 
 
 
@@ -400,13 +400,13 @@ int main ()
 
 
     
-    
+    /*
     // mettiamo nel file per il grafico 
     for (int i = 0; i < A_ris.size(); i ++ )
     {
         out << wf_ris.at(i) << "    " << max_a.at(i) << "\n"; 
     }
-        
+      */  
     
     
     

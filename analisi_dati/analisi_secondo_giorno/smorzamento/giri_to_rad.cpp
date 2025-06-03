@@ -5,9 +5,9 @@
 using namespace std; 
 int main ()
 {
-    ifstream fin ("check_max.txt"); 
+    ifstream fin ("check_min.txt"); 
 
-    ofstream out ("check_max_rad.txt", std::ios::app); 
+    ofstream out ("check_min_rad.txt", std::ios::app); 
 
     double val1, val2; 
 
@@ -22,10 +22,10 @@ int main ()
 
     for (int i = 0; i < y.size(); i ++ )
     {
-        out << x.at(i) << " " << log(y.at(i)*2*M_PI) << "\n"; 
+        out << x.at(i) << " " << log(abs(y.at(i)*2*M_PI)) << "\n"; 
     }
 
-    
+
 
     
     return 0; 
