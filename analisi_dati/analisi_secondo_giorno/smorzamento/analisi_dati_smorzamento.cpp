@@ -12,15 +12,15 @@ using namespace std;
 double calcolaStdev(vector<double> &); 
 int main ()
 {
-    vector<double> a, t, t_max, t_min, max, min, Ts; 
-    double val1, val2, val3, thr, max_rel, ts_medio, sigma_ts, ws, sigma_ws; 
+    vector<double> a, t, t_max, t_min, max, min, Ts, Sigma_post; 
+    double val1, val2, val3, thr, max_rel, ts_medio, sigma_ts, ws, sigma_ws, sigma_post; 
     string nome = ""; 
 
-    // ifstream fin ("smorzamento_0_95618.txt");
+    ifstream fin ("smorzamento_0_95618.txt");
 
-    //ofstream out ("check_min.txt", std::ios::app); 
+    ofstream out ("check_min_err.txt", std::ios::app); 
     
-    /*
+    
     while (fin>>val1>>val2>>val3)
     {
         // prendo i dati dell'ampiezza e del tempo solo quando il motore è spento 
@@ -30,10 +30,10 @@ int main ()
             t.push_back(val1); 
         }
     }
-    */
-
-    /*
     
+
+    
+    /*
     int j = 0; 
     int start = 0, end = 0; 
     for (int i = 2; i < (int)a.size() - 2; i++) 
@@ -100,10 +100,25 @@ int main ()
                 double b = M[1][3] - M[1][2]*c;
                 double a_coef = M[0][3] - M[0][1]*b - M[0][2]*c;
                 // vertice parabola
+
+                double sum_sq_res = 0.0;
+                for (int j = start; j <= end; j++) {
+                double model = a_coef * t[j] * t[j] + b * t[j] + c;
+                double resid = a[j] - model;
+                sum_sq_res += resid * resid;  // Quadrato del residuo
+                }
+
+                if (m > 3) {
+                sigma_post = sqrt(sum_sq_res / (m - 3));  // Errore a posteriori corretto
+                } else {
+                sigma_post = 0.0;  // Non abbastanza punti per stimare l'errore
+                }
+
                 double x_peak = -b/(2*a_coef);
                 double y_peak = a_coef*x_peak*x_peak + b*x_peak + c;
                 t_max.push_back(x_peak);
                 max.push_back(y_peak);
+                Sigma_post.push_back(sigma_post);
             }
             
         }
@@ -119,7 +134,7 @@ int main ()
 
     for (int i = 0; i < t_max.size(); i ++)
     {
-        out << t_max.at(i) << " " << max.at(i) << "\n"; 
+        out << t_max.at(i) << " " << max.at(i) << " " << Sigma_post.at(i) << "\n"; 
     }
 
     t_max.clear(); 
@@ -127,6 +142,10 @@ int main ()
 
     */
 
+    
+
+    /*
+    STIMA WS 
     
     ifstream fin1 ("check_max.txt"); 
 
@@ -155,12 +174,12 @@ int main ()
     cout << "NOME FILE: " << nome << endl; 
     cout << "stima Ts: " << ts_medio << " pm " << sigma_ts << endl; 
     cout << "stima ws: " << ws << " pm " << sigma_ws << endl; 
-    
+    */
     
 
 
-    /*
-    CALCOLA MINIMI 
+    
+    //CALCOLA MINIMI 
 
     int j = 0; 
     int start = 0, end = 0; 
@@ -228,6 +247,21 @@ int main ()
                 double b = M[1][3] - M[1][2]*c;
                 double a_coef = M[0][3] - M[0][1]*b - M[0][2]*c;
                 // vertice parabola
+
+                double sum_sq_res = 0.0;
+                for (int j = start; j <= end; j++) {
+                double model = a_coef * t[j] * t[j] + b * t[j] + c;
+                double resid = a[j] - model;
+                sum_sq_res += resid * resid;  // Quadrato del residuo
+                }
+
+                if (m > 3) {
+                sigma_post = sqrt(sum_sq_res / (m - 3));  // Errore a posteriori corretto
+                } else {
+                sigma_post = 0.0;  // Non abbastanza punti per stimare l'errore
+                }
+
+                Sigma_post.push_back(sigma_post);
                 double x_peak = -b/(2*a_coef);
                 double y_peak = a_coef*x_peak*x_peak + b*x_peak + c;
                 t_min.push_back(x_peak);
@@ -247,13 +281,13 @@ int main ()
 
     for (int i = 0; i < t_min.size(); i ++)
     {
-        out << t_min.at(i) << " " << min.at(i) << "\n"; 
+        out << t_min.at(i) << " " << min.at(i) << " " << Sigma_post.at(i) << "\n"; 
     }
 
     t_min.clear(); 
     min.clear();
 
-    */
+    
 
     return 0; 
 }
