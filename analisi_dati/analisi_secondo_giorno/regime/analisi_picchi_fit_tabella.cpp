@@ -340,7 +340,7 @@ int main ()
 
 
         // calcolo la sigma di tf, a_max e wf  
-        Sigma_tf = calcolaStdev(tf)/sqrt(tf.size());
+        Sigma_tf = calcolaStdev(tf);
         Sigma_wf = (Sigma_tf*(2*M_PI))/(pow(mediaTf,2));
         Sigma_a_max = calcolaStdev(max); 
 

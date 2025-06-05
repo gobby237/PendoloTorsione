@@ -144,8 +144,8 @@ int main ()
 
     
 
-    /*
-    STIMA WS 
+    
+    // STIMA WS 
     
     ifstream fin1 ("check_max.txt"); 
 
@@ -174,13 +174,14 @@ int main ()
     cout << "NOME FILE: " << nome << endl; 
     cout << "stima Ts: " << ts_medio << " pm " << sigma_ts << endl; 
     cout << "stima ws: " << ws << " pm " << sigma_ws << endl; 
-    */
+    
     
 
 
     
     //CALCOLA MINIMI 
 
+    /*
     int j = 0; 
     int start = 0, end = 0; 
     for (int i = 2; i < (int)a.size() - 2; i++) 
@@ -286,6 +287,8 @@ int main ()
 
     t_min.clear(); 
     min.clear();
+
+    */
 
     
 
