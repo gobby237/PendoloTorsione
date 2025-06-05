@@ -1,0 +1,380 @@
+\documentclass[a4paper,12pt]{article}
+
+% Pacchetti utili
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{makecell}  
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage[parfill]{parskip}
+\usepackage{siunitx}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{subcaption}
+\usepackage{comment}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\pgfplotsset{compat=1.18}
+\usepackage{verbatim}
+
+% Impostazioni di margine e intestazioni
+\geometry{a4paper, margin=1in, tmargin=1cm}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+% Titolo e autori
+\title{\vspace{0.1cm} \textbf{Relazione pendolo a torsione} \\ \large Apparato 15}
+\author{Giacomo Caneva, Thomas Gozzi, Antonio Gobbato}
+\date{12 Giugno 2025}
+
+\begin{document}
+\maketitle
+
+\vspace{-0.7cm}
+\noindent\rule{\textwidth}{0.5pt}
+\vspace{0.5cm}
+
+\section{Obiettivo}
+Verifica sperimentale del moto di un oscillatore armonico smorzato e forzato, descritto dalla seguente legge: 
+
+\begin{equation}
+    \vartheta(t) = \vartheta_{0,s} \, e^{-\gamma t} \cos(\omega_s t + \varphi_s) + \vartheta_{0,p} \cdot \cos\left( \omega_f t + \varphi_f \right)
+\end{equation}
+
+\section{Analisi dati}
+Il moto armonico del cilindro si sviluppa in tre fasi: la prima di assestamento, il transiente, in cui le oscillazioni non sono regolari e che non è interesse di questa relazione, in quanto verrà trascurata; la seconda chiamata regime, in cui le oscillazioni si stabilizzano a una determinata ampiezza, conservando costanza per via della forzante applicata; la terza e ultima che prevede la fase di smorzamento, in cui, tolta la forzante, l'oscillazione, sotto l'azione dell'attrito diminuisce esponenzialmente nel tempo.
+Si propone sotto un grafico per riassumere le diverse fasi del moto, oltre che le grandezze che lo descrivono: 
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=17cm,
+    height=8cm,
+    xmin=-2, xmax=15,
+    ymin=-1.5, ymax=1.5,
+    enlargelimits=true,
+    clip=false,
+    axis lines=middle,
+    xlabel={$t$},
+    ylabel={$\vartheta(t)$},
+    ylabel style={at={(axis description cs:0.05,1)}}, % sposta etichetta y(t) a sinistra
+    xtick=\empty, % rimuove i numeri sull'asse x
+    ytick=\empty, % rimuove i numeri sull'asse y
+    grid=both,
+    minor tick num=1,
+    major grid style={line width=.2pt,draw=gray!50},
+    minor grid style={line width=.1pt,draw=gray!20},
+    domain=0:15,
+    samples=1000,
+]
+
+% Fase di regime: 5 picchi
+\addplot[blue, thick, domain=0:6.28] {sin(deg(2*pi/1.2566 * x))};
+
+% Fase smorzata
+\addplot[blue, thick, domain=6.28:15] {exp(-0.2*(x - 6.28)) * sin(deg(2*pi/1.2566 * x))};
+
+\addplot[teal, thick, domain=6.28:15] {-exp(-0.2*(x-6.28))}; 
+
+% Linea verticale che separa le due fasi
+\addplot[dashed, thick, red] coordinates {(6.28,-1.5) (6.28,1.5)};
+\draw [decorate, decoration={brace, amplitude=10pt}, thick,draw = red,  yshift=-5pt] (6.28,-1.415) -- (0,-1.415) node[midway, below=10pt] {\textcolor{red} {Regime}};
+\draw [decorate, decoration={brace, amplitude=10pt}, thick,draw = teal,  yshift=-5pt] (15,-1.415)  -- (6.28,-1.415)node[midway, below=10pt] {\textcolor{teal} {Smorzamento}};
+\node[black] at (axis cs:7.3,1.3) {$M_f = 0$};
+
+% Massimi della fase di regime (1º e 2º)
+\addplot[only marks, mark=*, red] coordinates {(0.3099,1) (1.5732,1)};
+\draw[<->, thick, red] (axis cs:0.3099,1.1) -- node[above] {$T_{f,i}$} (axis cs:1.5732,1.1);
+
+% Massimi successivi (4º e 5º della fase di regime)
+\draw[<->, thick, red] (axis cs:4.087,1.1) -- node[above] {$T_{f,i}$} (axis cs:5.3462,1.1);
+\node[black] at (axis cs:2.3,-1.2) {\textcolor {red} {p-p picco}};
+\addplot[only marks, mark=*, red] coordinates {(4.087,1) (5.3462,1)};
+\draw[<->, thick, red] (axis cs:2.19845,1) -- (axis cs:2.19845,-1);
+\draw[<->, thick, teal] (axis cs:11.617,0.437) -- node[above] {} (axis cs:12.859,0.437);
+\draw[<->, thick, red] (axis cs:4.087,1.1) -- node[above] {$T_{f,i}$} (axis cs:5.3462,1.1);
+
+\draw[<->, thick, black] (axis cs:-0.3,0) -- (axis cs:-0.3,1);
+
+% Massimi della fase smorzata (approssimati)
+\addplot[only marks, mark=*, teal] coordinates {(7.85,0.723) (9.1,0.56)(11.617,0.337) (12.859,0.27) };
+% Frecce tra massimi della fase smorzata
+\draw[<->, thick, teal] (axis cs:7.85,0.823) -- node[above] {$T_s$} (axis cs:9.1,0.823);
+\draw[<->, thick, teal] (axis cs:11.617,0.437) -- node[above] {$T_s$} (axis cs:12.859,0.437);
+
+% Freccia verticale a sinistra per ampiezza con etichetta a y = 0.15
+\draw[<->, thick, black] (axis cs:-0.3,0) -- (axis cs:-0.3,1);
+\draw[<->, thick, black] (axis cs:-0.3,0) -- (axis cs:-0.3,-1);
+\node[black] at (axis cs:-0.9,0.5) {$\vartheta_{0,p}$};
+
+
+\end{axis}
+\end{tikzpicture}
+\caption{Moto oscillatorio con fase di regime e smorzamento}
+\end{figure}
+
+\begin{itemize}
+    \item $T_{f,i}$ = intervalli di tempo tra i picchi nella fase di regime;
+    \item $T_{s,i}$ = intervalli di tempo tra i picchi in fase di smorzamento;
+    \item $p-p$ = ampiezza da picco massimo a picco minimo;
+    \item $\vartheta_{0,p}$ = la soluzione particolare dell'equazione della legge soprascritta;
+    \item $M_f$ = momento della forzante, nullo nella fase di smorzamento.
+\end{itemize}
+
+L'acquisizione dati è stata fatta in modo automatico, permettendo, tramite programma di acquisire file di testo con tre colonne, contenenti rispettivamente: il tempo dall'inizio dell'acquisizione, la frequenza della forzante e l'ampiezza delle oscillazioni (in millesimi di giro). 
+
+
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{l c c c c c c c c c c c c}
+\hline
+\textbf{Nome file} 
+    & \textbf{Tempo presa} 
+    & \textbf{Thr} 
+    & \textbf{N. picchi} 
+    & \(\boldsymbol{A_{\max}}\) 
+    & \(\boldsymbol{\sigma_{A_{\max}}}\) 
+    & \(\boldsymbol{t_f}\) 
+    & \(\boldsymbol\sigma_{t_f}}\) 
+    & \(\boldsymbol{\omega_f}\) 
+    & \(\boldsymbol{\sigma_{\omega_f}}}\) 
+    & \textbf{Offset} 
+    & \(\boldsymbol{p\!-\!p/2}\) 
+    & \(\boldsymbol{\sigma_{p\!-\!p/2}}}\) \\
+\hline
+0\_9574.txt    & 77.68  & 0.18 & 37 & 1.7899 & 0.0302 & 1.0450 & 0.0014 & 6.0128 & 0.0081 & 0.0080 & 1.8099 & 0.0122 \\
+0\_93269.txt   & 69.94  & 0.05 & 32 & 0.5418 & 0.0350 & 1.0714 & 0.0060 & 5.8646 & 0.0327 & 0.0060 & 0.5212 & 0.0137 \\
+0\_94059.txt   & 75.28  & 0.08 & 35 & 0.7060 & 0.0340 & 1.0645 & 0.0034 & 5.9025 & 0.0187 & 0.0060 & 0.7230 & 0.0137 \\
+0\_94384.txt   & 74.10  & 0.09 & 34 & 0.8712 & 0.0343 & 1.0602 & 0.0028 & 5.9265 & 0.0155 & 0.0040 & 0.8796 & 0.0133 \\
+0\_94697.txt   & 72.26  & 0.11 & 34 & 1.0658 & 0.0310 & 1.0563 & 0.0021 & 5.9485 & 0.0119 & 0.0100 & 1.1016 & 0.0100 \\
+0\_95012.txt   & 71.68  & 0.14 & 34 & 1.3663 & 0.0328 & 1.0529 & 0.0017 & 5.9674 & 0.0098 & 0.0040 & 1.3562 & 0.0122 \\
+0\_95223.txt   & 76.40  & 0.16 & 36 & 1.6064 & 0.0313 & 1.0508 & 0.0016 & 5.9794 & 0.0089 & 0.0100 & 1.5743 & 0.0096 \\
+0\_95299.txt   & 74.36  & 0.16 & 35 & 1.6230 & 0.0398 & 1.0492 & 0.0057 & 5.9885 & 0.0325 & 0.0110 & 1.6425 & 0.0169 \\
+0\_95374.txt   & 72.30  & 0.18 & 34 & 1.7392 & 0.0340 & 1.0493 & 0.0015 & 5.9879 & 0.0083 & 0.0150 & 1.7200 & 0.0243 \\
+0\_95450.txt   & 72.80  & 0.18 & 35 & 1.7604 & 0.0313 & 1.0483 & 0.0015 & 5.9938 & 0.0088 & 0.0140 & 1.7633 & 0.0140 \\
+0\_95526.txt   & 98.40  & 0.18 & 47 & 1.8355 & 0.0318 & 1.0481 & 0.0057 & 5.9948 & 0.0326 & 0.0110 & 1.8052 & 0.0111 \\
+0\_95618.txt   & 71.16  & 0.19 & 34 & 1.8484 & 0.0346 & 1.0456 & 0.0042 & 6.0092 & 0.0243 & 0.0050 & 1.8185 & 0.0157 \\
+0\_95694.txt   & 75.68  & 0.18 & 36 & 1.8276 & 0.0302 & 1.0461 & 0.0020 & 6.0062 & 0.0113 & 0.0000 & 1.8178 & 0.0104 \\
+0\_95893.txt   & 75.24  & 0.17 & 36 & 1.7076 & 0.0327 & 1.0434 & 0.0012 & 6.0219 & 0.0072 & 0.0160 & 1.7312 & 0.0173 \\
+0\_96046.txt   & 73.18  & 0.16 & 35 & 1.6237 & 0.0283 & 1.0418 & 0.0010 & 6.0313 & 0.0060 & 0.0130 & 1.6218 & 0.0135 \\
+0\_96216.txt   & 70.78  & 0.15 & 34 & 1.4994 & 0.0325 & 1.0397 & 0.0015 & 6.0432 & 0.0089 & 0.0020 & 1.4762 & 0.0129 \\
+0\_96525.txt   & 70.42  & 0.13 & 34 & 1.2361 & 0.0347 & 1.0367 & 0.0019 & 6.0605 & 0.0110 & 0.0040 & 1.2218 & 0.0127 \\
+0\_97009.txt   & 70.54  & 0.10 & 34 & 0.9193 & 0.0312 & 1.0314 & 0.0029 & 6.0918 & 0.0170 & 0.0030 & 0.9270 & 0.0146 \\
+0\_97482.txt   & 70.56  & 0.08 & 34 & 0.7716 & 0.0349 & 1.0264 & 0.0033 & 6.1216 & 0.0199 & 0.0040 & 0.7577 & 0.0090 \\
+0\_98280.txt   & 78.84  & 0.06 & 38 & 0.5298 & 0.0330 & 1.0184 & 0.0041 & 6.1699 & 0.0249 & 0.0030 & 0.5523 & 0.0172 \\
+0\_93897.txt   & 101.62 & 0.08 & 47 & 0.7046 & 0.0344 & 1.0657 & 0.0032 & 5.8957 & 0.0177 & 0.0140 & 0.6524 & 0.1660 \\
+0\_94221.txt   & 75.70  & 0.09 & 36 & 0.8035 & 0.0344 & 1.0621 & 0.0033 & 5.9156 & 0.0182 & 0.0020 & 0.7990 & 0.0118 \\
+0\_94533.txt   & 71.60  & 0.10 & 33 & 0.9731 & 0.0309 & 1.0583 & 0.0023 & 5.9368 & 0.0129 & 0.0020 & 0.9719 & 0.0119 \\
+0\_94862.txt   & 72.48  & 0.12 & 34 & 1.2116 & 0.0303 & 1.0546 & 0.0021 & 5.9581 & 0.0117 & 0.0070 & 1.2322 & 0.0109 \\
+0\_95178.txt   & 77.80  & 0.16 & 37 & 1.4982 & 0.0386 & 1.0513 & 0.0017 & 5.9768 & 0.0098 & 0.0000 & 1.5153 & 0.0168 \\
+0\_95253.txt   & 71.84  & 0.16 & 34 & 1.6003 & 0.0338 & 1.0501 & 0.0018 & 5.9832 & 0.0102 & 0.0120 & 1.6088 & 0.0103 \\
+0\_95329.txt   & 76.92  & 0.17 & 36 & 1.6652 & 0.0319 & 1.0498 & 0.0013 & 5.9850 & 0.0077 & 0.0060 & 1.6779 & 0.0139 \\
+0\_95420.txt   & 76.84  & 0.17 & 36 & 1.7101 & 0.0304 & 1.0487 & 0.0018 & 5.9915 & 0.0100 & 0.0280 & 1.7442 & 0.0210 \\
+0\_95572.txt   & 71.24  & 0.18 & 34 & 1.8406 & 0.0316 & 1.0469 & 0.0011 & 6.0016 & 0.0061 & 0.0050 & 1.8153 & 0.0147 \\
+0\_95648.txt   & 72.84  & 0.19 & 34 & 1.8456 & 0.0335 & 1.0460 & 0.0017 & 6.0068 & 0.0098 & 0.0010 & 1.8197 & 0.0207 \\
+0\_95770.txt   & 70.26  & 0.19 & 33 & 1.8477 & 0.0350 & 1.0448 & 0.0015 & 6.0140 & 0.0089 & 0.0080 & 1.8086 & 0.0197 \\
+0\_95847.txt   & 117.02 & 0.18 & 56 & 1.7694 & 0.0363 & 1.0436 & 0.0017 & 6.0207 & 0.0099 & 0.0020 & 1.7493 & 0.0185 \\
+0\_95969.txt   & 76.60  & 0.18 & 37 & 1.7228 & 0.0360 & 1.0434 & 0.0026 & 6.0221 & 0.0150 & 0.0010 & 1.6788 & 0.0201 \\
+0\_96123.txt   & 72.86  & 0.16 & 35 & 1.5632 & 0.0346 & 1.0410 & 0.0014 & 6.0358 & 0.0082 & 0.0040 & 1.5598 & 0.0199 \\
+0\_96759.txt   & 72.06  & 0.11 & 34 & 1.0410 & 0.0324 & 1.0337 & 0.0024 & 6.0786 & 0.0139 & 0.0090 & 1.0605 & 0.0147 \\
+0\_97245.txt   & 70.48  & 0.09 & 34 & 0.8209 & 0.0362 & 1.0292 & 0.0026 & 6.1047 & 0.0156 & 0.0060 & 0.8347 & 0.0131 \\
+0\_97720.txt   & 70.34  & 0.07 & 34 & 0.6779 & 0.0366 & 1.0250 & 0.0040 & 6.1300 & 0.0240 & 0.0060 & 0.6868 & 0.0103 \\
+0\_99469.txt   & 70.96  & 0.04 & 35 & 0.3820 & 0.0360 & 1.0114 & 0.0352 & 6.2122 & 0.2162 & 0.0070 & 0.4012 & 0.0141 \\
+0\_95688Hz.txt & 60.34  & 0.18 & 29 & 1.7744 & 0.0404 & 1.0453 & 0.0023 & 6.0109 & 0.0133 & 0.2780 & 1.7882 & 0.0179 \\
+0\_9502Hz.txt  & 71.92  & 0.14 & 34 & 1.4092 & 0.0349 & 1.0529 & 0.0017 & 5.9673 & 0.0098 & 0.4230 & 1.4099 & 0.0302 \\
+0\_9577Hz.txt  & 90.98  & 0.18 & 43 & 1.8353 & 0.0331 & 1.0442 & 0.0014 & 6.0172 & 0.0082 & 0.0030 & 1.8161 & 0.0160 \\
+0\_9756Hz.txt  & 70.26  & 0.07 & 34 & 0.6925 & 0.0314 & 1.0261 & 0.0037 & 6.1236 & 0.0220 & 0.2230 & 0.7097 & 0.0169 \\
+0\_93897Hz.txt & 75.82  & 0.08 & 35 & 0.6918 & 0.0375 & 1.0656 & 0.0046 & 5.8965 & 0.0252 & 0.4590 & 0.6935 & 0.0384 \\
+0\_94384Hz.txt & 80.00  & 0.09 & 38 & 0.8913 & 0.0357 & 1.0601 & 0.0032 & 5.9270 & 0.0177 & 0.0030 & 0.9045 & 0.0153 \\
+0\_94503Hz.txt & 81.80  & 0.10 & 38 & 0.9804 & 0.0375 & 1.0589 & 0.0031 & 5.9337 & 0.0173 & 0.4650 & 0.9840 & 0.0464 \\
+0\_94847Hz.txt & 75.20  & 0.13 & 35 & 1.2411 & 0.0319 & 1.0552 & 0.0023 & 5.9547 & 0.0130 & 0.4510 & 1.2406 & 0.0242 \\
+0\_95178Hz.txt & 75.64  & 0.16 & 36 & 1.5540 & 0.0366 & 1.0518 & 0.0022 & 5.9738 & 0.0124 & 0.4070 & 1.5692 & 0.0410 \\
+0\_95329Hz.txt & 71.60  & 0.17 & 34 & 1.6624 & 0.0316 & 1.0494 & 0.0023 & 5.9874 & 0.0132 & 0.3790 & 1.6568 & 0.1918 \\
+0\_95405Hz.txt & 75.56  & 0.18 & 36 & 1.7666 & 0.0326 & 1.0487 & 0.0020 & 5.9915 & 0.0112 & 0.3510 & 1.7900 & 0.0533 \\
+0\_95496Hz.txt & 74.44  & 0.18 & 35 & 1.7886 & 0.0304 & 1.0480 & 0.0017 & 5.9957 & 0.0096 & 0.1820 & 1.7980 & 0.0182 \\
+0\_95557Hz.txt & 67.66  & 0.18 & 32 & 1.8147 & 0.0321 & 1.0439 & 0.0130 & 6.0188 & 0.0749 & 0.2810 & 1.8220 & 0.0277 \\
+0\_95572Hz.txt & 77.02  & 0.18 & 36 & 1.8006 & 0.0304 & 1.0469 & 0.0017 & 6.0015 & 0.0099 & 0.3100 & 1.8153 & 0.0253 \\
+0\_95618Hz.txt & 77.02  & 0.18 & 36 & 1.8334 & 0.0314 & 1.0466 & 0.0018 & 6.0036 & 0.0106 & 0.2920 & 1.8370 & 0.0421 \\
+0\_95648Hz.txt & 84.26  & 0.18 & 40 & 1.8168 & 0.0317 & 1.0465 & 0.0021 & 6.0042 & 0.0119 & 0.2850 & 1.8217 & 0.0351 \\
+0\_95688Hz.txt & 60.34  & 0.18 & 29 & 1.7744 & 0.0404 & 1.0453 & 0.0023 & 6.0109 & 0.0133 & 0.2780 & 1.7882 & 0.0179 \\
+0\_95724Hz.txt & 80.82  & 0.18 & 39 & 1.8280 & 0.0317 & 1.0448 & 0.0020 & 6.0138 & 0.0114 & 0.2490 & 1.8252 & 0.0166 \\
+0\_96108Hz.txt & 61.52  & 0.16 & 29 & 1.6002 & 0.0301 & 1.0408 & 0.0014 & 6.0371 & 0.0082 & 0.1820 & 1.5801 & 0.0161 \\
+0\_96277Hz.txt & 64.44  & 0.14 & 31 & 1.4488 & 0.0297 & 1.0395 & 0.0017 & 6.0442 & 0.0099 & 0.1720 & 1.4481 & 0.0838 \\
+0\_96448Hz.txt & 77.82  & 0.13 & 37 & 1.3118 & 0.0331 & 1.0377 & 0.0020 & 6.0551 & 0.0118 & 0.1790 & 1.2887 & 0.0141 \\
+0\_96603Hz.txt & 76.42  & 0.12 & 37 & 1.1726 & 0.0371 & 1.0379 & 0.0122 & 6.0536 & 0.0709 & 0.1850 & 1.1732 & 0.0299 \\
+0\_96759Hz.txt & 74.60  & 0.11 & 36 & 1.0592 & 0.0313 & 1.0338 & 0.0020 & 6.0776 & 0.0117 & 0.2020 & 1.0647 & 0.0313 \\
+0\_96993Hz.txt & 120.76 & 0.10 & 58 & 0.9350 & 0.0290 & 1.0318 & 0.0022 & 6.0895 & 0.0129 & 0.0050 & 0.9383 & 0.0138 \\
+0\_97087Hz.txt & 75.14  & 0.09 & 36 & 0.8728 & 0.0325 & 1.0305 & 0.0044 & 6.0974 & 0.0258 & 0.2190 & 0.8852 & 0.0177 \\
+\hline
+\end{tabular}
+\caption{Sommario dei dati: Tempo presa, soglia (Thr), numero di picchi, ampiezza massima media e incertezza, \(t_f\) medio e incertezza, \(\omega_f\) medio e incertezza, offset e \(p\!-\!p/2\) medio e incertezza.}
+\label{tab:dati_aggiornati}
+\end{table}
+
+
+
+\subsection{regime}
+Durante la fase di regime, era nostro obiettivo calcolare i seguenti valori.
+\[
+*tabella\ pazza\ con\ i\ valori*
+\]
+
+\begin{itemize}
+    \item \textbf{\large $T_f$}\\
+    Si tratta di una media dei vari $T_{f,i}$, intervalli di tempo da un picco e l'altro; è stato preso un $\bar{T}_f$ come valore di riferimento per ogni misurazione fatta ad una determinata forzante. I $T_{f,i}$ sono stati presi tra coppie di punti linearmente scorrelate, in modo che si potesse semplificare di molto la stima dell'incertezza. Per avere un campione sufficientemente abbondante, inoltre, si sono considerate un numero minimo di 20 coppie di picchi (quindi 20 o più $T_{f,i}$), per ogni set di dati.
+    \item \textbf{\large $\omega_{f,sperimentale}$}\\
+    
+    \item \textbf{\large $\theta_{part,0}$}\\
+    asdf
+\end{itemize}
+
+\subsection{smorzamento}
+
+\begin{itemize}
+    \item \textbf{$T_{s}$} \\
+        Per la stima del periodo in fase di smorzamento è stato costruito un campione dei massimi 
+    \item \textbf{$w_{s}$}
+    \item \textbf{$\gamma$}
+    \item \textbf{$\omega_{0}=\sqrt{w_{s}^{2}+\gamma^{2}}$}
+    \item \textbf{$\omega_{R,attesa}=\sqrt{\omega_{s}^{2}-\gamma^{2}}$}
+    
+
+
+\end{itemize}
+
+
+
+
+
+\begin{comment}
+
+L'analisi dati è sviluppata nel seguente modo. Innanzitutto, si sono trovati i picchi delle oscillazioni, nel grafico dei dati raccolti. Per farlo è stato necessario considerare solamente la zona dei punti vicini ad ogni massimo, eseguire il fit di una parabola su quella porzione di dati e considerare il vertice di tale curva come un picco. Stessa procedura è stata attuata per i minimi. Questi ultimi sono stati usati, insieme ai massimi, per verificare il fenomeno di offset dei dati, utilizzando la seguente formula:
+\[
+\frac{|\theta_{\text{max}}| + |\theta_{\text{min}}|}{2}
+\]
+
+nella quale $\vartheta_{\text{max}}$ e ${\theta_{\text{min}}}$ sono rispettivamente il massimo e minimo assoluti. 
+I set di picchi ottenuti sulle misurazioni ai vari valori di forzante, sono serviti poi per determinare la pulsazione di risonanza, $\omega_f.$
+
+\[
+\omega_{f,i} = \frac{2\pi}{{T}_{f,i}}
+\]
+
+Si è utilizzata questa formula considerando coppie di punti linearmente scorrelate, in modo che si potesse semplificare di molto la stima dell'incertezza. Per avere un campione sufficientemente abbondante, si è fatto ciò con un numero minimo di 20 coppie di picchi (quindi 20 o più $T_f$), per ogni set di dati; per ogni coppia si è quindi ottenuto un $\omega_{f,i}$.
+\[
+\begin{aligned}
+\theta &= \frac{\sum_{i=0}^{N} \theta_i}{N}
+\quad\quad
+&
+\omega_f &= \frac{\sum_{i=0}^{M} \omega_{f,i}}{M}
+\end{aligned}
+\]
+
+Di seguito si riporta il grafico ottenuto ponendo le medie dei campioni dei massimi alle varie forzanti come valori delle ordinate e le rispettive medie dei $\omega_{f,i}$ nelle ascisse:
+\[
+*grafico*
+\]
+ In questo modo si è potuto calcolare, riciclando il metodo del fit della parabola, il massimo, che chiameremo $\omega_r$ e che corrisponde al regime di ampiezza maggiore. Il vertice di questa curva rappresenta infatti al set di dati con la media dei picchi maggiore.
+ \[\]
+ Per quanto riguarda il calcolo degli errori, sono stati ricavati con la deviazione standard.
+ Difatti, per calcolare l'errore sui valori delle ampiezze e gli $\omega_f$ del grafico appena sopra, siccome si tratta di medie, è bastato calcolare la deviazione campionaria. Per trovare, l'incertezza di $\omega_r$, non essendo risultato diretto di misure sperimentali, è invece stato necessario usare una propagazione dell'errore, che riportiamo sotto:
+ \[
+ *formula\ propagazione*
+ \]
+ 
+
+\end{comment}
+
+
+
+
+
+
+\section{Discussione}
+
+\section{Conclusione}
+
+\section{Appendice}
+
+\subsection{Formule}
+\vspace{0.2cm}
+
+\begin{itemize}
+
+\item \textbf{Media aritmetica}
+\begin{equation}
+    \bar{x} = \frac{1}{N} \sum_{i=1}^{N} x_i
+\end{equation}
+
+\item \textbf{Deviazione standard della singola misura} 
+    \begin{equation}
+        \sigma = \sqrt{\frac{1}{N-1} \sum_{i=1}^{N} (x_i - \bar{x})^2}
+    \end{equation} 
+    
+\item \textbf{Deviazione standard della media per misure statisticamente indipendenti}
+\begin{equation}
+    \sigma_{\bar{x}} = \frac{\sigma}{\sqrt{N}}
+\end{equation}
+
+\item \textbf{Media pesata \(\bar{x}_p\)}  
+\begin{itemize}
+    \item Le misure \( x_i \) sono statisticamente indipendenti tra loro;
+    \item Gli errori associati \( \sigma_i \) sono noti e diversi per ciascuna misura;
+\end{itemize}
+
+\begin{equation}
+    \bar{x}_p = \frac{\sum_{i=1}^{N} \left( \frac{x_i}{\sigma_i^2} \right)}{\sum_{i=1}^{N} \left( \frac{1}{\sigma_i^2} \right)}
+\end{equation}
+
+\item \textbf{Incertezza della media pesata}
+\begin{equation}
+    \sigma_{\bar{x}_p} = \sqrt{ \frac{1}{\sum_{i=1}^{N} \left( \frac{1}{\sigma_i^2} \right)} }
+\end{equation}
+
+\item \textbf{Errore relativo}
+\begin{equation}
+    \varepsilon_r = \frac{\sigma}{x}
+\end{equation}
+
+\item \textbf{Interpolazione lineare \( y = a + bx \) con} 
+    \begin{itemize}
+        \item \( \forall i \) \( x_i \) statisticamente indipendenti tra loro, \( y_i \) statisticamente indipendenti tra loro;
+        \item \( \forall i \) \( \sigma_{x}/x \ll \sigma_{y}/y \), e \( \sigma_i = \sigma_y \)
+    \end{itemize}
+    
+    \begin{equation}
+        a_i = \frac{1}{\Delta} \left( \sum_i x_i^2 - x_i \sum_i x_j \right)
+    \end{equation}
+
+    \begin{equation}
+        b_i = \frac{1}{\Delta} \left( N \sum_i x_i - \sum_i x_j \right)
+    \end{equation}
+
+    \begin{equation}
+        \sigma_a = \sigma_y \sqrt{ \frac{\sum_i x_i^2}{\Delta} }
+    \end{equation}
+
+    \begin{equation}
+        \sigma_b = \sigma_y \sqrt{ \frac{N}{\Delta} }
+    \end{equation}
+ 
+    \begin{equation}
+        \Delta = N \sum_i x_i^2 - \left( \sum_i x_i \right)^2
+    \end{equation}
+
+    \begin{equation}
+        \sigma_{y,\text{post}} = \sqrt{ \frac{\sum_{i=1}^{N} (y_i - a - bx_i)^2}{N-2} }
+    \end{equation}
+
+\end{itemize}
+
+\end{document}

@@ -175,10 +175,6 @@ int main ()
     cout << "stima Ts: " << ts_medio << " pm " << sigma_ts << endl; 
     cout << "stima ws: " << ws << " pm " << sigma_ws << endl; 
     
-    
-
-
-    
     //CALCOLA MINIMI 
 
     /*
