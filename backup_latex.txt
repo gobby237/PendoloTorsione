@@ -48,11 +48,19 @@ Verifica sperimentale del moto di un oscillatore armonico smorzato e forzato, de
     \vartheta(t) = \vartheta_{0,s} \, e^{-\gamma t} \cos(\omega_s t + \varphi_s) + \vartheta_{0,p} \cdot \cos\left( \omega_f t + \varphi_f \right)
 \end{equation}
 
+Ai fini di ciò, si fornirà la stima delle seguenti grandezze: 
+\begin{itemize}
+    \item $T_{f,i}$: periodo del moto nella fase forzata;
+    \item $w_{f, sperimentale} = \frac{2\pi}{T_f}$;
+    \item $\vartheta_{0,p}(w_{f, sperimentale})$ = semiampiezza da picco a picco;
+    
+\end{itemize}
+
 \section{Analisi dati}
-Il moto armonico del cilindro si sviluppa in tre fasi: la prima di assestamento, il transiente, in cui le oscillazioni non sono regolari e che non è interesse di questa relazione, in quanto verrà trascurata; la seconda chiamata regime, in cui le oscillazioni si stabilizzano a una determinata ampiezza, conservando costanza per via della forzante applicata; la terza e ultima che prevede la fase di smorzamento, in cui, tolta la forzante, l'oscillazione, sotto l'azione dell'attrito diminuisce esponenzialmente nel tempo.
+Il moto armonico del cilindro si sviluppa in tre fasi: la prima di assestamento, il transiente, in cui le oscillazioni non sono regolari e che non è interesse di questa relazione, in quanto verrà trascurata; la seconda chiamata regime, in cui le oscillazioni si stabilizzano a una determinata ampiezza, conservando costanza per via della forzante applicata; la terza e ultima che prevede la fase di smorzamento, in cui, tolta la forzante, l'oscillazione, sotto l'azione dell'attrito diminuisce esponenzialmente nel tempo. \\
 Si propone sotto un grafico per riassumere le diverse fasi del moto, oltre che le grandezze che lo descrivono: 
 
-\begin{figure}[h!]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
 \begin{axis}[
@@ -121,127 +129,179 @@ Si propone sotto un grafico per riassumere le diverse fasi del moto, oltre che l
 \caption{Moto oscillatorio con fase di regime e smorzamento}
 \end{figure}
 
-\begin{itemize}
-    \item $T_{f,i}$ = intervalli di tempo tra i picchi nella fase di regime;
-    \item $T_{s,i}$ = intervalli di tempo tra i picchi in fase di smorzamento;
-    \item $p-p$ = ampiezza da picco massimo a picco minimo;
-    \item $\vartheta_{0,p}$ = la soluzione particolare dell'equazione della legge soprascritta;
-    \item $M_f$ = momento della forzante, nullo nella fase di smorzamento.
-\end{itemize}
-
-L'acquisizione dati è stata fatta in modo automatico, permettendo, tramite programma di acquisire file di testo con tre colonne, contenenti rispettivamente: il tempo dall'inizio dell'acquisizione, la frequenza della forzante e l'ampiezza delle oscillazioni (in millesimi di giro). 
 
 
-\begin{table}[h!]
+
+\subsection{Fase a regime}
+A regime il moto è approssimabile dalla soluzione particolare $\vartheta(t) \approx \vartheta_{0,p} \cdot \cos\left( \omega_f t + \varphi_f \right)$
+\begin{table}[H]
 \centering
 \small
-\begin{tabular}{l c c c c c c c c c c c c}
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|}
 \hline
-\textbf{Nome file} 
-    & \textbf{Tempo presa} 
-    & \textbf{Thr} 
-    & \textbf{N. picchi} 
-    & \(\boldsymbol{A_{\max}}\) 
-    & \(\boldsymbol{\sigma_{A_{\max}}}\) 
-    & \(\boldsymbol{t_f}\) 
-    & \(\boldsymbol\sigma_{t_f}}\) 
-    & \(\boldsymbol{\omega_f}\) 
-    & \(\boldsymbol{\sigma_{\omega_f}}}\) 
-    & \textbf{Offset} 
-    & \(\boldsymbol{p\!-\!p/2}\) 
-    & \(\boldsymbol{\sigma_{p\!-\!p/2}}}\) \\
+\textbf{Nome file} & \textbf{Tempo presa} & \textbf{N. picchi} & \(\boldsymbol{t_f}\) & \(\boldsymbol{\sigma_{t_f}}\) & \(\boldsymbol{\omega_f}\) & \(\boldsymbol{\sigma_{\omega_f}}\) & \(\boldsymbol{p\!-\!p/2}\) & \(\boldsymbol{\sigma_{p\!-\!p/2}}\) \\
 \hline
-0\_9574.txt    & 77.68  & 0.18 & 37 & 1.7899 & 0.0302 & 1.0450 & 0.0014 & 6.0128 & 0.0081 & 0.0080 & 1.8099 & 0.0122 \\
-0\_93269.txt   & 69.94  & 0.05 & 32 & 0.5418 & 0.0350 & 1.0714 & 0.0060 & 5.8646 & 0.0327 & 0.0060 & 0.5212 & 0.0137 \\
-0\_94059.txt   & 75.28  & 0.08 & 35 & 0.7060 & 0.0340 & 1.0645 & 0.0034 & 5.9025 & 0.0187 & 0.0060 & 0.7230 & 0.0137 \\
-0\_94384.txt   & 74.10  & 0.09 & 34 & 0.8712 & 0.0343 & 1.0602 & 0.0028 & 5.9265 & 0.0155 & 0.0040 & 0.8796 & 0.0133 \\
-0\_94697.txt   & 72.26  & 0.11 & 34 & 1.0658 & 0.0310 & 1.0563 & 0.0021 & 5.9485 & 0.0119 & 0.0100 & 1.1016 & 0.0100 \\
-0\_95012.txt   & 71.68  & 0.14 & 34 & 1.3663 & 0.0328 & 1.0529 & 0.0017 & 5.9674 & 0.0098 & 0.0040 & 1.3562 & 0.0122 \\
-0\_95223.txt   & 76.40  & 0.16 & 36 & 1.6064 & 0.0313 & 1.0508 & 0.0016 & 5.9794 & 0.0089 & 0.0100 & 1.5743 & 0.0096 \\
-0\_95299.txt   & 74.36  & 0.16 & 35 & 1.6230 & 0.0398 & 1.0492 & 0.0057 & 5.9885 & 0.0325 & 0.0110 & 1.6425 & 0.0169 \\
-0\_95374.txt   & 72.30  & 0.18 & 34 & 1.7392 & 0.0340 & 1.0493 & 0.0015 & 5.9879 & 0.0083 & 0.0150 & 1.7200 & 0.0243 \\
-0\_95450.txt   & 72.80  & 0.18 & 35 & 1.7604 & 0.0313 & 1.0483 & 0.0015 & 5.9938 & 0.0088 & 0.0140 & 1.7633 & 0.0140 \\
-0\_95526.txt   & 98.40  & 0.18 & 47 & 1.8355 & 0.0318 & 1.0481 & 0.0057 & 5.9948 & 0.0326 & 0.0110 & 1.8052 & 0.0111 \\
-0\_95618.txt   & 71.16  & 0.19 & 34 & 1.8484 & 0.0346 & 1.0456 & 0.0042 & 6.0092 & 0.0243 & 0.0050 & 1.8185 & 0.0157 \\
-0\_95694.txt   & 75.68  & 0.18 & 36 & 1.8276 & 0.0302 & 1.0461 & 0.0020 & 6.0062 & 0.0113 & 0.0000 & 1.8178 & 0.0104 \\
-0\_95893.txt   & 75.24  & 0.17 & 36 & 1.7076 & 0.0327 & 1.0434 & 0.0012 & 6.0219 & 0.0072 & 0.0160 & 1.7312 & 0.0173 \\
-0\_96046.txt   & 73.18  & 0.16 & 35 & 1.6237 & 0.0283 & 1.0418 & 0.0010 & 6.0313 & 0.0060 & 0.0130 & 1.6218 & 0.0135 \\
-0\_96216.txt   & 70.78  & 0.15 & 34 & 1.4994 & 0.0325 & 1.0397 & 0.0015 & 6.0432 & 0.0089 & 0.0020 & 1.4762 & 0.0129 \\
-0\_96525.txt   & 70.42  & 0.13 & 34 & 1.2361 & 0.0347 & 1.0367 & 0.0019 & 6.0605 & 0.0110 & 0.0040 & 1.2218 & 0.0127 \\
-0\_97009.txt   & 70.54  & 0.10 & 34 & 0.9193 & 0.0312 & 1.0314 & 0.0029 & 6.0918 & 0.0170 & 0.0030 & 0.9270 & 0.0146 \\
-0\_97482.txt   & 70.56  & 0.08 & 34 & 0.7716 & 0.0349 & 1.0264 & 0.0033 & 6.1216 & 0.0199 & 0.0040 & 0.7577 & 0.0090 \\
-0\_98280.txt   & 78.84  & 0.06 & 38 & 0.5298 & 0.0330 & 1.0184 & 0.0041 & 6.1699 & 0.0249 & 0.0030 & 0.5523 & 0.0172 \\
-0\_93897.txt   & 101.62 & 0.08 & 47 & 0.7046 & 0.0344 & 1.0657 & 0.0032 & 5.8957 & 0.0177 & 0.0140 & 0.6524 & 0.1660 \\
-0\_94221.txt   & 75.70  & 0.09 & 36 & 0.8035 & 0.0344 & 1.0621 & 0.0033 & 5.9156 & 0.0182 & 0.0020 & 0.7990 & 0.0118 \\
-0\_94533.txt   & 71.60  & 0.10 & 33 & 0.9731 & 0.0309 & 1.0583 & 0.0023 & 5.9368 & 0.0129 & 0.0020 & 0.9719 & 0.0119 \\
-0\_94862.txt   & 72.48  & 0.12 & 34 & 1.2116 & 0.0303 & 1.0546 & 0.0021 & 5.9581 & 0.0117 & 0.0070 & 1.2322 & 0.0109 \\
-0\_95178.txt   & 77.80  & 0.16 & 37 & 1.4982 & 0.0386 & 1.0513 & 0.0017 & 5.9768 & 0.0098 & 0.0000 & 1.5153 & 0.0168 \\
-0\_95253.txt   & 71.84  & 0.16 & 34 & 1.6003 & 0.0338 & 1.0501 & 0.0018 & 5.9832 & 0.0102 & 0.0120 & 1.6088 & 0.0103 \\
-0\_95329.txt   & 76.92  & 0.17 & 36 & 1.6652 & 0.0319 & 1.0498 & 0.0013 & 5.9850 & 0.0077 & 0.0060 & 1.6779 & 0.0139 \\
-0\_95420.txt   & 76.84  & 0.17 & 36 & 1.7101 & 0.0304 & 1.0487 & 0.0018 & 5.9915 & 0.0100 & 0.0280 & 1.7442 & 0.0210 \\
-0\_95572.txt   & 71.24  & 0.18 & 34 & 1.8406 & 0.0316 & 1.0469 & 0.0011 & 6.0016 & 0.0061 & 0.0050 & 1.8153 & 0.0147 \\
-0\_95648.txt   & 72.84  & 0.19 & 34 & 1.8456 & 0.0335 & 1.0460 & 0.0017 & 6.0068 & 0.0098 & 0.0010 & 1.8197 & 0.0207 \\
-0\_95770.txt   & 70.26  & 0.19 & 33 & 1.8477 & 0.0350 & 1.0448 & 0.0015 & 6.0140 & 0.0089 & 0.0080 & 1.8086 & 0.0197 \\
-0\_95847.txt   & 117.02 & 0.18 & 56 & 1.7694 & 0.0363 & 1.0436 & 0.0017 & 6.0207 & 0.0099 & 0.0020 & 1.7493 & 0.0185 \\
-0\_95969.txt   & 76.60  & 0.18 & 37 & 1.7228 & 0.0360 & 1.0434 & 0.0026 & 6.0221 & 0.0150 & 0.0010 & 1.6788 & 0.0201 \\
-0\_96123.txt   & 72.86  & 0.16 & 35 & 1.5632 & 0.0346 & 1.0410 & 0.0014 & 6.0358 & 0.0082 & 0.0040 & 1.5598 & 0.0199 \\
-0\_96759.txt   & 72.06  & 0.11 & 34 & 1.0410 & 0.0324 & 1.0337 & 0.0024 & 6.0786 & 0.0139 & 0.0090 & 1.0605 & 0.0147 \\
-0\_97245.txt   & 70.48  & 0.09 & 34 & 0.8209 & 0.0362 & 1.0292 & 0.0026 & 6.1047 & 0.0156 & 0.0060 & 0.8347 & 0.0131 \\
-0\_97720.txt   & 70.34  & 0.07 & 34 & 0.6779 & 0.0366 & 1.0250 & 0.0040 & 6.1300 & 0.0240 & 0.0060 & 0.6868 & 0.0103 \\
-0\_99469.txt   & 70.96  & 0.04 & 35 & 0.3820 & 0.0360 & 1.0114 & 0.0352 & 6.2122 & 0.2162 & 0.0070 & 0.4012 & 0.0141 \\
-0\_95688Hz.txt & 60.34  & 0.18 & 29 & 1.7744 & 0.0404 & 1.0453 & 0.0023 & 6.0109 & 0.0133 & 0.2780 & 1.7882 & 0.0179 \\
-0\_9502Hz.txt  & 71.92  & 0.14 & 34 & 1.4092 & 0.0349 & 1.0529 & 0.0017 & 5.9673 & 0.0098 & 0.4230 & 1.4099 & 0.0302 \\
-0\_9577Hz.txt  & 90.98  & 0.18 & 43 & 1.8353 & 0.0331 & 1.0442 & 0.0014 & 6.0172 & 0.0082 & 0.0030 & 1.8161 & 0.0160 \\
-0\_9756Hz.txt  & 70.26  & 0.07 & 34 & 0.6925 & 0.0314 & 1.0261 & 0.0037 & 6.1236 & 0.0220 & 0.2230 & 0.7097 & 0.0169 \\
-0\_93897Hz.txt & 75.82  & 0.08 & 35 & 0.6918 & 0.0375 & 1.0656 & 0.0046 & 5.8965 & 0.0252 & 0.4590 & 0.6935 & 0.0384 \\
-0\_94384Hz.txt & 80.00  & 0.09 & 38 & 0.8913 & 0.0357 & 1.0601 & 0.0032 & 5.9270 & 0.0177 & 0.0030 & 0.9045 & 0.0153 \\
-0\_94503Hz.txt & 81.80  & 0.10 & 38 & 0.9804 & 0.0375 & 1.0589 & 0.0031 & 5.9337 & 0.0173 & 0.4650 & 0.9840 & 0.0464 \\
-0\_94847Hz.txt & 75.20  & 0.13 & 35 & 1.2411 & 0.0319 & 1.0552 & 0.0023 & 5.9547 & 0.0130 & 0.4510 & 1.2406 & 0.0242 \\
-0\_95178Hz.txt & 75.64  & 0.16 & 36 & 1.5540 & 0.0366 & 1.0518 & 0.0022 & 5.9738 & 0.0124 & 0.4070 & 1.5692 & 0.0410 \\
-0\_95329Hz.txt & 71.60  & 0.17 & 34 & 1.6624 & 0.0316 & 1.0494 & 0.0023 & 5.9874 & 0.0132 & 0.3790 & 1.6568 & 0.1918 \\
-0\_95405Hz.txt & 75.56  & 0.18 & 36 & 1.7666 & 0.0326 & 1.0487 & 0.0020 & 5.9915 & 0.0112 & 0.3510 & 1.7900 & 0.0533 \\
-0\_95496Hz.txt & 74.44  & 0.18 & 35 & 1.7886 & 0.0304 & 1.0480 & 0.0017 & 5.9957 & 0.0096 & 0.1820 & 1.7980 & 0.0182 \\
-0\_95557Hz.txt & 67.66  & 0.18 & 32 & 1.8147 & 0.0321 & 1.0439 & 0.0130 & 6.0188 & 0.0749 & 0.2810 & 1.8220 & 0.0277 \\
-0\_95572Hz.txt & 77.02  & 0.18 & 36 & 1.8006 & 0.0304 & 1.0469 & 0.0017 & 6.0015 & 0.0099 & 0.3100 & 1.8153 & 0.0253 \\
-0\_95618Hz.txt & 77.02  & 0.18 & 36 & 1.8334 & 0.0314 & 1.0466 & 0.0018 & 6.0036 & 0.0106 & 0.2920 & 1.8370 & 0.0421 \\
-0\_95648Hz.txt & 84.26  & 0.18 & 40 & 1.8168 & 0.0317 & 1.0465 & 0.0021 & 6.0042 & 0.0119 & 0.2850 & 1.8217 & 0.0351 \\
-0\_95688Hz.txt & 60.34  & 0.18 & 29 & 1.7744 & 0.0404 & 1.0453 & 0.0023 & 6.0109 & 0.0133 & 0.2780 & 1.7882 & 0.0179 \\
-0\_95724Hz.txt & 80.82  & 0.18 & 39 & 1.8280 & 0.0317 & 1.0448 & 0.0020 & 6.0138 & 0.0114 & 0.2490 & 1.8252 & 0.0166 \\
-0\_96108Hz.txt & 61.52  & 0.16 & 29 & 1.6002 & 0.0301 & 1.0408 & 0.0014 & 6.0371 & 0.0082 & 0.1820 & 1.5801 & 0.0161 \\
-0\_96277Hz.txt & 64.44  & 0.14 & 31 & 1.4488 & 0.0297 & 1.0395 & 0.0017 & 6.0442 & 0.0099 & 0.1720 & 1.4481 & 0.0838 \\
-0\_96448Hz.txt & 77.82  & 0.13 & 37 & 1.3118 & 0.0331 & 1.0377 & 0.0020 & 6.0551 & 0.0118 & 0.1790 & 1.2887 & 0.0141 \\
-0\_96603Hz.txt & 76.42  & 0.12 & 37 & 1.1726 & 0.0371 & 1.0379 & 0.0122 & 6.0536 & 0.0709 & 0.1850 & 1.1732 & 0.0299 \\
-0\_96759Hz.txt & 74.60  & 0.11 & 36 & 1.0592 & 0.0313 & 1.0338 & 0.0020 & 6.0776 & 0.0117 & 0.2020 & 1.0647 & 0.0313 \\
-0\_96993Hz.txt & 120.76 & 0.10 & 58 & 0.9350 & 0.0290 & 1.0318 & 0.0022 & 6.0895 & 0.0129 & 0.0050 & 0.9383 & 0.0138 \\
-0\_97087Hz.txt & 75.14  & 0.09 & 36 & 0.8728 & 0.0325 & 1.0305 & 0.0044 & 6.0974 & 0.0258 & 0.2190 & 0.8852 & 0.0177 \\
+0.9756Hz    & 70.26  & 34 & 1.026  & 0.004 & 6.124 & 0.022 & 0.710 & 0.017 \\
+\hline
+0.93897Hz   & 75.82  & 35 & 1.066  & 0.005 & 5.897 & 0.025 & 0.694 & 0.038 \\
+\hline
+0.94384Hz   & 80.00  & 38 & 1.060  & 0.003 & 5.927 & 0.018 & 0.905 & 0.015 \\
+\hline
+0.94503Hz   & 81.80  & 38 & 1.059  & 0.003 & 5.934 & 0.017 & 0.984 & 0.046 \\
+\hline
+0.94847Hz   & 75.20  & 35 & 1.055  & 0.002 & 5.955 & 0.013 & 1.241 & 0.024 \\
+\hline
+0.95178Hz   & 75.64  & 36 & 1.052  & 0.002 & 5.974 & 0.012 & 1.569 & 0.041 \\
+\hline
+0.95329Hz   & 71.60  & 34 & 1.049  & 0.002 & 5.987 & 0.013 & 1.657 & 0.192 \\
+\hline
+0.95405Hz   & 75.56  & 36 & 1.049  & 0.002 & 5.992 & 0.011 & 1.790 & 0.053 \\
+\hline
+0.95496Hz   & 74.44  & 35 & 1.048  & 0.002 & 5.996 & 0.010 & 1.798 & 0.018 \\
+\hline
+0.95557Hz   & 67.66  & 32 & 1.044  & 0.013 & 6.019 & 0.075 & 1.822 & 0.028 \\
+\hline
+0.95572Hz   & 77.02  & 36 & 1.047  & 0.002 & 6.002 & 0.010 & 1.815 & 0.025 \\
+\hline
+0.95618Hz   & 77.02  & 36 & 1.047  & 0.002 & 6.004 & 0.011 & 1.837 & 0.042 \\
+\hline
+0.95648Hz   & 84.26  & 40 & 1.046  & 0.002 & 6.004 & 0.012 & 1.822 & 0.035 \\
+\hline
+0.95688Hz   & 60.34  & 29 & 1.045  & 0.002 & 6.011 & 0.013 & 1.788 & 0.018 \\
+\hline
+0.95724Hz   & 80.82  & 39 & 1.045  & 0.002 & 6.014 & 0.011 & 1.825 & 0.017 \\
+\hline
+0.96108Hz   & 61.52  & 29 & 1.041  & 0.001 & 6.037 & 0.008 & 1.580 & 0.016 \\
+\hline
+0.96277Hz   & 64.44  & 31 & 1.040  & 0.002 & 6.044 & 0.010 & 1.448 & 0.084 \\
+\hline
+0.96448Hz   & 77.82  & 37 & 1.038  & 0.002 & 6.055 & 0.012 & 1.289 & 0.014 \\
+\hline
+0.96603Hz   & 76.42  & 37 & 1.038  & 0.012 & 6.054 & 0.071 & 1.173 & 0.030 \\
+\hline
+0.96759Hz   & 74.60  & 36 & 1.034  & 0.002 & 6.078 & 0.012 & 1.065 & 0.031 \\
+\hline
+0.96993Hz   & 120.76 & 58 & 1.032  & 0.002 & 6.090 & 0.013 & 0.938 & 0.014 \\
+\hline
+0.97087Hz   & 75.14  & 36 & 1.031  & 0.004 & 6.097 & 0.026 & 0.885 & 0.018 \\
 \hline
 \end{tabular}
-\caption{Sommario dei dati: Tempo presa, soglia (Thr), numero di picchi, ampiezza massima media e incertezza, \(t_f\) medio e incertezza, \(\omega_f\) medio e incertezza, offset e \(p\!-\!p/2\) medio e incertezza.}
-\label{tab:dati_aggiornati}
+\caption{Parte 2 dei dati: Tempo presa, numero di picchi, \(t_f\) medio e incertezza, \(\omega_f\) medio e incertezza, \(p\!-\!p/2\) medio e incertezza.}
+\label{tab:dati_parte2_senza_thr}
 \end{table}
 
-
-
-\subsection{regime}
-Durante la fase di regime, era nostro obiettivo calcolare i seguenti valori.
-\[
-*tabella\ pazza\ con\ i\ valori*
-\]
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Nome file} & \textbf{Tempo presa} & \textbf{N. picchi} & \(\boldsymbol{t_f}\) & \(\boldsymbol{\sigma_{t_f}}\) & \(\boldsymbol{\omega_f}\) & \(\boldsymbol{\sigma_{\omega_f}}\) & \(\boldsymbol{p\!-\!p/2}\) & \(\boldsymbol{\sigma_{p\!-\!p/2}}\) \\
+\hline
+0.9574Hz    & 77.68  & 37 & 1.045  & 0.001 & 6.013 & 0.008 & 1.810 & 0.012 \\
+\hline
+0.93269Hz   & 69.94  & 32 & 1.071  & 0.006 & 5.865 & 0.033 & 0.521 & 0.014 \\
+\hline
+0.94059Hz   & 75.28  & 35 & 1.065  & 0.003 & 5.903 & 0.019 & 0.723 & 0.014 \\
+\hline
+0.94384Hz   & 74.10  & 34 & 1.060  & 0.003 & 5.927 & 0.016 & 0.880 & 0.013 \\
+\hline
+0.94697Hz   & 72.26  & 34 & 1.056  & 0.002 & 5.949 & 0.012 & 1.102 & 0.010 \\
+\hline
+0.95012Hz   & 71.68  & 34 & 1.053  & 0.002 & 5.967 & 0.010 & 1.356 & 0.012 \\
+\hline
+0.95223Hz   & 76.40  & 36 & 1.051  & 0.002 & 5.979 & 0.009 & 1.574 & 0.010 \\
+\hline
+0.95299Hz   & 74.36  & 35 & 1.049  & 0.006 & 5.989 & 0.033 & 1.643 & 0.017 \\
+\hline
+0.95374Hz   & 72.30  & 34 & 1.049  & 0.002 & 5.988 & 0.008 & 1.720 & 0.024 \\
+\hline
+0.95450Hz   & 72.80  & 35 & 1.048  & 0.002 & 5.994 & 0.009 & 1.763 & 0.014 \\
+\hline
+0.95526Hz   & 98.40  & 47 & 1.048  & 0.006 & 5.995 & 0.033 & 1.805 & 0.011 \\
+\hline
+0.95618Hz   & 71.16  & 34 & 1.046  & 0.004 & 6.009 & 0.024 & 1.818 & 0.016 \\
+\hline
+0.95694Hz   & 75.68  & 36 & 1.046  & 0.002 & 6.006 & 0.011 & 1.818 & 0.010 \\
+\hline
+0.95893Hz   & 75.24  & 36 & 1.043  & 0.001 & 6.022 & 0.007 & 1.731 & 0.017 \\
+\hline
+0.96046Hz   & 73.18  & 35 & 1.042  & 0.001 & 6.031 & 0.006 & 1.622 & 0.014 \\
+\hline
+0.96216Hz   & 70.78  & 34 & 1.040  & 0.002 & 6.043 & 0.009 & 1.476 & 0.013 \\
+\hline
+0.96525Hz   & 70.42  & 34 & 1.037  & 0.002 & 6.061 & 0.011 & 1.222 & 0.013 \\
+\hline
+0.97009Hz   & 70.54  & 34 & 1.031  & 0.003 & 6.092 & 0.017 & 0.927 & 0.015 \\
+\hline
+0.97482Hz   & 70.56  & 34 & 1.026  & 0.003 & 6.122 & 0.020 & 0.758 & 0.009 \\
+\hline
+0.98280Hz   & 78.84  & 38 & 1.018  & 0.004 & 6.170 & 0.025 & 0.552 & 0.017 \\
+\hline
+0.93897Hz   & 101.62 & 47 & 1.066  & 0.003 & 5.896 & 0.018 & 0.652 & 0.166 \\
+\hline
+0.94221Hz   & 75.70  & 36 & 1.062  & 0.003 & 5.916 & 0.018 & 0.799 & 0.012 \\
+\hline
+0.94533Hz   & 71.60  & 33 & 1.058  & 0.002 & 5.937 & 0.013 & 0.972 & 0.012 \\
+\hline
+0.94862Hz   & 72.48  & 34 & 1.055  & 0.002 & 5.958 & 0.012 & 1.232 & 0.011 \\
+\hline
+0.95178Hz   & 77.80  & 37 & 1.051  & 0.002 & 5.977 & 0.010 & 1.515 & 0.017 \\
+\hline
+0.95253Hz   & 71.84  & 34 & 1.050  & 0.002 & 5.983 & 0.010 & 1.609 & 0.010 \\
+\hline
+0.95329Hz   & 76.92  & 36 & 1.050  & 0.001 & 5.985 & 0.008 & 1.678 & 0.014 \\
+\hline
+0.95420Hz   & 76.84  & 36 & 1.049  & 0.002 & 5.992 & 0.010 & 1.744 & 0.021 \\
+\hline
+0.95572Hz   & 71.24  & 34 & 1.047  & 0.001 & 6.002 & 0.006 & 1.815 & 0.015 \\
+\hline
+0.95648Hz   & 72.84  & 34 & 1.046  & 0.002 & 6.007 & 0.010 & 1.820 & 0.021 \\
+\hline
+0.95770Hz   & 70.26  & 33 & 1.045  & 0.002 & 6.014 & 0.009 & 1.809 & 0.020 \\
+\hline
+0.95847Hz   & 117.02 & 56 & 1.044  & 0.002 & 6.021 & 0.010 & 1.749 & 0.018 \\
+\hline
+0.95969Hz   & 76.60  & 37 & 1.043  & 0.003 & 6.022 & 0.015 & 1.679 & 0.020 \\
+\hline
+0.96123Hz   & 72.86  & 35 & 1.041  & 0.001 & 6.036 & 0.008 & 1.560 & 0.020 \\
+\hline
+0.96759Hz   & 72.06  & 34 & 1.034  & 0.002 & 6.079 & 0.014 & 1.061 & 0.015 \\
+\hline
+0.97245Hz   & 70.48  & 34 & 1.029  & 0.003 & 6.105 & 0.016 & 0.835 & 0.013 \\
+\hline
+0.97720Hz   & 70.34  & 34 & 1.025  & 0.004 & 6.130 & 0.024 & 0.687 & 0.010 \\
+\hline
+0.99469Hz   & 70.96  & 35 & 1.011  & 0.035 & 6.212 & 0.216 & 0.401 & 0.014 \\
+\hline
+0.95688Hz   & 60.34  & 29 & 1.045  & 0.002 & 6.011 & 0.013 & 1.788 & 0.018 \\
+\hline
+0.9502Hz    & 71.92  & 34 & 1.053  & 0.002 & 5.967 & 0.010 & 1.410 & 0.030 \\
+\hline
+0.9577Hz    & 90.98  & 43 & 1.044  & 0.001 & 6.017 & 0.008 & 1.816 & 0.016 \\
+\hline
+\end{tabular}
+\caption{Parte 1 dei dati: Tempo presa, numero di picchi, \(t_f\) medio e incertezza, \(\omega_f\) medio e incertezza, \(p\!-\!p/2\) medio e incertezza.}
+\label{tab:dati_parte1_senza_thr}
+\end{table}
 
 \begin{itemize}
     \item \textbf{\large $T_f$}\\
     Si tratta di una media dei vari $T_{f,i}$, intervalli di tempo da un picco e l'altro; è stato preso un $\bar{T}_f$ come valore di riferimento per ogni misurazione fatta ad una determinata forzante. I $T_{f,i}$ sono stati presi tra coppie di punti linearmente scorrelate, in modo che si potesse semplificare di molto la stima dell'incertezza. Per avere un campione sufficientemente abbondante, inoltre, si sono considerate un numero minimo di 20 coppie di picchi (quindi 20 o più $T_{f,i}$), per ogni set di dati.
     \item \textbf{\large $\omega_{f,sperimentale}$}\\
-    
+    Avendo le medie degli intervalli si è potuto facilmente calcolare la pulsazione della forzante, $\omega_f$, che è stata ricavata con la seguente formula:
+    \[
+    \omega_{f} = \frac{2\pi}{{\bar{T}}_f}
+    \]
     \item \textbf{\large $\theta_{part,0}$}\\
-    asdf
+    Per trovare la soluzione 
 \end{itemize}
 
 \subsection{smorzamento}
 
+E' innanzitutto importante notare che per l'analisi dati della fase di smorzamento si sono considerati i dati presi alla pulsazione di risonanza, in modo da avere più picchi con cui stimare i seguenti valori. 
 \begin{itemize}
     \item \textbf{$T_{s}$} \\
-        Per la stima del periodo in fase di smorzamento è stato costruito un campione dei massimi 
+        Per la stima del periodo in fase di smorzamento è stato costruito un campione dei vari $T_{s,i}$ ricavati mediante regressione quadratica dei picchi in questa fase. In seguito, si è calcolata la media $\bar{T_{s}}$ tra picchi non consecutivi, in modo da ridurre per quanto possibile la covarianza tra i dati, e la relativa deviazione standard $\sigma_{\bar{T_{s}}}$. Per avere un campione sufficiente, come per la fase di regime, ci si è assicurati di avere un minimo di 20 coppie di picchi per il set di dati.  
     \item \textbf{$w_{s}$}
     \item \textbf{$\gamma$}
     \item \textbf{$\omega_{0}=\sqrt{w_{s}^{2}+\gamma^{2}}$}
