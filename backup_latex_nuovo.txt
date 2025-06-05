@@ -21,6 +21,8 @@
 \usepackage{tikz}
 \pgfplotsset{compat=1.18}
 \usepackage{verbatim}
+\usepackage{multicol}
+\usepackage{tabularx}
 
 % Impostazioni di margine e intestazioni
 \geometry{a4paper, margin=1in, tmargin=1cm}
@@ -39,7 +41,6 @@
 
 \vspace{-0.7cm}
 \noindent\rule{\textwidth}{0.5pt}
-\vspace{0.5cm}
 
 \section{Obiettivo}
 Verifica sperimentale del moto di un oscillatore armonico smorzato e forzato, descritto dalla seguente legge: 
@@ -49,28 +50,34 @@ Verifica sperimentale del moto di un oscillatore armonico smorzato e forzato, de
 \end{equation}
 
 Ai fini di ciò, si fornirà la stima delle seguenti grandezze tra le due fasi: 
-\begin{itemize}
-    \item $T_{f,i}$: periodo del moto nella fase forzata;
-    \item $\omega_{f, sperimentale} = \frac{2\pi}{T_f}$;
-    \item $\vartheta_{0,p}(w_{f, sperimentale})$ = semiampiezza da picco a picco;
-    \item $\omega_{r, sperimentale}$;  
-    \item $T_s$: periodo del moto nella fase smorzata; 
-    \item $\omega_s = \frac{2\pi}{T_s}$;
-    \item $\gamma$: coefficente di smorzamento del sistema oscillante; 
-    \item $\omega_0 = \sqrt{\omega_s^2 + \gamma^2}$; 
-    \item $\omega_{r, attesa} = \sqrt{\omega_s^2 - \gamma^2}$; 
-\end{itemize}
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.3} % aumenta un po' l'interlinea
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+$T_{f,s}$: periodo moto - fase forzata & $\omega_{f,\text{sperimentale}} = \frac{2\pi}{T_j}$ \\
+\hline
+$\theta_{0,p}(\omega_{f,\text{sperimentale}})$: semiampiezza & $\omega_{r,\text{attesa}} = \sqrt{\omega_s^2 - \gamma^2}$ \\
+\hline
+$T_s$: periodo nella fase smorzata & $\omega_s = \frac{2\pi}{T_s}$ \\
+\hline
+$\gamma$: coefficiente di smorzamento & $\omega_0 = \sqrt{\omega_s^2 + \gamma^2}$ \\
+\hline
+\end{tabularx}
+\caption{Parametri e relazioni utilizzate.}
+\label{tab:parametri_relazioni}
+\end{table}
+
 
 \section{Analisi dati}
-
-Di seguito un grafico per mostrare le diverse fasi del moto e le grandezze da stimare per poterlo descrivere completamente. Si propongono inoltre due grafici con i dati grezzi provenienti dalla stessa presa, ma in fasi diverse. 
+Di seguito un grafico per mostrare le diverse fasi del moto e le grandezze da stimare per poterlo descrivere completamente. 
 
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}
 \begin{axis}[
     width=17cm,
-    height=8cm,
+    height=7cm,
     xmin=-2, xmax=15,
     ymin=-1.5, ymax=1.5,
     enlargelimits=true,
@@ -155,157 +162,13 @@ E di seguito due esempi di dati grezzi raccolti nelle due giornate nelle due fas
 
 
 \subsection{Fase a regime}
-A regime il moto è approssimabile dalla soluzione particolare $\vartheta(t) \approx \vartheta_{0,p} \cdot \cos\left( \omega_f t + \varphi_f \right)$. 
+A regime il moto è approssimabile dalla soluzione particolare 
 
-\begin{table}[H]
-\centering
-\small
-\begin{tabular}{|l|c|c|c|c|c|c|c|c|}
-\hline
-\textbf{Nome file} & \textbf{Tempo presa} & \textbf{N. picchi} & \(\boldsymbol{t_f}\) & \(\boldsymbol{\sigma_{t_f}}\) & \(\boldsymbol{\omega_f}\) & \(\boldsymbol{\sigma_{\omega_f}}\) & \(\boldsymbol{p\!-\!p/2}\) & \(\boldsymbol{\sigma_{p\!-\!p/2}}\) \\
-\hline
-0.9756Hz    & 70.26  & 34 & 1.026  & 0.004 & 6.124 & 0.022 & 0.710 & 0.017 \\
-\hline
-0.93897Hz   & 75.82  & 35 & 1.066  & 0.005 & 5.897 & 0.025 & 0.694 & 0.038 \\
-\hline
-0.94384Hz   & 80.00  & 38 & 1.060  & 0.003 & 5.927 & 0.018 & 0.905 & 0.015 \\
-\hline
-0.94503Hz   & 81.80  & 38 & 1.059  & 0.003 & 5.934 & 0.017 & 0.984 & 0.046 \\
-\hline
-0.94847Hz   & 75.20  & 35 & 1.055  & 0.002 & 5.955 & 0.013 & 1.241 & 0.024 \\
-\hline
-0.95178Hz   & 75.64  & 36 & 1.052  & 0.002 & 5.974 & 0.012 & 1.569 & 0.041 \\
-\hline
-0.95329Hz   & 71.60  & 34 & 1.049  & 0.002 & 5.987 & 0.013 & 1.657 & 0.192 \\
-\hline
-0.95405Hz   & 75.56  & 36 & 1.049  & 0.002 & 5.992 & 0.011 & 1.790 & 0.053 \\
-\hline
-0.95496Hz   & 74.44  & 35 & 1.048  & 0.002 & 5.996 & 0.010 & 1.798 & 0.018 \\
-\hline
-0.95557Hz   & 67.66  & 32 & 1.044  & 0.013 & 6.019 & 0.075 & 1.822 & 0.028 \\
-\hline
-0.95572Hz   & 77.02  & 36 & 1.047  & 0.002 & 6.002 & 0.010 & 1.815 & 0.025 \\
-\hline
-0.95618Hz   & 77.02  & 36 & 1.047  & 0.002 & 6.004 & 0.011 & 1.837 & 0.042 \\
-\hline
-0.95648Hz   & 84.26  & 40 & 1.046  & 0.002 & 6.004 & 0.012 & 1.822 & 0.035 \\
-\hline
-0.95688Hz   & 60.34  & 29 & 1.045  & 0.002 & 6.011 & 0.013 & 1.788 & 0.018 \\
-\hline
-0.95724Hz   & 80.82  & 39 & 1.045  & 0.002 & 6.014 & 0.011 & 1.825 & 0.017 \\
-\hline
-0.96108Hz   & 61.52  & 29 & 1.041  & 0.001 & 6.037 & 0.008 & 1.580 & 0.016 \\
-\hline
-0.96277Hz   & 64.44  & 31 & 1.040  & 0.002 & 6.044 & 0.010 & 1.448 & 0.084 \\
-\hline
-0.96448Hz   & 77.82  & 37 & 1.038  & 0.002 & 6.055 & 0.012 & 1.289 & 0.014 \\
-\hline
-0.96603Hz   & 76.42  & 37 & 1.038  & 0.012 & 6.054 & 0.071 & 1.173 & 0.030 \\
-\hline
-0.96759Hz   & 74.60  & 36 & 1.034  & 0.002 & 6.078 & 0.012 & 1.065 & 0.031 \\
-\hline
-0.96993Hz   & 120.76 & 58 & 1.032  & 0.002 & 6.090 & 0.013 & 0.938 & 0.014 \\
-\hline
-0.97087Hz   & 75.14  & 36 & 1.031  & 0.004 & 6.097 & 0.026 & 0.885 & 0.018 \\
-\hline
-\end{tabular}
-\caption{Parte 2 dei dati: Tempo presa, numero di picchi, \(t_f\) medio e incertezza, \(\omega_f\) medio e incertezza, \(p\!-\!p/2\) medio e incertezza.}
-\label{tab:dati_parte2_senza_thr}
-\end{table}
+\begin{equation}
+\vartheta(t) \approx \vartheta_{0,p} \cdot \cos\left( \omega_f t + \varphi_f \right) . 
+\end{equation}
 
-\begin{table}[H]
-\centering
-\small
-\begin{tabular}{|l|c|c|c|c|c|c|c|c|}
-\hline
-\textbf{Nome file} & \textbf{Tempo presa} & \textbf{N. picchi} & \(\boldsymbol{t_f}\) & \(\boldsymbol{\sigma_{t_f}}\) & \(\boldsymbol{\omega_f}\) & \(\boldsymbol{\sigma_{\omega_f}}\) & \(\boldsymbol{p\!-\!p/2}\) & \(\boldsymbol{\sigma_{p\!-\!p/2}}\) \\
-\hline
-0.9574Hz    & 77.68  & 37 & 1.045  & 0.001 & 6.013 & 0.008 & 1.810 & 0.012 \\
-\hline
-0.93269Hz   & 69.94  & 32 & 1.071  & 0.006 & 5.865 & 0.033 & 0.521 & 0.014 \\
-\hline
-0.94059Hz   & 75.28  & 35 & 1.065  & 0.003 & 5.903 & 0.019 & 0.723 & 0.014 \\
-\hline
-0.94384Hz   & 74.10  & 34 & 1.060  & 0.003 & 5.927 & 0.016 & 0.880 & 0.013 \\
-\hline
-0.94697Hz   & 72.26  & 34 & 1.056  & 0.002 & 5.949 & 0.012 & 1.102 & 0.010 \\
-\hline
-0.95012Hz   & 71.68  & 34 & 1.053  & 0.002 & 5.967 & 0.010 & 1.356 & 0.012 \\
-\hline
-0.95223Hz   & 76.40  & 36 & 1.051  & 0.002 & 5.979 & 0.009 & 1.574 & 0.010 \\
-\hline
-0.95299Hz   & 74.36  & 35 & 1.049  & 0.006 & 5.989 & 0.033 & 1.643 & 0.017 \\
-\hline
-0.95374Hz   & 72.30  & 34 & 1.049  & 0.002 & 5.988 & 0.008 & 1.720 & 0.024 \\
-\hline
-0.95450Hz   & 72.80  & 35 & 1.048  & 0.002 & 5.994 & 0.009 & 1.763 & 0.014 \\
-\hline
-0.95526Hz   & 98.40  & 47 & 1.048  & 0.006 & 5.995 & 0.033 & 1.805 & 0.011 \\
-\hline
-0.95618Hz   & 71.16  & 34 & 1.046  & 0.004 & 6.009 & 0.024 & 1.818 & 0.016 \\
-\hline
-0.95694Hz   & 75.68  & 36 & 1.046  & 0.002 & 6.006 & 0.011 & 1.818 & 0.010 \\
-\hline
-0.95893Hz   & 75.24  & 36 & 1.043  & 0.001 & 6.022 & 0.007 & 1.731 & 0.017 \\
-\hline
-0.96046Hz   & 73.18  & 35 & 1.042  & 0.001 & 6.031 & 0.006 & 1.622 & 0.014 \\
-\hline
-0.96216Hz   & 70.78  & 34 & 1.040  & 0.002 & 6.043 & 0.009 & 1.476 & 0.013 \\
-\hline
-0.96525Hz   & 70.42  & 34 & 1.037  & 0.002 & 6.061 & 0.011 & 1.222 & 0.013 \\
-\hline
-0.97009Hz   & 70.54  & 34 & 1.031  & 0.003 & 6.092 & 0.017 & 0.927 & 0.015 \\
-\hline
-0.97482Hz   & 70.56  & 34 & 1.026  & 0.003 & 6.122 & 0.020 & 0.758 & 0.009 \\
-\hline
-0.98280Hz   & 78.84  & 38 & 1.018  & 0.004 & 6.170 & 0.025 & 0.552 & 0.017 \\
-\hline
-0.93897Hz   & 101.62 & 47 & 1.066  & 0.003 & 5.896 & 0.018 & 0.652 & 0.166 \\
-\hline
-0.94221Hz   & 75.70  & 36 & 1.062  & 0.003 & 5.916 & 0.018 & 0.799 & 0.012 \\
-\hline
-0.94533Hz   & 71.60  & 33 & 1.058  & 0.002 & 5.937 & 0.013 & 0.972 & 0.012 \\
-\hline
-0.94862Hz   & 72.48  & 34 & 1.055  & 0.002 & 5.958 & 0.012 & 1.232 & 0.011 \\
-\hline
-0.95178Hz   & 77.80  & 37 & 1.051  & 0.002 & 5.977 & 0.010 & 1.515 & 0.017 \\
-\hline
-0.95253Hz   & 71.84  & 34 & 1.050  & 0.002 & 5.983 & 0.010 & 1.609 & 0.010 \\
-\hline
-0.95329Hz   & 76.92  & 36 & 1.050  & 0.001 & 5.985 & 0.008 & 1.678 & 0.014 \\
-\hline
-0.95420Hz   & 76.84  & 36 & 1.049  & 0.002 & 5.992 & 0.010 & 1.744 & 0.021 \\
-\hline
-0.95572Hz   & 71.24  & 34 & 1.047  & 0.001 & 6.002 & 0.006 & 1.815 & 0.015 \\
-\hline
-0.95648Hz   & 72.84  & 34 & 1.046  & 0.002 & 6.007 & 0.010 & 1.820 & 0.021 \\
-\hline
-0.95770Hz   & 70.26  & 33 & 1.045  & 0.002 & 6.014 & 0.009 & 1.809 & 0.020 \\
-\hline
-0.95847Hz   & 117.02 & 56 & 1.044  & 0.002 & 6.021 & 0.010 & 1.749 & 0.018 \\
-\hline
-0.95969Hz   & 76.60  & 37 & 1.043  & 0.003 & 6.022 & 0.015 & 1.679 & 0.020 \\
-\hline
-0.96123Hz   & 72.86  & 35 & 1.041  & 0.001 & 6.036 & 0.008 & 1.560 & 0.020 \\
-\hline
-0.96759Hz   & 72.06  & 34 & 1.034  & 0.002 & 6.079 & 0.014 & 1.061 & 0.015 \\
-\hline
-0.97245Hz   & 70.48  & 34 & 1.029  & 0.003 & 6.105 & 0.016 & 0.835 & 0.013 \\
-\hline
-0.97720Hz   & 70.34  & 34 & 1.025  & 0.004 & 6.130 & 0.024 & 0.687 & 0.010 \\
-\hline
-0.99469Hz   & 70.96  & 35 & 1.011  & 0.035 & 6.212 & 0.216 & 0.401 & 0.014 \\
-\hline
-0.95688Hz   & 60.34  & 29 & 1.045  & 0.002 & 6.011 & 0.013 & 1.788 & 0.018 \\
-\hline
-0.9502Hz    & 71.92  & 34 & 1.053  & 0.002 & 5.967 & 0.010 & 1.410 & 0.030 \\
-\hline
-0.9577Hz    & 90.98  & 43 & 1.044  & 0.001 & 6.017 & 0.008 & 1.816 & 0.016 \\
-\hline
-\end{tabular}
-\caption{Parte 1 dei dati: Tempo presa, numero di picchi, \(t_f\) medio e incertezza, \(\omega_f\) medio e incertezza, \(p\!-\!p/2\) medio e incertezza.}
-\label{tab:dati_parte1_senza_thr}
-\end{table}
+Si procede a stimare le grandezze necessarie alla descrizione del moto in questa fase per ogni file preso in laboratorio durante le due giornate. Di seguito viene riportata una tabella con le stime, in funzione della frequenza nominale (impostanta, non effettiva).
 
 \begin{comment}
 
@@ -324,47 +187,49 @@ A regime il moto è approssimabile dalla soluzione particolare $\vartheta(t) \ap
 
 \begin{table}[H]
 \centering
-\scriptsize
+\footnotesize
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{l c c c c c c || l c c c c c c}
+\begin{tabular}{|l|c|c|c|c|c|c||l|c|c|c|c|c|c|}
 \hline
-\multicolumn{7}{c||}{\textbf{Parte 1}} & \multicolumn{7}{c}{\textbf{Parte 2}} \\
+\textbf{$\nu$ [Hz]\rule[-1.2ex]{0pt}{4ex}} & \(\boldsymbol{t}\) [s]  & \(\boldsymbol{\sigma_t}\) [s] & \(\boldsymbol{\omega}\) [$\frac{\mathrm{rad}}{\mathrm{s}}$]& \(\boldsymbol{\sigma_\omega}\) [$\frac{\mathrm{rad}}{\mathrm{s}}$]& \(\boldsymbol{A}\) [rad] & \(\boldsymbol{\sigma_A}\) [rad] &
+\textbf{$\nu$ [Hz]} & \(\boldsymbol{t}\) [s]  & \(\boldsymbol{\sigma_t}\) [s] & \(\boldsymbol{\omega}\) [$\frac{\mathrm{rad}}{\mathrm{s}}$]& \(\boldsymbol{\sigma_\omega}\) [$\frac{\mathrm{rad}}{\mathrm{s}}$]& \(\boldsymbol{A}\) [rad] & \(\boldsymbol{\sigma_A}\) [rad]\\
 \hline
-\textbf{Nome file} & \(\boldsymbol{t_f}\) & \(\boldsymbol{\sigma_{t_f}}\) & \(\boldsymbol{\omega_f}\) & \(\boldsymbol{\sigma_{\omega_f}}\) & \(\boldsymbol{p\!-\!p/2}\) & \(\boldsymbol{\sigma_{p\!-\!p/2}}\) & 
-\textbf{Nome file} & \(\boldsymbol{t_f}\) & \(\boldsymbol{\sigma_{t_f}}\) & \(\boldsymbol{\omega_f}\) & \(\boldsymbol{\sigma_{\omega_f}}\) & \(\boldsymbol{p\!-\!p/2}\) & \(\boldsymbol{\sigma_{p\!-\!p/2}}\) \\
-\hline
-0.9574Hz & 1.045 & 0.001 & 6.013 & 0.008 & 1.810 & 0.012 & 0.9756Hz & 1.026 & 0.004 & 6.124 & 0.022 & 0.710 & 0.017 \\
-0.93269Hz & 1.071 & 0.006 & 5.865 & 0.033 & 0.521 & 0.014 & 0.93897Hz & 1.066 & 0.005 & 5.897 & 0.025 & 0.694 & 0.038 \\
-0.94059Hz & 1.065 & 0.003 & 5.903 & 0.019 & 0.723 & 0.014 & 0.94384Hz & 1.060 & 0.003 & 5.927 & 0.018 & 0.905 & 0.015 \\
-0.94384Hz & 1.060 & 0.003 & 5.927 & 0.016 & 0.880 & 0.013 & 0.94503Hz & 1.059 & 0.003 & 5.934 & 0.017 & 0.984 & 0.046 \\
-0.94697Hz & 1.056 & 0.002 & 5.949 & 0.012 & 1.102 & 0.010 & 0.94847Hz & 1.055 & 0.002 & 5.955 & 0.013 & 1.241 & 0.024 \\
-0.95012Hz & 1.053 & 0.002 & 5.967 & 0.010 & 1.356 & 0.012 & 0.95178Hz & 1.052 & 0.002 & 5.974 & 0.012 & 1.569 & 0.041 \\
-0.95223Hz & 1.051 & 0.002 & 5.979 & 0.009 & 1.574 & 0.010 & 0.95329Hz & 1.049 & 0.002 & 5.987 & 0.013 & 1.657 & 0.192 \\
-0.95299Hz & 1.049 & 0.006 & 5.989 & 0.033 & 1.643 & 0.017 & 0.95405Hz & 1.049 & 0.002 & 5.992 & 0.011 & 1.790 & 0.053 \\
-0.95374Hz & 1.049 & 0.002 & 5.988 & 0.008 & 1.720 & 0.024 & 0.95496Hz & 1.048 & 0.002 & 5.996 & 0.010 & 1.798 & 0.018 \\
-0.95450Hz & 1.048 & 0.002 & 5.994 & 0.009 & 1.763 & 0.014 & 0.95557Hz & 1.044 & 0.013 & 6.019 & 0.075 & 1.822 & 0.028 \\
-0.95526Hz & 1.048 & 0.006 & 5.995 & 0.033 & 1.805 & 0.011 & 0.95572Hz & 1.047 & 0.002 & 6.002 & 0.010 & 1.815 & 0.025 \\
-0.95618Hz & 1.046 & 0.004 & 6.009 & 0.024 & 1.818 & 0.016 & 0.95618Hz & 1.047 & 0.002 & 6.004 & 0.011 & 1.837 & 0.042 \\
-0.95694Hz & 1.046 & 0.002 & 6.006 & 0.011 & 1.818 & 0.010 & 0.95648Hz & 1.046 & 0.002 & 6.004 & 0.012 & 1.822 & 0.035 \\
-0.95893Hz & 1.043 & 0.001 & 6.022 & 0.007 & 1.731 & 0.017 & 0.95688Hz & 1.045 & 0.002 & 6.011 & 0.013 & 1.788 & 0.018 \\
-0.96046Hz & 1.042 & 0.001 & 6.031 & 0.006 & 1.622 & 0.014 & 0.95724Hz & 1.045 & 0.002 & 6.014 & 0.011 & 1.825 & 0.017 \\
-0.96216Hz & 1.040 & 0.002 & 6.043 & 0.009 & 1.476 & 0.013 & 0.96108Hz & 1.041 & 0.001 & 6.037 & 0.008 & 1.580 & 0.016 \\
-0.96525Hz & 1.037 & 0.002 & 6.061 & 0.011 & 1.222 & 0.013 & 0.96277Hz & 1.040 & 0.002 & 6.044 & 0.010 & 1.448 & 0.084 \\
-0.97009Hz & 1.031 & 0.003 & 6.092 & 0.017 & 0.927 & 0.015 & 0.96448Hz & 1.038 & 0.002 & 6.055 & 0.012 & 1.289 & 0.014 \\
-0.97482Hz & 1.026 & 0.003 & 6.122 & 0.020 & 0.758 & 0.009 & 0.96603Hz & 1.038 & 0.012 & 6.054 & 0.071 & 1.173 & 0.030 \\
-0.98280Hz & 1.018 & 0.004 & 6.170 & 0.025 & 0.552 & 0.017 & 0.96759Hz & 1.034 & 0.002 & 6.078 & 0.012 & 1.065 & 0.031 \\
-0.93897Hz & 1.066 & 0.003 & 5.896 & 0.018 & 0.652 & 0.166 & 0.96993Hz & 1.032 & 0.002 & 6.090 & 0.013 & 0.938 & 0.014 \\
-0.94221Hz & 1.062 & 0.003 & 5.916 & 0.018 & 0.799 & 0.012 & 0.97087Hz & 1.031 & 0.004 & 6.097 & 0.026 & 0.885 & 0.018 \\
+0.9574 & 1.045 & 0.001 & 6.013 & 0.008 & 1.810 & 0.012 & 0.9756 & 1.026 & 0.004 & 6.124 & 0.022 & 0.710 & 0.017 \\
+0.9327 & 1.071 & 0.006 & 5.865 & 0.033 & 0.521 & 0.014 & 0.9390 & 1.066 & 0.005 & 5.897 & 0.025 & 0.694 & 0.038 \\
+0.9406 & 1.065 & 0.003 & 5.903 & 0.019 & 0.723 & 0.014 & 0.9438 & 1.060 & 0.003 & 5.927 & 0.018 & 0.905 & 0.015 \\
+0.9438 & 1.060 & 0.003 & 5.927 & 0.016 & 0.880 & 0.013 & 0.9450 & 1.059 & 0.003 & 5.934 & 0.017 & 0.984 & 0.046 \\
+0.9470 & 1.056 & 0.002 & 5.949 & 0.012 & 1.102 & 0.010 & 0.9485 & 1.055 & 0.002 & 5.955 & 0.013 & 1.241 & 0.024 \\
+0.9501 & 1.053 & 0.002 & 5.967 & 0.010 & 1.356 & 0.012 & 0.9518 & 1.052 & 0.002 & 5.974 & 0.012 & 1.569 & 0.041 \\
+0.9522 & 1.051 & 0.002 & 5.979 & 0.009 & 1.574 & 0.010 & 0.9533 & 1.049 & 0.002 & 5.987 & 0.013 & 1.657 & 0.192 \\
+0.9530 & 1.049 & 0.006 & 5.989 & 0.033 & 1.643 & 0.017 & 0.9541 & 1.049 & 0.002 & 5.992 & 0.011 & 1.790 & 0.053 \\
+0.9537 & 1.049 & 0.002 & 5.988 & 0.008 & 1.720 & 0.024 & 0.9550 & 1.048 & 0.002 & 5.996 & 0.010 & 1.798 & 0.018 \\
+0.9545 & 1.048 & 0.002 & 5.994 & 0.009 & 1.763 & 0.014 & 0.9556 & 1.044 & 0.013 & 6.019 & 0.075 & 1.822 & 0.028 \\
+0.9553 & 1.048 & 0.006 & 5.995 & 0.033 & 1.805 & 0.011 & 0.9557 & 1.047 & 0.002 & 6.002 & 0.010 & 1.815 & 0.025 \\
+0.9562 & 1.046 & 0.004 & 6.009 & 0.024 & 1.818 & 0.016 & 0.9562 & 1.047 & 0.002 & 6.004 & 0.011 & 1.837 & 0.042 \\
+0.9569 & 1.046 & 0.002 & 6.006 & 0.011 & 1.818 & 0.010 & 0.9565 & 1.046 & 0.002 & 6.004 & 0.012 & 1.822 & 0.035 \\
+0.9589 & 1.043 & 0.001 & 6.022 & 0.007 & 1.731 & 0.017 & 0.9569 & 1.045 & 0.002 & 6.011 & 0.013 & 1.788 & 0.018 \\
+0.9605 & 1.042 & 0.001 & 6.031 & 0.006 & 1.622 & 0.014 & 0.9572 & 1.045 & 0.002 & 6.014 & 0.011 & 1.825 & 0.017 \\
+0.9622 & 1.040 & 0.002 & 6.043 & 0.009 & 1.476 & 0.013 & 0.9611 & 1.041 & 0.001 & 6.037 & 0.008 & 1.580 & 0.016 \\
+0.9653 & 1.037 & 0.002 & 6.061 & 0.011 & 1.222 & 0.013 & 0.9628 & 1.040 & 0.002 & 6.044 & 0.010 & 1.448 & 0.084 \\
+0.9701 & 1.031 & 0.003 & 6.092 & 0.017 & 0.927 & 0.015 & 0.9645 & 1.038 & 0.002 & 6.055 & 0.012 & 1.289 & 0.014 \\
+0.9748 & 1.026 & 0.003 & 6.122 & 0.020 & 0.758 & 0.009 & 0.9660 & 1.038 & 0.012 & 6.054 & 0.071 & 1.173 & 0.030 \\
+0.9828 & 1.018 & 0.004 & 6.170 & 0.025 & 0.552 & 0.017 & 0.9676 & 1.034 & 0.002 & 6.078 & 0.012 & 1.065 & 0.031 \\
+0.9390 & 1.066 & 0.003 & 5.896 & 0.018 & 0.652 & 0.166 & 0.9699 & 1.032 & 0.002 & 6.090 & 0.013 & 0.938 & 0.014 \\
+0.9422 & 1.062 & 0.003 & 5.916 & 0.018 & 0.799 & 0.012 & 0.9709 & 1.031 & 0.004 & 6.097 & 0.026 & 0.885 & 0.018 \\
 \hline
 \end{tabular}
 }
-\caption{Dati divisi in due blocchi affiancati con \(t_f\), \(\omega_f\), \(p\!-\!p/2\) e relative incertezze. Sono omesse le colonne "Tempo presa" e "N. picchi".}
-\label{tab:dati_affiancati_completa}
+\caption{Dati sperimentali. \(t\) è il tempo medio fra i picchi estremi, \(\omega\) la pulsazione stimata, \(A\) l’ampiezza (p-p/2).}
+\label{tab:dati_affiancati_finale}
 \end{table}
 
+Segue il grafico della risonanza, in cui si confrontano le $\omega_f$ calcolate con i rispettivi picchi all'interno della stessa presa. La curva così trovata viene interpolata con una parabola di equazione $y = ax^2 + bx + c$, per poi trovarne il massimo, ovvero il valor vero di $\omega_{r, sperimentale}$. Per poterne stimare l'incertezza si è considerata la semi-ampiezza del dominio del fit come errore massimo sulla misura, che è stato poi ridotto a stdev attraverso la distribuzione costante di probabilità. 
 
-\subsection{smorzamento}
 
+
+\subsection{Fase di smorzamento}
+
+\begin{comment}
 E' innanzitutto importante notare che per l'analisi dati della fase di smorzamento si sono considerati i dati presi alla pulsazione di risonanza, in modo da avere più picchi con cui stimare i seguenti valori. 
 \begin{itemize}
     \item \textbf{$T_{s}$} \\
@@ -377,6 +242,7 @@ E' innanzitutto importante notare che per l'analisi dati della fase di smorzamen
 
 
 \end{itemize}
+\end{comment}
 
 
 
