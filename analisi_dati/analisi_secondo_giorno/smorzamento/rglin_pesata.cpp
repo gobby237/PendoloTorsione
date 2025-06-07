@@ -66,5 +66,12 @@ int main() {
     cout << "a (pendenza)     = " << a << " ± " << sigma_a << endl;
     cout << "b (intercetta)   = " << b << " ± " << sigma_b << endl;
 
+        // Calcolo di rho (coefficiente di correlazione tra a e b)
+    double cov_ab = -Sx / Delta;
+    double rho = cov_ab / (sigma_a * sigma_b);
+
+    cout << "rho (correlazione a, b) = " << rho << endl;
+
+
     return 0;
 }
