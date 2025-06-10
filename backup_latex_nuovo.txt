@@ -23,6 +23,7 @@
 \usepackage{verbatim}
 \usepackage{multicol}
 \usepackage{tabularx}
+\usepackage[table]{xcolor}
 \usepackage{amsmath} % Per l'ambiente cases e \text
 
 
@@ -53,16 +54,15 @@ Verifica sperimentale del moto di un oscillatore armonico smorzato e forzato, de
 
 Ai fini di ciò, si fornirà la stima delle seguenti grandezze tra le due fasi: 
 \begin{table}[H]
-\centering
 \renewcommand{\arraystretch}{1.4} % aumenta un po' l'interlinea
 \footnotesize % riduce la dimensione del testo
 \begin{tabularx}{\textwidth}{|X|X|X|}
 \hline
 $T_f$: periodo del moto in fase forzata & $T_s$: pseudo-periodo fase smorzata & $\gamma$: coefficiente di smorzamento \\
 \hline
-\centering $\omega_{f,\text{sperimentale}} = {2\pi}/{T_j}$  & $\omega_s = {2\pi}/{T_s}$ \centering & $ \omega_0 = \sqrt{\omega_s^2 + \gamma^2}$ \\ 
+$\omega_{f,\text{sperimentale}} = {2\pi}/{T_j}$  & $\omega_s = {2\pi}/{T_s}$  & $ \omega_0 = \sqrt{\omega_s^2 + \gamma^2}$ \\ 
 \hline 
-$\theta_{0,p}(\omega_{f,\text{sperimentale}})$: semiampiezza & \centering $\omega_{r,\text{attesa}} = \sqrt{\omega_s^2 - \gamma^2}$ & $\omega_{r,\text{sperimentale}}$: pulsazione alla massima ampiezza \\
+$\vartheta_{0,p}(\omega_{f,\text{sperimentale}})$: semiampiezza &  $\omega_{r,\text{attesa}} = \sqrt{\omega_s^2 - \gamma^2}$ & $\omega_{r,\text{sperimentale}}$: pulsazione alla massima ampiezza \\
 \hline
 \end{tabularx}
 \caption{Parametri e relazioni utilizzate.}
@@ -111,6 +111,8 @@ Di seguito un grafico per mostrare le diverse fasi del moto e le grandezze da st
 \draw [decorate, decoration={brace, amplitude=10pt}, thick,draw = red,  yshift=-5pt] (6.28,-1.415) -- (0,-1.415) node[midway, below=10pt] {\textcolor{red} {Regime}};
 \draw [decorate, decoration={brace, amplitude=10pt}, thick,draw = teal,  yshift=-5pt] (15,-1.415)  -- (6.28,-1.415)node[midway, below=10pt] {\textcolor{teal} {Smorzamento}};
 \node[black] at (axis cs:7.3,1.3) {$M_f = 0$};
+\node[teal] at (axis cs:10.28,-0.8) {$-e^{-\gamma t}$};
+
 
 % Massimi della fase di regime (1º e 2º)
 \addplot[only marks, mark=*, red] coordinates {(0.3099,1) (1.5732,1)};
@@ -170,7 +172,7 @@ A regime il moto è approssimabile dalla soluzione particolare
 \vartheta(t) \approx \vartheta_{0,p} \cdot \cos\left( \omega_f t + \varphi_f \right) . 
 \end{equation}
 
-Si procede a stimare le grandezze necessarie alla descrizione del moto in questa fase per ogni file preso in laboratorio durante le due giornate. Di seguito viene riportata una tabella con le stime, in funzione della frequenza nominale (quella impostata, non effettiva).
+Si procede a stimare le grandezze necessarie alla descrizione del moto in questa fase per ogni file preso in laboratorio durante le due giornate. Di seguito si riporta una tabella con le stime, in funzione della frequenza nominale, del periodo e della relativa incertezza.
 
 \begin{comment}
 
@@ -187,43 +189,41 @@ Si procede a stimare le grandezze necessarie alla descrizione del moto in questa
 \end{itemize}
 \end{comment}
 
+
 \begin{table}[H]
 \centering
 \footnotesize
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{|l|c|c|c|c|c|c||l|c|c|c|c|c|c|}
+\renewcommand{\arraystretch}{1.2}
+\resizebox{1\textwidth}{!}{% % Modifica il valore 0.85 per regolare la larghezza
+\begin{tabular}{|c|c|c||c|c|c||c|c|c||c|c|c|}
 \hline
-\textbf{$\nu$ [Hz]\rule[-1.2ex]{0pt}{4ex}} & \(\boldsymbol{T}\) [s]  & \(\boldsymbol{\sigma_T}\) [s] & \(\boldsymbol{\omega}\) [$\frac{\mathrm{rad}}{\mathrm{s}}$]& \(\boldsymbol{\sigma_\omega}\) [$\frac{\mathrm{rad}}{\mathrm{s}}$]& \(\boldsymbol{A}\) [rad] & \(\boldsymbol{\sigma_A}\) [rad] &
-\textbf{$\nu$ [Hz]} & \(\boldsymbol{T}\) [s]  & \(\boldsymbol{\sigma_T}\) [s] & \(\boldsymbol{\omega}\) [$\frac{\mathrm{rad}}{\mathrm{s}}$]& \(\boldsymbol{\sigma_\omega}\) [$\frac{\mathrm{rad}}{\mathrm{s}}$]& \(\boldsymbol{A}\) [rad] & \(\boldsymbol{\sigma_A}\) [rad]\\
+\multicolumn{3}{|c||}{\textbf{Set 1}} & \multicolumn{3}{c||}{\textbf{Set 2}} & \multicolumn{3}{c||}{\textbf{Set 3}} & \multicolumn{3}{c|}{\textbf{Set 4}} \\
 \hline
-0.9574 & 1.045 & 0.001 & 6.013 & 0.008 & 1.810 & 0.012 & 0.9756 & 1.026 & 0.004 & 6.124 & 0.022 & 0.710 & 0.017 \\
-0.9327 & 1.071 & 0.006 & 5.865 & 0.033 & 0.521 & 0.014 & 0.9390 & 1.066 & 0.005 & 5.897 & 0.025 & 0.694 & 0.038 \\
-0.9406 & 1.065 & 0.003 & 5.903 & 0.019 & 0.723 & 0.014 & 0.9438 & 1.060 & 0.003 & 5.927 & 0.018 & 0.905 & 0.015 \\
-0.9438 & 1.060 & 0.003 & 5.927 & 0.016 & 0.880 & 0.013 & 0.9450 & 1.059 & 0.003 & 5.934 & 0.017 & 0.984 & 0.046 \\
-0.9470 & 1.056 & 0.002 & 5.949 & 0.012 & 1.102 & 0.010 & 0.9485 & 1.055 & 0.002 & 5.955 & 0.013 & 1.241 & 0.024 \\
-0.9501 & 1.053 & 0.002 & 5.967 & 0.010 & 1.356 & 0.012 & 0.9518 & 1.052 & 0.002 & 5.974 & 0.012 & 1.569 & 0.041 \\
-0.9522 & 1.051 & 0.002 & 5.979 & 0.009 & 1.574 & 0.010 & 0.9533 & 1.049 & 0.002 & 5.987 & 0.013 & 1.657 & 0.192 \\
-0.9530 & 1.049 & 0.006 & 5.989 & 0.033 & 1.643 & 0.017 & 0.9541 & 1.049 & 0.002 & 5.992 & 0.011 & 1.790 & 0.053 \\
-0.9537 & 1.049 & 0.002 & 5.988 & 0.008 & 1.720 & 0.024 & 0.9550 & 1.048 & 0.002 & 5.996 & 0.010 & 1.798 & 0.018 \\
-0.9545 & 1.048 & 0.002 & 5.994 & 0.009 & 1.763 & 0.014 & 0.9556 & 1.044 & 0.013 & 6.019 & 0.075 & 1.822 & 0.028 \\
-0.9553 & 1.048 & 0.006 & 5.995 & 0.033 & 1.805 & 0.011 & 0.9557 & 1.047 & 0.002 & 6.002 & 0.010 & 1.815 & 0.025 \\
-0.9562 & 1.046 & 0.004 & 6.009 & 0.024 & 1.818 & 0.016 & 0.9562 & 1.047 & 0.002 & 6.004 & 0.011 & 1.837 & 0.042 \\
-0.9569 & 1.046 & 0.002 & 6.006 & 0.011 & 1.818 & 0.010 & 0.9565 & 1.046 & 0.002 & 6.004 & 0.012 & 1.822 & 0.035 \\
-0.9589 & 1.043 & 0.001 & 6.022 & 0.007 & 1.731 & 0.017 & 0.9569 & 1.045 & 0.002 & 6.011 & 0.013 & 1.788 & 0.018 \\
-0.9605 & 1.042 & 0.001 & 6.031 & 0.006 & 1.622 & 0.014 & 0.9572 & 1.045 & 0.002 & 6.014 & 0.011 & 1.825 & 0.017 \\
-0.9622 & 1.040 & 0.002 & 6.043 & 0.009 & 1.476 & 0.013 & 0.9611 & 1.041 & 0.001 & 6.037 & 0.008 & 1.580 & 0.016 \\
-0.9653 & 1.037 & 0.002 & 6.061 & 0.011 & 1.222 & 0.013 & 0.9628 & 1.040 & 0.002 & 6.044 & 0.010 & 1.448 & 0.084 \\
-0.9701 & 1.031 & 0.003 & 6.092 & 0.017 & 0.927 & 0.015 & 0.9645 & 1.038 & 0.002 & 6.055 & 0.012 & 1.289 & 0.014 \\
-0.9748 & 1.026 & 0.003 & 6.122 & 0.020 & 0.758 & 0.009 & 0.9660 & 1.038 & 0.012 & 6.054 & 0.071 & 1.173 & 0.030 \\
-0.9828 & 1.018 & 0.004 & 6.170 & 0.025 & 0.552 & 0.017 & 0.9676 & 1.034 & 0.002 & 6.078 & 0.012 & 1.065 & 0.031 \\
-0.9390 & 1.066 & 0.003 & 5.896 & 0.018 & 0.652 & 0.166 & 0.9699 & 1.032 & 0.002 & 6.090 & 0.013 & 0.938 & 0.014 \\
-0.9422 & 1.062 & 0.003 & 5.916 & 0.018 & 0.799 & 0.012 & 0.9709 & 1.031 & 0.004 & 6.097 & 0.026 & 0.885 & 0.018 \\
+$\boldsymbol{\nu}$ [Hz] & $\boldsymbol{T}$ [s] & $\boldsymbol{\sigma_T}$ [s] & 
+$\boldsymbol{\nu}$ [Hz] & $\boldsymbol{T}$ [s] & $\boldsymbol{\sigma_T}$ [s] &
+$\boldsymbol{\nu}$ [Hz] & $\boldsymbol{T}$ [s] & $\boldsymbol{\sigma_T}$ [s] &
+$\boldsymbol{\nu}$ [Hz] & $\boldsymbol{T}$ [s] & $\boldsymbol{\sigma_T}$ [s] \\
+\hline
+0.9574 & 1.045 & 0.001 & 0.9390 & 1.066 & 0.005 & 0.9485 & 1.055 & 0.002 & 0.9557 & 1.047 & 0.002 \\
+0.9327 & 1.071 & 0.006 & 0.9438 & 1.060 & 0.003 & 0.9518 & 1.052 & 0.002 & 0.9562 & 1.047 & 0.002 \\
+0.9406 & 1.065 & 0.003 & 0.9450 & 1.059 & 0.003 & 0.9533 & 1.049 & 0.002 & 0.9565 & 1.046 & 0.002 \\
+0.9438 & 1.060 & 0.003 & 0.9470 & 1.056 & 0.002 & 0.9541 & 1.049 & 0.002 & 0.9569 & 1.045 & 0.002 \\
+0.9501 & 1.053 & 0.002 & 0.9530 & 1.049 & 0.006 & 0.9550 & 1.048 & 0.002 & 0.9572 & 1.045 & 0.002 \\ 
+0.9522 & 1.051 & 0.002 & 0.9537 & 1.049 & 0.002 & 0.9556 & 1.044 & 0.013 & 0.9611 & 1.041 & 0.001 \\
+0.9756 & 1.026 & 0.004 & 0.9545 & 1.048 & 0.002 & 0.9553 & 1.048 & 0.006 & 0.9628 & 1.040 & 0.002 \\
+0.9701 & 1.031 & 0.003 & 0.9562 & 1.046 & 0.004 & 0.9589 & 1.043 & 0.001 & 0.9645 & 1.038 & 0.002 \\
+0.9653 & 1.037 & 0.002 & 0.9605 & 1.042 & 0.001 & 0.9660 & 1.038 & 0.012 & 0.9676 & 1.034 & 0.002 \\
+0.9622 & 1.040 & 0.002 & 0.9748 & 1.026 & 0.003 & 0.9699 & 1.032 & 0.002 & 0.9828 & 1.018 & 0.004 \\
+0.9422 & 1.062 & 0.003 & 0.9390 & 1.066 & 0.003 & 0.9709 & 1.031 & 0.004 & 0.9709 & 1.031 & 0.004 \\
 \hline
 \end{tabular}
 }
-\caption{Stime grandezze a regime}
-\label{tab:dati_affiancati_finale}
+\caption{Tabella con stime di $T$ e $\sigma_{T}$ in funzione della frequenza nominale}
+\label{tab:periodi_quattro_set}
 \end{table}
+
+
+
  %Innanzitutto, si sono trovati i picchi delle oscillazioni, nel grafico dei dati raccolti. Per farlo è stato necessario considerare solamente la zona dei punti vicini ad ogni massimo, eseguire il fit di una parabola su quella porzione di dati e considerare il vertice di tale curva come un picco. Stessa procedura è stata attuata per i minimi. Questi ultimi sono stati usati, insieme ai massimi, per verificare il fenomeno di offset dei dati, utilizzando la seguente formula:
 %\[
 %\frac{|\theta_{\text{max}}| + |\theta_{\text{min}}|}{2}
@@ -234,7 +234,7 @@ Si procede a stimare le grandezze necessarie alla descrizione del moto in questa
 
 Nella fase di regime, per determinare il periodo $T_f$, sono stati identificati i massimi delle oscillazioni mediante un fit parabolico locale applicato ai dati superanti una soglia di ampiezza prefissata. I vertici delle parabole sono stati assunti come istanti temporali dei picchi $\{t_{i,max}\}$. \\ 
 \\
-I valori così ottenuti sono stati utilizzati per calcolare un campione di periodi $\{T_f\}_{j = 1...N}$ con $N \geq 20$, avendo cura di saltare un picco per eliminare l'effetto di covarianza. Sotto questa ipotesi si è proceduto come segue: 
+I valori così ottenuti sono stati utilizzati per calcolare un campione di periodi $\{T_{f,i}\}_{i = 1...N}$ con $N \geq 20$, tra coppie di massimi, avendo cura di saltare un picco ogni due, così da eliminare l'effetto di covarianza. Sotto questa ipotesi si è proceduto come segue: 
 
 $$T_{f,j} = t_{2i +1 ,max} - t_{2i+2,max} $$
 
@@ -252,29 +252,131 @@ Avendo le stime dei periodi di oscillazione, è stato possibile stimare gli $\om
 la cui relativa incertezza è data dalla formula di propagazione degli errori.
 
 \begin{equation}
-    \sigma_{\omega_f}=\left(\frac{2\pi}{T_f^2}\right)\sigma_{T_f}^2
+    \sigma_{\omega_f}=\left(\frac{2\pi}{T_f^2}\right)\sigma_{T_f}
 \end{equation}
 
-Un approccio simile è stato adottato anche per la stima dell'ampiezza del moto ($\vartheta_{0,p}$). Sono stati individuati i minimi della curva effettuando dei fit quadratici al di sotto di una certa soglia (come in precedenza con i massimi) e con i valori così ricavati si è stato calcolato un campione di distanze picco-picco, selezionando i massimi e i minimi alternati in modo da saltare un picco ogni volta, così da ridurre la correlazione tra i dati.\\
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\resizebox{1\textwidth}{!}{% % Modifica il valore 0.85 per regolare la larghezza
+\begin{tabular}{|c|c|c||c|c|c||c|c|c||c|c|c|}
+\hline
+\multicolumn{3}{|c||}{\textbf{Set 1}} & \multicolumn{3}{c||}{\textbf{Set 2}} & \multicolumn{3}{c||}{\textbf{Set 3}} & \multicolumn{3}{c|}{\textbf{Set 4}} \\
+\hline
+$\boldsymbol{\nu}$ [Hz] & $\boldsymbol{\omega}$ [$\frac{\mathrm{rad}}{\mathrm{s}}$] & $\boldsymbol{\sigma_\omega}$ [$\frac{\mathrm{rad}}{\mathrm{s}}$] &  
+$\boldsymbol{\nu}$ [Hz] & $\boldsymbol{\omega}$ [$\frac{\mathrm{rad}}{\mathrm{s}}$] & $\boldsymbol{\sigma_\omega}$ [$\frac{\mathrm{rad}}{\mathrm{s}}$] &  
+$\boldsymbol{\nu}$ [Hz] & $\boldsymbol{\omega}$ [$\frac{\mathrm{rad}}{\mathrm{s}}$] & $\boldsymbol{\sigma_\omega}$ [$\frac{\mathrm{rad}}{\mathrm{s}}$] &  
+$\boldsymbol{\nu}$ [Hz] & $\boldsymbol{\omega}$ [$\frac{\mathrm{rad}}{\mathrm{s}}$] & $\boldsymbol{\sigma_\omega}$ [$\frac{\mathrm{rad}}{\mathrm{s}}$] \\  
+\hline
+0.9574 & 6.013 & 0.008 & 0.9390 & 5.897 & 0.025 & 0.9485 & 5.955 & 0.013 & 0.9557 & 6.002 & 0.010 \\  
+0.9327 & 5.865 & 0.033 & 0.9438 & 5.927 & 0.018 & 0.9518 & 5.974 & 0.012 & 0.9562 & 6.004 & 0.011 \\  
+0.9406 & 5.903 & 0.019 & 0.9450 & 5.934 & 0.017 & 0.9533 & 5.987 & 0.013 & 0.9565 & 6.004 & 0.012 \\  
+0.9438 & 5.927 & 0.016 & 0.9470 & 5.949 & 0.012 & 0.9541 & 5.992 & 0.011 & 0.9569 & 6.011 & 0.013 \\  
+0.9501 & 5.967 & 0.010 & 0.9530 & 5.989 & 0.033 & 0.9550 & 5.996 & 0.010 & 0.9572 & 6.014 & 0.011 \\  
+0.9522 & 5.979 & 0.009 & 0.9537 & 5.988 & 0.008 & 0.9556 & 6.019 & 0.075 & 0.9611 & 6.037 & 0.008 \\  
+0.9756 & 6.124 & 0.022 & 0.9545 & 5.994 & 0.009 & 0.9553 & 5.995 & 0.033 & 0.9628 & 6.044 & 0.010 \\  
+0.9701 & 6.092 & 0.017 & 0.9562 & 6.009 & 0.024 & 0.9589 & 6.022 & 0.007 & 0.9645 & 6.055 & 0.012 \\  
+0.9653 & 6.061 & 0.011 & 0.9605 & 6.031 & 0.006 & 0.9660 & 6.054 & 0.071 & 0.9676 & 6.078 & 0.012 \\  
+0.9622 & 6.043 & 0.009 & 0.9748 & 6.122 & 0.020 & 0.9699 & 6.090 & 0.013 & 0.9828 & 6.170 & 0.025 \\  
+0.9422 & 5.916 & 0.018 & 0.9390 & 5.896 & 0.018 & 0.9709 & 6.097 & 0.026 & 0.9709 & 6.097 & 0.026 \\  
+\hline
+\end{tabular}
+}
+\caption{Tabella con stime di $\omega_f$ e $\sigma_{\omega_f}$ in funzione della frequenza nominale}
+\label{tab:pulsazioni_quattro_set}
+\end{table}
+
+
+La determinazione dell'ampiezza caratteristica $\vartheta_{0,p}$ è stata condotta seguendo un modus operandi analogo a quello utilizzato per la misura dei periodi, con alcune fasi critiche. \\Sono stati individuati i minimi della curva effettuando dei fit quadratici al di sotto di una certa soglia, in perfetta simmetria con la procedura utilizzata per i massimi. Per ogni coppia di estremi successivi, ma non consecutivi,  è stata calcolata la semiampiezza come segue.\\
 
 \begin{equation}
-A_i = \frac{|\vartheta_{\text{max,i}}| + |\vartheta_{\text{min,i}}|}{2}
+\vartheta_j = \frac{|\vartheta_{\text{max,2i + 1}}| + |\vartheta_{\text{min,2i +2}}|}{2}
 \label{eq:ampiezza_picco}
 \end{equation}
 
-L’incertezza associata a ciascuna stima è stata calcolata come deviazione standard della media campionaria.\\
-
+Ricavando così un campione $\{\vartheta_j\}_{j = 1...N}$ con N $\geq 20$ da cui poter stimare l'ampiezza della curva con media aritmetica e deviazione standard del campione.  \\
 È stato scelto di utilizzare l’intera distanza picco-picco (anziché la sola semiampiezza) per garantire che eventuali offset del segnale fossero sempre annullati in modo efficace.
 
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\resizebox{1\textwidth}{!}{%
+\begin{tabular}{|c|c|c||c|c|c||c|c|c||c|c|c|}
+\hline
+\multicolumn{3}{|c||}{\textbf{Set 1}} & \multicolumn{3}{c||}{\textbf{Set 2}} & \multicolumn{3}{c||}{\textbf{Set 3}} & \multicolumn{3}{c|}{\textbf{Set 4}} \\
+\hline
+$\boldsymbol{\nu}$ [Hz] & $\boldsymbol{\vartheta}$ [rad] & $\boldsymbol{\sigma_{\vartheta}}$ [rad] &  
+$\boldsymbol{\nu}$ [Hz] & $\boldsymbol{\vartheta}$ [rad] & $\boldsymbol{\sigma_{\vartheta}}$ [rad] &  
+$\boldsymbol{\nu}$ [Hz] & $\boldsymbol{\vartheta}$ [rad] & $\boldsymbol{\sigma_{\vartheta}}$ [rad] &  
+$\boldsymbol{\nu}$ [Hz] & $\boldsymbol{\vartheta}$ [rad] & $\boldsymbol{\sigma_{\vartheta}}$ [rad] \\  
+\hline
+0.9574 & 1.810 & 0.012 & 0.9390 & 0.694 & 0.038 & 0.9485 & 1.241 & 0.024 & 0.9557 & 1.815 & 0.025 \\  
+0.9327 & 0.521 & 0.014 & 0.9438 & 0.905 & 0.015 & 0.9518 & 1.569 & 0.041 & \cellcolor{gray!20} 0.9562 & \cellcolor{gray!20} 1.837 & \cellcolor{gray!20} 0.042 \\  
+0.9406 & 0.723 & 0.014 & 0.9450 & 0.984 & 0.046 & 0.9533 & 1.657 & 0.192 & 0.9565 & 1.822 & 0.035 \\  
+0.9438 & 0.880 & 0.013 & 0.9470 & 1.102 & 0.010 & 0.9541 & 1.790 & 0.053 & 0.9569 & 1.788 & 0.018 \\  
+0.9501 & 1.356 & 0.012 & 0.9530 & 1.643 & 0.017 & 0.9550 & 1.798 & 0.018 & 0.9572 & 1.825 & 0.017 \\  
+0.9522 & 1.574 & 0.010 & 0.9537 & 1.720 & 0.024 & 0.9556 & 1.822 & 0.028 & 0.9611 & 1.580 & 0.016 \\  
+0.9756 & 0.710 & 0.017 & 0.9545 & 1.763 & 0.014 & 0.9553 & 1.805 & 0.011 & 0.9628 & 1.448 & 0.084 \\  
+0.9701 & 0.927 & 0.015 & 0.9562 & 1.818 & 0.016 & 0.9589 & 1.731 & 0.017 & 0.9645 & 1.289 & 0.014 \\  
+0.9653 & 1.222 & 0.013 & 0.9605 & 1.622 & 0.014 & 0.9660 & 1.173 & 0.030 & 0.9676 & 1.065 & 0.031 \\  
+0.9622 & 1.476 & 0.013 & 0.9748 & 0.758 & 0.009 & 0.9699 & 0.938 & 0.014 & 0.9828 & 0.552 & 0.017 \\  
+\cellcolor{gray!20} 0.9422 & \cellcolor{gray!20} 0.799 & \cellcolor{gray!20} 0.012 & 0.9390 & 0.652 & 0.166 & 0.9709 & 0.885 & 0.018 & 0.9709 & 0.885 & 0.018 \\  
+\hline
+\end{tabular}
+}
+\caption{Tabella con stime di $\vartheta_{0,p}$ e $\sigma_{\vartheta_{0,p}}$ in funzione della frequenza nominale}
+\label{tab:ampiezze_quattro_set}
+\end{table}
 
-Segue il grafico della risonanza, in cui si confrontano le $\omega_f$ calcolate, con la stima dei picchi all'interno della stessa presa. La curva così trovata viene interpolata con una parabola di equazione $y = ax^2 + bx + c$, per poi trovarne il massimo, ovvero il valor vero di $\omega_{r, sperimentale}$. Per poterne stimare l'incertezza si è considerata la semi-ampiezza del dominio del fit come errore massimo sulla misura, che è stato poi ridotto a stdev attraverso la distribuzione costante di probabilità. 
 
-\begin{figure} [H]
+\subsection{Risonanza}
+
+Per poter analizzare correttamente il modello nella fase di smorzamento si vuole cercare la frequenza di risonanza, alla quale il grafico del moto ha una maggiore ampiezza. Si cerca questo fenonemo per avere un maggior numero di picchi dal quale poter stimare successivamente le grandezze del moto.  
+
+\begin{figure}[H]
     \centering
-    \includegraphics[width=1\linewidth]{wf_risonanza_senzapicco.pdf}
-    \caption{Grafico risonanza}
-    \label{fig:enter-label}
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{dati_grezzi_risonanza.pdf}
+        \caption{Dati grezzi a regime}
+        \label{fig:residui_comp}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{dati_grezzi_no_risonanza.pdf}
+        \caption{Dati grezzi in smorzamento}
+        \label{fig:residui_dil}
+    \end{minipage}
 \end{figure}
+
+Come si può vedere dai due grafici, uno vicino alla risonanza e l'altro no, l'analisi dei massimi e dei minimi risulta molto più agevolata con dei picchi pronunciati come sul grafico di destra.   \\
+Si procede a tracciare il grafico della risonanza, in cui si confrontano le $\omega_f$ calcolate, con la stima dei picchi all'interno della stessa presa. \\ La curva così trovata viene interpolata con una parabola di equazione $y = ax^2 + bx + c$, per poi trovarne il massimo, ovvero il valor vero di $\omega_{r, sperimentale}$. Per poterne stimare l'incertezza si è considerata la semi-ampiezza del dominio del fit come errore massimo sulla misura, che è stato poi ridotto a deviazione standard attraverso la distribuzione costante di probabilità. 
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        % Importa il grafico PDF
+        \node[anchor=south west, inner sep=0] (image) at (0,0) 
+            {\includegraphics[width=1\textwidth]{wf_risonanza_senzapicco.pdf}};
+        
+        % Disegna linee grigie
+        \draw[dashed, gray] (5.75,7.7) -- (5.75,0.8);
+        \draw[dashed, gray] (9.55,7.7) -- (9.55,0.8);
+
+        %quadrato??
+        \draw[dashed] (5.95,5.95) -- (9.4, 5.95);
+        \draw[dashed] (5.95,7.5) -- (9.4,7.5); 
+        \draw[dashed] (5.95,5.95) -- (5.95,7.5); 
+        \draw[dashed] (9.4,5.95) -- (9.4,7.5); 
+
+    \end{tikzpicture}
+    \caption{$grafico_{risonanza}$}
+    \label{fig:risonanza}
+\end{figure}
+
 
 Segue una tabella con i parametri del fit.
 
@@ -309,7 +411,7 @@ Segue una tabella con i parametri del fit.
 \subsection{Fase di smorzamento}
 
 Nella fase di smorzamento si sono presi i dati grezzi alla frequenza nominale di 0.9562Hz. \\
-Per poter stimare lo pseudo-periodo si è applicato lo stesso metodo descritto nella fase a regime, adattando il codice per funzionare con un ampiezza della curva in continua variazioni. Si è perciò ricavato un campione $\{T_{s,i}\}_{i = 1...N}$ con N $\geq 20 $. \\ Da cui segue la stima:
+Per poter stimare lo pseudo-periodo si è applicato lo stesso metodo descritto nella fase a regime, adattando il codice per funzionare con un ampiezza della curva in continua variazione. Si è perciò ricavato un campione $\{T_{s,i}\}_{i = 1...N}$ con N $\geq 20 $. \\ Da cui segue la stima:
 $$ T_s = (1.045 \pm 0.003) \, s$$
 e dalla relazione $$ \omega_s = \frac{2\pi}{T_s} $$ 
 Si ottiene 
@@ -320,13 +422,12 @@ Per poter stimare $\gamma$ si linearizza la soluzione omogenea come segue:
 
 $$ \ln(\vartheta(t)) = \ln(\vartheta_{s,0})\, - \, \gamma t $$
 
-Ottenendo i seguenti due campioni di dati: 
+Si ricavano i seguenti due campioni di dati per effettuare la regressione lineare: 
 
-$$ (t_{i,min},\ln(\vartheta_{0,s}(t_{i,min})))_{i = 1...N} \, \, \, \mathrm{e} \, \, \, (t_{i,max},\ln(\vartheta_{0,s}(t_{i,max})))_{i = 1...N} $$
+$$ (t_{i,min},\ln(|\vartheta_{0,s}(t_{i,min})|))_{i = 1...N} \, \, \, \mathrm{e} \, \, \, (t_{i,max},\ln(\vartheta_{0,s}(t_{i,max})))_{i = 1...N} $$
 
-Ai valori $\vartheta_{0,s}(t_{i,min}))$ e $\vartheta_{0,s}(t_{i,max}))$ è stato attribuito un errore pari all'incertezza campionaria del singolo valore dei picchi raccolti dalla stessa presa ma nella fase di regime. 
+Ai valori $\vartheta_{0,s}(t_{i,min}))$ e $\vartheta_{0,s}(t_{i,max}))$ è stato attribuito un errore pari all'incertezza campionaria dei picchi a regime, poiché il sistema è soggetto alle stesse fluttuazioni strumentali in entrambe le fasi.
 Eseguendo le interpolazioni lineari dei dati di cui sopra si ottengono quindi le seguenti rette:
-
 
 \begin{figure}[H]
 \makebox[\textwidth][l]{%
@@ -446,8 +547,7 @@ $$
 \lambda = 0.13 
 $$
 
-Ovvero un'ottima compatibilità tra le due stime. 
-
+Il valore della compatibilità indica un'eccellente sovrapposizione tra $\omega_{r,atteso}$ e $\omega_{r,sperimentale}$ confermando la validità del modello teorico. Ciò implica che lo smorzamento $\gamma$ è stato stimato correttamente e che il sistema segue fedelmente la dinamica dell'oscillatore armonico forzato.
 
 \section{Conclusione}
 Di seguito una tabella che riassume le stime delle grandezze che descrivono il moto sopra analizzato, in riferimento alla presa 0.962Hz, utilizzata sia a regime che in fase di smorzamento.  
