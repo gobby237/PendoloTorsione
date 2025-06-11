@@ -58,9 +58,9 @@ Ai fini di ciò, si fornirà la stima delle seguenti grandezze tra le due fasi:
 \footnotesize % riduce la dimensione del testo
 \begin{tabularx}{\textwidth}{|X|X|X|}
 \hline
-$T_f$: periodo del moto in fase forzata & $T_s$: pseudo-periodo fase smorzata & $\gamma$: coefficiente di smorzamento \\
+$\overline{T_f}$: periodo del moto in fase forzata & $\overline{T_s}$: pseudo-periodo fase smorzata & $\gamma$: coefficiente di smorzamento \\
 \hline
-$\omega_{f,\text{sperimentale}} = {2\pi}/{T_j}$  & $\omega_s = {2\pi}/{T_s}$  & $ \omega_0 = \sqrt{\omega_s^2 + \gamma^2}$ \\ 
+$\omega_{f,\text{sperimentale}} = {2\pi}/{\overline{T_f}}$  & $\omega_s = {2\pi}/{\overline{T_s}}$  & $ \omega_0 = \sqrt{\omega_s^2 + \gamma^2}$ \\ 
 \hline 
 $\vartheta_{0,p}(\omega_{f,\text{sperimentale}})$: semiampiezza &  $\omega_{r,\text{attesa}} = \sqrt{\omega_s^2 - \gamma^2}$ & $\omega_{r,\text{sperimentale}}$: pulsazione alla massima ampiezza \\
 \hline
@@ -116,22 +116,22 @@ Di seguito un grafico per mostrare le diverse fasi del moto e le grandezze da st
 
 % Massimi della fase di regime (1º e 2º)
 \addplot[only marks, mark=*, red] coordinates {(0.3099,1) (1.5732,1)};
-\draw[<->, thick, red] (axis cs:0.3099,1.1) -- node[above] {$T_{f,i}$} (axis cs:1.5732,1.1);
+\draw[<->, thick, red] (axis cs:0.3099,1.1) -- node[above] {$T_{f}$} (axis cs:1.5732,1.1);
 
 % Massimi successivi (4º e 5º della fase di regime)
-\draw[<->, thick, red] (axis cs:4.087,1.1) -- node[above] {$T_{f,i}$} (axis cs:5.3462,1.1);
+\draw[<->, thick, red] (axis cs:4.087,1.1) -- node[above] {$T_{f}$} (axis cs:5.3462,1.1);
 \node[black] at (axis cs:2.3,-1.2) {\textcolor {red} {p-p picco picco}};
 \addplot[only marks, mark=*, red] coordinates {(4.087,1) (5.3462,1)};
 \draw[<->, thick, red] (axis cs:2.19845,1) -- (axis cs:2.19845,-1);
 \draw[<->, thick, teal] (axis cs:11.617,0.437) -- node[above] {} (axis cs:12.859,0.437);
-\draw[<->, thick, red] (axis cs:4.087,1.1) -- node[above] {$T_{f,i}$} (axis cs:5.3462,1.1);
+\draw[<->, thick, red] (axis cs:4.087,1.1) -- node[above] {$T_{f}$} (axis cs:5.3462,1.1);
 
 \draw[<->, thick, black] (axis cs:-0.3,0) -- (axis cs:-0.3,1);
 
 % Massimi della fase smorzata (approssimati)
 \addplot[only marks, mark=*, teal] coordinates {(7.85,0.723) (9.1,0.56)(11.617,0.337) (12.859,0.27) };
 % Frecce tra massimi della fase smorzata
-\draw[<->, thick, teal] (axis cs:7.85,0.823) -- node[above] {$T_s$} (axis cs:9.1,0.823);
+\draw[<->, thick, teal] (axis cs:7.85,0.823) -- node[above] {$T_{s}$} (axis cs:9.1,0.823);
 \draw[<->, thick, teal] (axis cs:11.617,0.437) -- node[above] {$T_s$} (axis cs:12.859,0.437);
 
 % Freccia verticale a sinistra per ampiezza con etichetta a y = 0.15
@@ -172,7 +172,7 @@ A regime il moto è approssimabile dalla soluzione particolare
 \vartheta(t) \approx \vartheta_{0,p} \cdot \cos\left( \omega_f t + \varphi_f \right) . 
 \end{equation}
 
-Si procede a stimare le grandezze necessarie alla descrizione del moto in questa fase per ogni file preso in laboratorio durante le due giornate. Di seguito si riporta una tabella con le stime, in funzione della frequenza nominale, del periodo e della relativa incertezza.
+Si procede a stimare le grandezze necessarie alla descrizione del moto in questa fase per ogni file preso in laboratorio durante le due giornate. \\Di seguito si riporta una tabella con le stime, in funzione della frequenza nominale, del periodo e della relativa incertezza.
 
 \begin{comment}
 
@@ -199,10 +199,10 @@ Si procede a stimare le grandezze necessarie alla descrizione del moto in questa
 \hline
 \multicolumn{3}{|c||}{\textbf{Set 1}} & \multicolumn{3}{c||}{\textbf{Set 2}} & \multicolumn{3}{c||}{\textbf{Set 3}} & \multicolumn{3}{c|}{\textbf{Set 4}} \\
 \hline
-$\boldsymbol{\nu}$ [Hz] & $\boldsymbol{T}$ [s] & $\boldsymbol{\sigma_T}$ [s] & 
-$\boldsymbol{\nu}$ [Hz] & $\boldsymbol{T}$ [s] & $\boldsymbol{\sigma_T}$ [s] &
-$\boldsymbol{\nu}$ [Hz] & $\boldsymbol{T}$ [s] & $\boldsymbol{\sigma_T}$ [s] &
-$\boldsymbol{\nu}$ [Hz] & $\boldsymbol{T}$ [s] & $\boldsymbol{\sigma_T}$ [s] \\
+$\boldsymbol{\nu}$ [Hz] & $\boldsymbol{\overline{T}}$ [s] & $\boldsymbol{\sigma_{\sigma_{T}}}$ [s] & 
+$\boldsymbol{\nu}$ [Hz] & $\boldsymbol{\overline{T}}$ [s] & $\boldsymbol{\sigma_{\sigma_{T}}}$ [s] &
+$\boldsymbol{\nu}$ [Hz] & $\boldsymbol{\overline{T}}$ [s] & $\boldsymbol{\sigma_{\sigma_{T}}}$ [s] &
+$\boldsymbol{\nu}$ [Hz] & $\boldsymbol{\overline{T}}$ [s] & $\boldsymbol{\sigma_{T}}$ [s] \\
 \hline
 0.9574 & 1.045 & 0.001 & 0.9390 & 1.066 & 0.005 & 0.9485 & 1.055 & 0.002 & 0.9557 & 1.047 & 0.002 \\
 0.9327 & 1.071 & 0.006 & 0.9438 & 1.060 & 0.003 & 0.9518 & 1.052 & 0.002 & 0.9562 & 1.047 & 0.002 \\
@@ -218,7 +218,7 @@ $\boldsymbol{\nu}$ [Hz] & $\boldsymbol{T}$ [s] & $\boldsymbol{\sigma_T}$ [s] \\
 \hline
 \end{tabular}
 }
-\caption{Tabella con stime di $T$ e $\sigma_{T}$ in funzione della frequenza nominale}
+\caption{Tabella con stime di $\overline{T}$ e $\sigma_{T}$ in funzione della frequenza nominale}
 \label{tab:periodi_quattro_set}
 \end{table}
 
@@ -232,27 +232,27 @@ $\boldsymbol{\nu}$ [Hz] & $\boldsymbol{T}$ [s] & $\boldsymbol{\sigma_T}$ [s] \\
 %nella quale $\vartheta_{\text{max}}$ e ${\theta_{\text{min}}}$ sono rispettivamente il massimo e minimo assoluti. 
 %I set di picchi ottenuti sulle misurazioni ai vari valori di forzante, sono serviti poi per determinare la pulsazione di risonanza, $\omega_f.$
 
-Nella fase di regime, per determinare il periodo $T_f$, sono stati identificati i massimi delle oscillazioni mediante un fit parabolico locale applicato ai dati superanti una soglia di ampiezza prefissata. I vertici delle parabole sono stati assunti come istanti temporali dei picchi $\{t_{i,max}\}$. \\ 
+Nella fase di regime, per determinare il periodo $\overline{T_f}$, sono stati identificati i massimi delle oscillazioni mediante un fit parabolico locale applicato ai dati superanti una soglia di ampiezza prefissata. I vertici delle parabole sono stati assunti come istanti temporali dei picchi $\{t_{i,max}\}$. \\ 
 \\
-I valori così ottenuti sono stati utilizzati per calcolare un campione di periodi $\{T_{f,i}\}_{i = 1...N}$ con $N \geq 20$, tra coppie di massimi, avendo cura di saltare un picco ogni due, così da eliminare l'effetto di covarianza. Sotto questa ipotesi si è proceduto come segue: 
+I valori così ottenuti sono stati utilizzati per calcolare un campione di periodi $\{T_{f,j}\}_{j = 1...N}$ con $N \geq 20$, tra coppie di massimi, avendo cura di saltare un picco ogni due, così da eliminare l'effetto di covarianza. Sotto questa ipotesi si è proceduto come segue: 
 
-$$T_{f,j} = t_{2i +1 ,max} - t_{2i+2,max} $$
+$$T_{f,j} = t_{2i +2 ,max} - t_{2i+1,max} $$
 
-Il valore vero di $T_f$ associato ad ogni presa è stato ricavato con la media aritmetica, mentre l'incertezza è stata valutata come deviazione std del campione: 
+Il valore vero $\overline{T_f}$ associato ad ogni presa è stato ricavato con la media aritmetica, mentre l'incertezza è stata valutata come deviazione std del campione: 
 
-$$\sigma_{T_f} = \sqrt{ \frac{1}{N-1} \sum_{i=1}^{N} \left( T_{f,i} - \overline{T_f} \right)^2 }$$
-Non si è calcolata la stdev della media dato che comporterebbe una sottostima dell’errore, poiché la correlazione residua tra i $T_{f,i}$ (sebbene ridotta dalla non consecutività) rende invalida l’ipotesi di indipendenza statistica richiesta per tale formula.
+$$\sigma_{T_f} = \sqrt{ \frac{1}{N-1} \sum_{j=1}^{N} \left( T_{f,j} - \overline{T_f} \right)^2 }$$
+Non si è calcolata la stdev della media dato che comporterebbe una sottostima dell’errore, poiché la correlazione residua tra i $T_{f,j}$ (sebbene ridotta dalla non consecutività) rende invalida l’ipotesi di indipendenza statistica richiesta per tale formula.
 
 Avendo le stime dei periodi di oscillazione, è stato possibile stimare gli $\omega_{f}$ sperimentali tramite la seguente formula:
 
 \begin{equation}
-    \omega_{f}=\frac{2\pi}{T_f} 
+    \omega_{f}=\frac{2\pi}{\overline{T_f}} 
 \end{equation}
 
 la cui relativa incertezza è data dalla formula di propagazione degli errori.
 
 \begin{equation}
-    \sigma_{\omega_f}=\left(\frac{2\pi}{T_f^2}\right)\sigma_{T_f}
+    \sigma_{\omega_f}=\left(\frac{2\pi}{\overline{T_f}^2}\right)\sigma_{T_f}
 \end{equation}
 
 \begin{table}[H]
@@ -291,11 +291,11 @@ $\boldsymbol{\nu}$ [Hz] & $\boldsymbol{\omega}$ [$\frac{\mathrm{rad}}{\mathrm{s}
 La determinazione dell'ampiezza caratteristica $\vartheta_{0,p}$ è stata condotta seguendo un modus operandi analogo a quello utilizzato per la misura dei periodi, con alcune fasi critiche. \\Sono stati individuati i minimi della curva effettuando dei fit quadratici al di sotto di una certa soglia, in perfetta simmetria con la procedura utilizzata per i massimi. Per ogni coppia di estremi successivi, ma non consecutivi,  è stata calcolata la semiampiezza come segue.\\
 
 \begin{equation}
-\vartheta_j = \frac{|\vartheta_{\text{max,2i + 1}}| + |\vartheta_{\text{min,2i +2}}|}{2}
+\vartheta_{{0,p}_j} = \frac{|\vartheta_{\text{max,2i + 1}}| + |\vartheta_{\text{min,2i +2}}|}{2}
 \label{eq:ampiezza_picco}
 \end{equation}
 
-Ricavando così un campione $\{\vartheta_j\}_{j = 1...N}$ con N $\geq 20$ da cui poter stimare l'ampiezza della curva con media aritmetica e deviazione standard del campione.  \\
+Ricavando così un campione $\{\vartheta_{{0,p}_j}\}_{j = 1...N}$ con N $\geq 20$ da cui poter stimare l'ampiezza della curva con media aritmetica e deviazione standard del campione.  \\
 È stato scelto di utilizzare l’intera distanza picco-picco (anziché la sola semiampiezza) per garantire che eventuali offset del segnale fossero sempre annullati in modo efficace.
 
 \begin{table}[H]
@@ -326,7 +326,7 @@ $\boldsymbol{\nu}$ [Hz] & $\boldsymbol{\vartheta}$ [rad] & $\boldsymbol{\sigma_{
 \hline
 \end{tabular}
 }
-\caption{Tabella con stime di $\vartheta_{0,p}$ e $\sigma_{\vartheta_{0,p}}$ in funzione della frequenza nominale}
+\caption{Tabella con stime di $\vartheta_{0,p}$ e $\sigma_{\vartheta_{0,p}}$ in funzione della frequenza nominale. Le righe evidenziate sono state utilizzate per i mostrare i dati grezzi nei grafici di seguito.}
 \label{tab:ampiezze_quattro_set}
 \end{table}
 
@@ -352,7 +352,7 @@ Per poter analizzare correttamente il modello nella fase di smorzamento si vuole
     \end{minipage}
 \end{figure}
 
-Come si può vedere dai due grafici, uno vicino alla risonanza e l'altro no, l'analisi dei massimi e dei minimi risulta molto più agevolata con dei picchi pronunciati come sul grafico di destra.   \\
+Come si può vedere dai due grafici, uno vicino alla risonanza e l'altro no, l'analisi dei massimi e dei minimi risulta molto più agevolata con dei picchi pronunciati come sul grafico di sinistra.   \\
 Si procede a tracciare il grafico della risonanza, in cui si confrontano le $\omega_f$ calcolate, con la stima dei picchi all'interno della stessa presa. \\ La curva così trovata viene interpolata con una parabola di equazione $y = ax^2 + bx + c$, per poi trovarne il massimo, ovvero il valor vero di $\omega_{r, sperimentale}$. Per poterne stimare l'incertezza si è considerata la semi-ampiezza del dominio del fit come errore massimo sulla misura, che è stato poi ridotto a deviazione standard attraverso la distribuzione costante di probabilità. 
 
 \begin{figure}[H]
@@ -373,7 +373,7 @@ Si procede a tracciare il grafico della risonanza, in cui si confrontano le $\om
         \draw[dashed] (9.4,5.95) -- (9.4,7.5); 
 
     \end{tikzpicture}
-    \caption{$grafico_{risonanza}$}
+    \caption{Curva di risonanza}
     \label{fig:risonanza}
 \end{figure}
 
@@ -412,8 +412,8 @@ Segue una tabella con i parametri del fit.
 
 Nella fase di smorzamento si sono presi i dati grezzi alla frequenza nominale di 0.9562Hz. \\
 Per poter stimare lo pseudo-periodo si è applicato lo stesso metodo descritto nella fase a regime, adattando il codice per funzionare con un ampiezza della curva in continua variazione. Si è perciò ricavato un campione $\{T_{s,i}\}_{i = 1...N}$ con N $\geq 20 $. \\ Da cui segue la stima:
-$$ T_s = (1.045 \pm 0.003) \, s$$
-e dalla relazione $$ \omega_s = \frac{2\pi}{T_s} $$ 
+$$ \overline{T_s} = (1.045 \pm 0.003) \, s$$
+e dalla relazione $$ \omega_s = \frac{2\pi}{\overline{T_s}} $$ 
 Si ottiene 
 $$\omega_s = (6.01 \pm 0.02)\, rad/s$$
 
@@ -427,7 +427,7 @@ Si ricavano i seguenti due campioni di dati per effettuare la regressione linear
 $$ (t_{i,min},\ln(|\vartheta_{0,s}(t_{i,min})|))_{i = 1...N} \, \, \, \mathrm{e} \, \, \, (t_{i,max},\ln(\vartheta_{0,s}(t_{i,max})))_{i = 1...N} $$
 
 Ai valori $\vartheta_{0,s}(t_{i,min}))$ e $\vartheta_{0,s}(t_{i,max}))$ è stato attribuito un errore pari all'incertezza campionaria dei picchi a regime, poiché il sistema è soggetto alle stesse fluttuazioni strumentali in entrambe le fasi.
-Eseguendo le interpolazioni lineari dei dati di cui sopra si ottengono quindi le seguenti rette:
+Eseguendo le interpolazioni lineari dei dati di cui sopra, tenendo conto delle diverse incertezze, si ottengono quindi le seguenti rette:
 
 \begin{figure}[H]
 \makebox[\textwidth][l]{%
@@ -504,12 +504,19 @@ Si fornisce di seguito la stima di $\gamma$ come la media artimentica delle due 
 
 $$ \gamma = (0.0460 \, \pm \, 0.0002 )\, rad/s $$
 
-A questo punto si fornisce la stima della pulsazione di risonanza attesa: 
+A questo punto si fornisce la stima della pulsazione di risonanza attesa tramite la formula:
+
+$$ \omega_{r,atteso} = \sqrt{\omega_{s}^2-\gamma^2}$$
+
+ricavando quindi:
 
 $$ \omega_{r, atteso } = (6.0116 \, \pm \, 0.0003) \, rad/s$$
 
-e della pulsazione del sistema: 
+e della pulsazione del sistema tramite:
 
+$$\omega_0=\sqrt{\omega_s^2+\gamma^2}$$
+
+ottenendo:
 $$\omega_0 = (6.0120 \, \pm \, 0.0003) \, rad/s$$
 
 
@@ -542,7 +549,7 @@ E' innanzitutto importante notare che per l'analisi dati della fase di smorzamen
 
 \section{Discussione}
 
-Si confrontano le stime ottenute in precedenza di $\omega_{r, atteso }$e $\omega_{r,sperimentale}$, ottenendo così: 
+Si confrontano le stime ottenute in precedenza di $\omega_{r, atteso }$ e  $\omega_{r,sperimentale}$, ottenendo così: 
 $$
 \lambda = 0.13 
 $$
@@ -557,21 +564,21 @@ Di seguito una tabella che riassume le stime delle grandezze che descrivono il m
 \renewcommand{\arraystretch}{1.4} % aumenta un po' l'interlinea
 \begin{tabularx}{\textwidth}{|X|X|}
 \hline
-$T_{f}$: periodo del moto in fase forzata & $(1.046 \pm 0.02) \ \text{s}$ \\
+$\overline{T_{f}}$: periodo del moto in fase forzata & $(1.046 \pm 0.02) \ \text{s}$ \\
 \hline
 $\omega_{f,\text{sperimentale}}$: pulsazione forzante misurata &  $( 6.00 \pm 0.01 \,  )\, \text{rad/s}$ \\
 \hline
 $\theta_{0,p}(\omega_{f,\text{sperimentale}})$: semiampiezza & $(1.84 \pm 0.04) \, \text{rad}$ \\
 \hline
-$T_s$: pseudo-periodo nella fase smorzata & $(1.045 \pm 0.003) \, \text{s}$ \\
+$\overline{T_s}$: pseudo-periodo nella fase smorzata & $(1.045 \pm 0.003) \, \text{s}$ \\
 \hline
 $\omega_s$: pulsazione smorzata & $(6.01 \pm 0.02)\, \mathrm{rad/s}$ \\
 \hline
 $\gamma$: coefficiente di smorzamento & $(0.0460 \pm 0.0002) \, \text{rad/s}$ \\
 \hline
-$\omega_{r, sperimentale}$: pulsazione di risonanza sperimentale& $(6.0116 \, \pm \, 0.0003) \, $rad/s \\
+$\omega_{r, atteso}$: pulsazione di risonanza attesa& $(6.0116 \, \pm \, 0.0003) \, $rad/s \\
 \hline
-$\omega_{r, atteso}$: pulsazione di risonanza attesa & $(6.01 \pm 0.03) \, $rad/s \\
+$\omega_{r, sperimentale}$: pulsazione di risonanza sperimentale & $(6.01 \pm 0.03) \, $rad/s \\
 \hline
 $\omega_0$: pulsazione propria non smorzata & $(6.0120 \, \pm \, 0.0003) \, \text{rad/s}$ \\
 \hline
